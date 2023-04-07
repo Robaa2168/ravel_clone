@@ -1,0 +1,202 @@
+import React, { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from 'react-router-dom';
+import { showToast } from '../utils/showToast';
+import { useNavigate } from 'react-router-dom';
+
+
+function Signup() {
+  const [activeTab, setActiveTab] = useState("Mobile");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [referralId, setReferralId] = useState("");
+  const [phoneNumber, setMobile] = useState("");
+  const [showReferralField, setShowReferralField] = useState(false);
+
+  const formatPhoneNumber = (phoneNumber) => {
+    if (phoneNumber.startsWith('254')) {
+      return phoneNumber;
+    } else if (phoneNumber.startsWith('0')) {
+      return `254${phoneNumber.slice(1)}`;
+    } else if (phoneNumber.startsWith('7') || phoneNumber.startsWith('1')) {
+      return `254${phoneNumber}`;
+    }
+  };
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleEmailInputChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordInputChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleReferralIdInputChange = (event) => {
+    setReferralId(event.target.value);
+  };
+
+  const handleMobileInputChange = (event) => {
+    setMobile(event.target.value);
+  };
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+    const formData = activeTab === "Email"
+      ? { email, password, referralId }
+      : { phoneNumber: formattedPhoneNumber, password, referralId };
+  
+    const response = await fetch(
+      `http://localhost:3000/api/signup${activeTab === "Email" ? "" : "WithMobile"}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      }
+    );
+    const data = await response.json();
+    if (!response.ok) {
+      showToast('danger', data.message);
+    } else {
+      showToast('success', "User registered successfully. Sending verification code...");
+  
+      // Delay sending verification code by 2 seconds
+      setTimeout(async () => {
+        const verificationType = activeTab.toLowerCase();
+        const contact = activeTab === "Email" ? email : formattedPhoneNumber;
+        try {
+          const resendResponse = await fetch("http://localhost:3000/api/verification", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ [verificationType === "email" ? "email" : "phoneNumber"]: contact }),
+          });
+          const resendData = await resendResponse.json();
+          if (resendResponse.ok) {
+            showToast('success', "Verification code sent successfully!");
+          } else {
+            showToast('error', resendData.message);
+          }
+        } catch (error) {
+          showToast('error', "Error sending verification code.");
+        }
+      }, 2000);
+  
+      // Redirect to the verify page
+      navigate("/verify", {
+        state: {
+          mode: activeTab.toLowerCase(),
+          contact: activeTab === "Email" ? email : formattedPhoneNumber,
+        },
+      });
+    }
+  };  
+  
+
+  const handleReferralClick = () => {
+    setShowReferralField(!showReferralField);
+  };
+
+  
+  return (
+    <div className="body d-flex p-0 p-xl-5">
+      <ToastContainer />
+      <div className="container-xxl">
+        <div className="row g-3">
+        <div className="col-lg-6 d-flex justify-content-center align-items-center auth-h100">
+  <div className="d-flex flex-column">
+    <span className="text-muted">Register with your email or mobile</span>
+    <ul className="nav nav-pills mt-4" role="tablist">
+   
+      <li className="nav-item">
+        <button className={`nav-link ${activeTab === "Mobile" ? "active" : ""}`} onClick={() => handleTabChange("Mobile")} type="button">Mobile</button>
+      </li>
+      <li className="nav-item">
+        <button className={`nav-link ${activeTab === "Email" ? "active" : ""}`} onClick={() => handleTabChange("Email")} type="button">Email</button>
+      </li>
+    </ul>
+    <div className="tab-content mt-4 mb-3">
+      <div className={`tab-pane fade show ${activeTab === "Mobile" ? "active" : ""}`} id="Mobile">
+        <div className="card">
+          <div className="card-body p-4">
+            <form onSubmit={handleSubmit}>
+              <label className="form-label fs-6">Mobile *</label>
+              <div className="input-group mb-3">
+                <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
+                <ul className="dropdown-menu">
+                  <li><a className="dropdown-item" href="#">+254 Kenya</a></li>
+                </ul>
+                <input type="text" className="form-control" value={phoneNumber} onChange={handleMobileInputChange} required />
+              </div>
+              <div className="mb-3">
+                <label className="form-label fs-6">Password *</label>
+                <input type="password" className="form-control" value={password} onChange={handlePasswordInputChange} required />
+              </div>
+              {showReferralField && (
+                <div className="mb-3">
+                  <label className="form-label fs-6">Referral ID</label>
+                  <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
+                </div>
+              )}
+              <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+            </form>
+            <div className="mt-2">
+              <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`tab-pane fade show ${activeTab === "Email" ? "active" : ""}`} id="Email">
+        <div className="card">
+          <div className="card-body p-4">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label fs-6">Email address *</label>
+                <input type="email" className="form-control" value={email} onChange={handleEmailInputChange} required />
+              </div>
+              <div className="mb-3">
+                <label className="form-label fs-            6">Password *</label>
+            <input type="password" className="form-control" value={password} onChange={handlePasswordInputChange} required />
+          </div>
+          {showReferralField && (
+            <div className="mb-3">
+              <label className="form-label fs-6">Referral ID</label>
+              <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
+            </div>
+          )}
+          <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+        </form>
+        <div className="mt-2">
+          <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<Link to="/login" title="#">Already registered? <span className="text-secondary text-decoration-underline">Log In</span></Link>
+</div>
+</div>
+
+          <div className="col-lg-6 d-none d-lg-flex justify-content-center align-items-center auth-h100">
+            <div className="qr-block text-center">
+              <img src="../assets/images/qr-code.png" alt="#" className="img-fluid my-4" />
+              <h4>Log in with QR code</h4>
+              <p>Scan this code to log in instantly.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Signup;
+
