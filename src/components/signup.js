@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import { showToast } from '../utils/showToast';
 import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 
 function Signup() {
@@ -51,8 +52,7 @@ function Signup() {
       ? { email, password, referralId }
       : { phoneNumber: formattedPhoneNumber, password, referralId };
   
-    const response = await fetch(
-      `http://localhost:3000/api/signup${activeTab === "Email" ? "" : "WithMobile"}`,
+    const response = await api.fetch(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`,
       {
         method: "POST",
         headers: {
@@ -72,7 +72,7 @@ function Signup() {
         const verificationType = activeTab.toLowerCase();
         const contact = activeTab === "Email" ? email : formattedPhoneNumber;
         try {
-          const resendResponse = await fetch("http://localhost:3000/api/verification", {
+          const resendResponse = await api.fetch("/api/verification", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -105,7 +105,7 @@ function Signup() {
     setShowReferralField(!showReferralField);
   };
 
-  
+
   return (
     <div className="body d-flex p-0 p-xl-5">
       <ToastContainer />

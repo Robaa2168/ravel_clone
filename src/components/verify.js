@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useLocation, useNavigate } from 'react-router-dom';
+import api from '../api';
 
 
 function Verification() {
@@ -28,7 +29,7 @@ function Verification() {
         const enteredCode = verificationCode.join("");
       
         try {
-          const response = await fetch("http://localhost:3000/api/verify", {
+          const response = await api.fetch("/api/verify", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -49,13 +50,13 @@ function Verification() {
         }
       };
 
-      
+
     const handleResendCode = async (event) => {
         event.preventDefault();
         // Implement the logic to resend the OTP code with a 60s timeout
 
         try {
-            const response = await fetch("http://localhost:3000/api/verification", {
+            const response = await api.fetch("/api/verification", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

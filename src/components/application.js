@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
+import api from '../api';
 import { showToast } from '../utils/showToast';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -82,7 +83,7 @@ function Application() {
     if (canProceedToNextStep()) {
       if (step === 2) {
         try {
-          const response = await fetch("http://localhost:3000/api/KYC", {
+          const response = await api.fetch("/api/KYC", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

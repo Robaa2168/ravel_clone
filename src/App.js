@@ -30,7 +30,7 @@ function App() {
         {!excludedRoutes.includes(location.pathname) &&  <Header />}
          
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Login />} />
             <Route path="*" element={<Home />} />
             <Route path="/settings" element={<Security />} />
             <Route path="/loan" element={<Loan />} />

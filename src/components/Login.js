@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate,Link } from "react-router-dom";
 import { showToast } from "../utils/showToast";
 import { useUser } from "./context";
+import api from '../api';
 
 const formatPhoneNumber = (phoneNumber) => {
   if (phoneNumber.startsWith("254")) {
@@ -31,7 +32,7 @@ function Login() {
         : { phoneNumber: formatPhoneNumber(phoneNumber), password };
   
     try {
-      const response = await fetch("http://localhost:3000/api/login", {
+      const response = await api.fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
