@@ -83,22 +83,26 @@ function Application() {
     if (canProceedToNextStep()) {
       if (step === 2) {
         try {
-          const response = await api.fetch("/api/KYC", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userId, ...formState }),
+          const response = await api.post("/api/KYC", {
+            userId,
+            ...formState
           });
   
-          const data = await response.json();
+          const data = response.data;
   
-          if (response.ok) {
+          if (response.status === 200) { // Check for success status code
             setFormSubmitted(true);
             showToast("success", "Form submitted successfully.");
             setStep(step + 1); // Move this line here to change the step only if the submission is successful
           } else {
-            showToast("error", data.message);
+            // Handle error response from server
+            const errorMessage = data.message || "Form submission failed";
+            if (response.status === 400 && data.errors) {
+              const errorFields = Object.keys(data.errors).join(", ");
+              showToast("error", `${errorMessage}: ${errorFields}`);
+            } else {
+              showToast("error", errorMessage);
+            }
           }
         } catch (error) {
           showToast("error", "Error during form submission.");

@@ -1,4 +1,6 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState } from "react";
+import { isTokenValid } from "./jwtHelper"; // Import the isTokenValid function
+
 
 const UserContext = createContext();
 
@@ -9,7 +11,15 @@ export const useUser = () => {
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      if (isTokenValid(parsedUser.token)) {
+        return parsedUser;
+      } else {
+        localStorage.removeItem("user");
+      }
+    }
+    return null;
   });
 
   const login = (userData) => {
@@ -21,7 +31,7 @@ export const UserProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("user");
   };
-  
+
   return (
     <UserContext.Provider value={{ user, login, logout }}>
       {children}

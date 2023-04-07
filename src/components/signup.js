@@ -45,51 +45,40 @@ function Signup() {
     setMobile(event.target.value);
   };
   const navigate = useNavigate();
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-    const formData = activeTab === "Email"
-      ? { email, password, referralId }
-      : { phoneNumber: formattedPhoneNumber, password, referralId };
-  
-    const response = await api.fetch(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      }
-    );
-    const data = await response.json();
-    if (!response.ok) {
-      showToast('danger', data.message);
-    } else {
+
+
+ const handleSubmit = async (event) => {
+  event.preventDefault();
+  const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+  const formData = activeTab === "Email"
+    ? { email, password, referralId }
+    : { phoneNumber: formattedPhoneNumber, password, referralId };
+
+  try {
+    const response = await api.post(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`, formData);
+    const data = response.data;
+
+    if (response.status === 200) { // Check for success status code
       showToast('success', "User registered successfully. Sending verification code...");
-  
-      // Delay sending verification code by 2 seconds
-      setTimeout(async () => {
-        const verificationType = activeTab.toLowerCase();
-        const contact = activeTab === "Email" ? email : formattedPhoneNumber;
-        try {
-          const resendResponse = await api.fetch("/api/verification", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ [verificationType === "email" ? "email" : "phoneNumber"]: contact }),
-          });
-          const resendData = await resendResponse.json();
-          if (resendResponse.ok) {
-            showToast('success', "Verification code sent successfully!");
-          } else {
-            showToast('error', resendData.message);
-          }
-        } catch (error) {
-          showToast('error', "Error sending verification code.");
+      
+      const verificationType = activeTab.toLowerCase();
+      const contact = activeTab === "Email" ? email : formattedPhoneNumber;
+      try {
+        const resendResponse = await api.post("/api/verification", {
+          [verificationType]: contact
+        });
+        const resendData = resendResponse.data;
+        if (resendResponse.status === 200) { // Check for success status code
+          showToast('success', "Verification code sent successfully!");
+        } else {
+          // Handle error response from server
+          const errorMessage = resendData.message || "Error sending verification code";
+          showToast('error', errorMessage);
         }
-      }, 2000);
-  
+      } catch (error) {
+        showToast('error', "Error sending verification code.");
+      }
+
       // Redirect to the verify page
       navigate("/verify", {
         state: {
@@ -97,9 +86,22 @@ function Signup() {
           contact: activeTab === "Email" ? email : formattedPhoneNumber,
         },
       });
+    } else {
+      // Handle error response from server
+      const errorMessage = data.message || "Registration failed";
+      if (response.status === 400 && data.errors) {
+        const errorFields = Object.keys(data.errors).join(", ");
+        showToast('error', `${errorMessage}: ${errorFields}`);
+      } else {
+        showToast('error', errorMessage);
+      }
     }
-  };  
-  
+  } catch (error) {
+    showToast('error', "Error during registration.");
+    console.error("Error during registration: ", error);
+  }
+};
+
 
   const handleReferralClick = () => {
     setShowReferralField(!showReferralField);

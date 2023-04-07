@@ -17,6 +17,7 @@ import Signup from './components/signup';
 import Application from './components/application';
 import Verification from './components/verify';
 import Accounts from './components/accounts';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   const location = useLocation();
@@ -28,21 +29,20 @@ function App() {
         {!excludedRoutes.includes(location.pathname) && <Sidebar />}
         <div className="main px-lg-4 px-md-4">
         {!excludedRoutes.includes(location.pathname) &&  <Header />}
-         
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="*" element={<Home />} />
-            <Route path="/settings" element={<Security />} />
-            <Route path="/loan" element={<Loan />} />
-            <Route path="/repay" element={<Repay />} />
-            <Route path="/ticket" element={<Ticket />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/KYC" element={<Application />} />
-            <Route path="/verify" element={<Verification />} />
-            <Route path="/accounts" element={<Accounts />} />
-          </Routes>
+        <Routes>
+  <Route path="/" element={<Login />} />
+  <Route path="/*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+  <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
+  <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
+  <Route path="/repay" element={<ProtectedRoute><Repay /></ProtectedRoute>} />
+  <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
+  <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+  <Route path="/login" element={<Login />} />
+  <Route path="/signup" element={<Signup />} />
+  <Route path="/KYC" element={<ProtectedRoute><Application /></ProtectedRoute>} />
+  <Route path="/verify" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
+  <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
+</Routes>
         </div>
       </div>
     </UserProvider>

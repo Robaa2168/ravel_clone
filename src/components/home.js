@@ -7,26 +7,18 @@ const Home = () => {
   const userContext = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!userContext) {
-      const timer = setTimeout(() => {
-        navigate("/login");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [userContext, navigate]);
+  const { user } = userContext;
 
-  if (!userContext || !userContext.user) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
-        <Spinner animation="border" role="status" variant="success">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
-      </div>
-    );
+  useEffect(() => {
+    if (!userContext || !user) {
+      navigate("/login");
+    }
+  }, [userContext, user, navigate]);
+
+  if (!userContext || !user) {
+    return null;
   }
 
-  const { user } = userContext;
 
   return (
 
@@ -49,7 +41,7 @@ const Home = () => {
                 </div>
                 <div className="col-md-6 col-lg-6 col-xl-3">
                   <div className="d-flex flex-column">
-                    <span className="text-muted mb-1">Pay ID:{user.primaryInfo.payID}</span>
+                    <span className="text-muted mb-1">Pay ID:{user.payID}</span>
                     <span className="small text-muted flex-fill text-truncate">
   Last login time: {new Date(user.primaryInfo.lastLogin).toLocaleString()}
 </span>

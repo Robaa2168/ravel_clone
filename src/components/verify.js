@@ -6,6 +6,7 @@ import api from '../api';
 
 
 function Verification() {
+  const [resendTimeout, setResendTimeout] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const { mode = "email", contact = "" } = location.state || {};
@@ -29,57 +30,68 @@ function Verification() {
         const enteredCode = verificationCode.join("");
       
         try {
-          const response = await api.fetch("/api/verify", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ type: verificationType, contact, otp: enteredCode }),
+          const response = await api.post("/api/verify", {
+            type: verificationType,
+            contact,
+            otp: enteredCode
           });
-          const data = await response.json();
+          const data = response.data;
       
-          if (response.ok) {
+          if (response.status === 200) { // Check for success status code
             showToast("success", "Verification successful");
             // Redirect user to the KYC page after successful verification
             navigate("/login");
           } else {
-            showToast("error", data.message);
+            // Handle error response from server
+            const errorMessage = data.message || "Verification failed";
+            showToast("error", errorMessage);
           }
         } catch (error) {
           showToast("error", "Error during verification");
+          console.error("Error during verification: ", error);
         }
       };
+      
 
-
-    const handleResendCode = async (event) => {
+      const handleResendCode = async (event) => {
         event.preventDefault();
         // Implement the logic to resend the OTP code with a 60s timeout
-
+      
         try {
-            const response = await api.fetch("/api/verification", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ [verificationType === "email" ? "email" : "phoneNumber"]: contact }),
-
-            });
-            const data = await response.json();
-
-            if (response.ok) {
-                showToast("success", "Verification code has been resent");
-                // Add a 60s timeout before allowing another resend
-                setTimeout(() => {
-                    // Enable the resend button
-                }, 60000);
-            } else {
-                showToast("error", data.message);
-            }
+          const response = await api.post("/api/verification", {
+            [verificationType === "email" ? "email" : "phoneNumber"]: contact
+          });
+          const data = response.data;
+      
+          if (response.status === 200) { // Check for success status code
+            showToast("success", "Verification code has been resent");
+            // Add a 60s timeout before allowing another resend
+            setTimeout(() => {
+              // Enable the resend button
+            }, 60000);
+          } else {
+            // Handle error response from server
+            const errorMessage = data.message || "Error resending verification code";
+            showToast("error", errorMessage);
+          }
         } catch (error) {
-            showToast("error", "Error resending verification code");
+          showToast("error", "Error resending verification code");
+          console.error("Error resending verification code: ", error);
         }
-    };
+      };
+      
 
+      useEffect(() => {
+        // If the countdown timer is running, update it every second
+        if (resendTimeout > 0) {
+          const timer = setTimeout(() => {
+            setResendTimeout(resendTimeout - 1);
+          }, 1000);
+          return () => clearTimeout(timer);
+        }
+      }, [resendTimeout]);
+      
+      const countdownText = resendTimeout > 0 ? ` (${resendTimeout}s)` : "";
     return (
 
         <div className="col-lg-6 d-flex justify-content-center align-items-center auth-h100">
@@ -146,14 +158,14 @@ function Verification() {
                             <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100" >Verify my account</button>
                         </form>
                         <a
-                            href="#"
-                            title="#"
-                            className="text-primary text-decoration-underline"
-                            role="button"
-                            onClick={handleResendCode}
-                        >
-                            Resend a new code?
-                        </a>
+    href="#"
+    title="#"
+    className="text-primary text-decoration-underline"
+    role="button"
+    onClick={handleResendCode}
+  >
+    Resend a new code{countdownText}?
+  </a>
                     </div>
                 </div>
             </div>

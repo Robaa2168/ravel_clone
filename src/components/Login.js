@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate,Link } from "react-router-dom";
@@ -21,7 +21,11 @@ function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { login, logout } = useUser(); 
+
+  useEffect(() => {
+    logout();
+  }, [logout]);
 
   const handleLogin = async (event, type) => {
     event.preventDefault();
@@ -32,16 +36,11 @@ function Login() {
         : { phoneNumber: formatPhoneNumber(phoneNumber), password };
   
     try {
-      const response = await api.fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(credentials),
-      });
-      const data = await response.json();
+      const response = await api.post("/api/login", credentials);
+      const data = response.data;
   
-      if (response.ok) {
+      if (response.status === 200) { // Check for success status code
+        logout();
         if (data.isVerified) {
           if (data.hasCompletedKYC) {
             showToast("success", "Logged in successfully");
@@ -50,9 +49,11 @@ function Login() {
               phoneNumber: data.phoneNumber,
               isVerified: data.isVerified,
               userId: data.userId,
-              userInfo: data.userInfo, // Assuming userInfo contains the user's KYC information
-              accounts: data.accounts, // Assuming accounts contains the user's account information
-            });
+              payID:data.payID,
+              userInfo: data.userInfo,
+              accounts: data.accounts,
+            }, data.token); // Pass the token received from the API
+  
             localStorage.setItem("user", JSON.stringify(data)); // Save user data to localStorage
             navigate("/home");
           } else {
@@ -70,12 +71,20 @@ function Login() {
           });
         }
       } else {
-        showToast("error", data.message);
+        // Handle error response from server
+        const errorMessage = data.message || "Login failed";
+        if (response.status === 400 && data.errors) {
+          const errorFields = Object.keys(data.errors).join(", ");
+          showToast("error", `${errorMessage}: ${errorFields}`);
+        } else {
+          showToast("error", errorMessage);
+        }
       }
     } catch (error) {
       showToast("error", "Error on login");
     }
   };
+  
   
   return (
     <div className="body d-flex p-0 p-xl-5">
