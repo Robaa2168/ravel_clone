@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
+      console.log("Token before validation:", parsedUser.token); 
       if (isTokenValid(parsedUser.token)) {
         return parsedUser;
       } else {
@@ -23,6 +24,7 @@ export const UserProvider = ({ children }) => {
   });
 
   const login = (userData) => {
+    console.log("Login function userData:", userData); // Add this line
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
   };

@@ -49,10 +49,11 @@ function Login() {
               phoneNumber: data.phoneNumber,
               isVerified: data.isVerified,
               userId: data.userId,
-              payID:data.payID,
+              payID: data.payID,
               userInfo: data.userInfo,
               accounts: data.accounts,
-            }, data.token); // Pass the token received from the API
+              token: data.token, // Include the token in the userData object
+            });
   
             localStorage.setItem("user", JSON.stringify(data)); // Save user data to localStorage
             navigate("/home");
@@ -81,7 +82,12 @@ function Login() {
         }
       }
     } catch (error) {
-      showToast("error", "Error on login");
+      if (error.response && error.response.data && error.response.data.message) {
+        showToast("error", error.response.data.message);
+      } else {
+        showToast("error", "Error on login");
+        console.error("Error on login: ", error);
+      }
     }
   };
   

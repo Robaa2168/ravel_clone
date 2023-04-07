@@ -47,9 +47,14 @@ function Verification() {
             showToast("error", errorMessage);
           }
         } catch (error) {
-          showToast("error", "Error during verification");
-          console.error("Error during verification: ", error);
-        }
+            if (error.response && error.response.data && error.response.data.message) {
+              showToast("error", error.response.data.message);
+            } else {
+              showToast("error", "Error during verification");
+              console.error("Error during verification: ", error);
+            }
+          }
+          
       };
       
 

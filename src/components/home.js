@@ -8,16 +8,10 @@ const Home = () => {
   const navigate = useNavigate();
 
   const { user } = userContext;
+  console.log('User object in Home component:', user);
 
-  useEffect(() => {
-    if (!userContext || !user) {
-      navigate("/login");
-    }
-  }, [userContext, user, navigate]);
 
-  if (!userContext || !user) {
-    return null;
-  }
+
 
 
   return (

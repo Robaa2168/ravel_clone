@@ -31,7 +31,7 @@ function App() {
         {!excludedRoutes.includes(location.pathname) &&  <Header />}
         <Routes>
   <Route path="/" element={<Login />} />
-  <Route path="/*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+  <Route path="/*" element={<Home />} />
   <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
   <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
   <Route path="/repay" element={<ProtectedRoute><Repay /></ProtectedRoute>} />
