@@ -237,11 +237,11 @@ const Home = () => {
                   <div className="settings border-bottom">
                     <div className="d-flex align-items-start px-2 py-3">
                       <div className="dot-green m-2" />
-                      </div>
+                     
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Google Authenticator</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
-                    
+                        </div>
                     </div>
                   </div>
                 </div>

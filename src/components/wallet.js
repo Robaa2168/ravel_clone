@@ -150,9 +150,9 @@ function Wallet() {
                 <form>
                   <div className="row g-3 mb-3">
                     <div className="col-sm-12">
-                      <label className="form-label">Select currency</label>
+                      <label className="form-label">Enter amount & currency</label>
                       <div className="input-group">
-                        <input type="text" className="form-control" />
+                        <input type="text" placeholder='Amount' className="form-control" />
                         <button
         className="btn btn-outline-secondary dropdown-toggle"
         type="button"
@@ -176,9 +176,14 @@ function Wallet() {
                       </div> 
                     </div>
                     <div className="col-sm-12">
-                      <label className="form-label">Bank/Phone</label>
-                      <input type="text" className="form-control" />
-                    </div>
+  <label className="form-label">Bank/Phone</label>
+  {user && user.userInfo && (
+    <select className="form-control">
+      <option value={user.userInfo.phoneNumber}>{user.userInfo.phoneNumber}</option>
+    </select>
+  )}
+</div>
+
                     <div className="col-sm-12">
                       <label className="form-label">Select Withdraw Network</label>
                       <select className="form-select" aria-label="Default select example">
@@ -190,7 +195,7 @@ function Wallet() {
                       <div className="d-flex justify-content-between flex-wrap">
                         <div>
                           <div className="truncated">Balance</div>
-                          <div className="text-muted truncated">  {selectedAccount.balance.toFixed(2)} {selectedCurrency}</div>
+                          <div className="text-muted truncated">  {selectedAccount?.balance?.toFixed(2)} {selectedCurrency}</div>
                         </div>
                         <div>
                           <div className="truncated">Minimum withdrawal</div>
