@@ -42,22 +42,24 @@ function Login() {
       if (response.status === 200) { // Check for success status code
         logout();
         if (data.isVerified) {
-          if (data.hasCompletedKYC) {
-            showToast("success", "Logged in successfully");
-            login({
-              email: data.email,
-              phoneNumber: data.phoneNumber,
-              isVerified: data.isVerified,
-              userId: data.userId,
-              payID: data.payID,
-              userInfo: data.userInfo,
-              accounts: data.accounts,
-              token: data.token, // Include the token in the userData object
-            });
-  
-            localStorage.setItem("user", JSON.stringify(data)); // Save user data to localStorage
-            navigate("/home");
-          } else {
+            if (data.hasCompletedKYC) {
+              showToast("success", "Logged in successfully");
+              login({
+                email: data.primaryInfo.email,
+                phoneNumber: data.primaryInfo.phoneNumber,
+                isVerified: data.isVerified,
+                userId: data.userId,
+                payID: data.primaryInfo.payID,
+                userInfo: data.userInfo,
+                accounts: data.accounts,
+                token: data.token, 
+                primaryInfo: data.primaryInfo,
+              });
+            
+              localStorage.setItem("user", JSON.stringify(data)); 
+              navigate("/home");
+            } else {
+      
             showToast("warning", "Please complete the KYC process");
             navigate("/KYC", { state: { userId: data.userId } });
           }

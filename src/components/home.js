@@ -1,23 +1,34 @@
-import React, { useEffect } from "react";
-import { useUser } from "./context"; 
-import { Spinner } from "react-bootstrap"; // import Spinner component
-import { useNavigate,Link  } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useUser } from "./context";
+import { Spinner } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
 
 const Home = () => {
-  const userContext = useUser();
   const navigate = useNavigate();
+  const { user } = useUser();
 
-  const { user } = userContext;
-  console.log('User object in Home component:', user);
+  useEffect(() => {
+    console.log("User state changed", user);
+  }, [user]);
 
+  // Your existing useEffect for the login redirect
+  useEffect(() => {
+    console.log("Inside useEffect");
+    console.log(user);
+    if (!user && !localStorage.getItem("user")) {
+      navigate("/login");
+    }
+  }, [navigate, user]);
 
-
-
+  useEffect(() => {
+    console.log("User state changed", user);
+    console.log("Email:", user?.email);
+    console.log("PayID:", user?.payID);
+    console.log("Phone number:", user?.phoneNumber);
+  }, [user]);
 
   return (
-
-    
-    <div className="body d-flex py-3"> 
+    <div className="body d-flex py-3">
     <div className="container-xxl">
       <div className="row g-3 mb-3">
         <div className="col-lg-12">
@@ -28,16 +39,17 @@ const Home = () => {
                   <div className="d-flex">
                     <img className="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile" />
                     <div className="flex-fill ms-3">
-                      <p className="mb-0"><span className="font-weight-bold">{user.userInfo.firstName} {user.userInfo.lastName}</span></p>
-                      <small className>{user.userInfo.email}</small>
+                      <p className="mb-0"><span className="font-weight-bold">{user?.userInfo?.firstName} {user?.userInfo?.lastName}
+</span></p>
+                      <small className>{user?.userInfo?.email}</small>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-6 col-lg-6 col-xl-3">
                   <div className="d-flex flex-column">
-                    <span className="text-muted mb-1">Pay ID:{user.payID}</span>
+                    <span className="text-muted mb-1">Pay ID:{user?.userInfo?.payID}</span>
                     <span className="small text-muted flex-fill text-truncate">
-  Last login time: {new Date(user.primaryInfo.lastLogin).toLocaleString()}
+  Last login time: {new Date(user?.primaryInfo?.lastLogin).toLocaleString()}
 </span>
 
                   </div>
@@ -48,7 +60,7 @@ const Home = () => {
                 </div>
                 <div className="col-md-6 col-lg-6 col-xl-4">
                   <a title="invite" className="btn btn-primary text-dark mb-1">25% commission:Invite friends now!</a>
-                  <a title="invite" className="d-block"><i class="fas fa-share-alt  m-2"></i>{user.primaryInfo.referralId}</a>
+                  <a title="invite" className="d-block"><i class="fas fa-share-alt  m-2"></i>{user?.primaryInfo?.referralId}</a>
                 </div>
               </div>
             </div>
@@ -67,7 +79,7 @@ const Home = () => {
                     <span className="small text-muted px-2">$0</span>
                   </div>
                   <div className="price-report">
-                    <span className="small text-success"> 0.00% <i className="fa fa-level-down" /></span>
+                    <span className="small text-success"> 0.00% </span>
                     <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
                   </div>
                 </div>
@@ -86,7 +98,7 @@ const Home = () => {
                     <span className="small text-muted px-2">$0</span>
                   </div>
                   <div className="price-report">
-                    <span className="small text-success">0.00% <i className="fa fa-level-down" /></span>
+                    <span className="small text-success">0.00% </span>
                     <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
                   </div>
                 </div>
@@ -105,7 +117,7 @@ const Home = () => {
                     <span className="small text-muted px-2">$0</span>
                   </div>
                   <div className="price-report">
-                    <span className="small text-success">+ 0.00% <i className="fa fa-level-up" /></span>
+                    <span className="small text-success">0.00% </span>
                     <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
                   </div>
                 </div>
@@ -124,7 +136,7 @@ const Home = () => {
                     <span className="small text-muted px-2">$0</span>
                   </div>
                   <div className="price-report">
-                    <span className="small text-success"> 0.00% <i className="fa fa-level-down" /></span>
+                    <span className="small text-success"> 0.00% </span>
                     <span className="small text-muted px-2">Volume:0.00 <span className="badge bg-careys-pink mb-1">Inactive</span></span>
                   </div>
                 </div>
@@ -135,29 +147,30 @@ const Home = () => {
       </div>{/* Row End */}
       <div className="row g-3 mb-3 row-deck">
       <div className="col-xl-7">
-          <div className="card">
-            <div className="card-header py-3 d-flex justify-content-between">
-              <h6 className="mb-0 fw-bold">Recent Transactions</h6> 
-            </div>
-            <div className="card-body">
-              <table id="ordertabthree" className="priceTable table table-hover custom-table-2 table-bordered align-middle mb-0" style={{width: '100%'}}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Pair</th>
-                    <th>Side</th>
-                    <th>Price</th>
-                    <th>Executed</th>
-                    <th>Fee</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 
-                </tbody>
-              </table>
-            </div>
-          </div>
+      <div className="card">
+  <div className="card-header py-3 d-flex justify-content-between">
+    <h6 className="mb-0 fw-bold">Recent Transactions</h6> 
+  </div>
+  <div className="card-body" style={{overflowX: 'auto'}}>
+    <table id="ordertabthree" className="priceTable table table-hover custom-table-2 table-bordered align-middle mb-0" style={{maxWidth: '100%'}}>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Pair</th>
+          <th>Side</th>
+          <th>Price</th>
+          <th>Executed</th>
+          <th>Fee</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+       
+      </tbody>
+    </table>
+  </div>
+</div>
+
         </div>
        
         <div className="col-xl-12 col-xxl-5">
@@ -238,7 +251,7 @@ const Home = () => {
                       <div className="dot-green mx-2 my-2" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Phone Number</span>
-                        <span>{user.userInfo.phoneNumber}</span>
+                        <span>{user?.userInfo?.phoneNumber}</span>
                       </div>
                     </div>
                   </div>
@@ -249,7 +262,7 @@ const Home = () => {
                       <div className="dot-red mx-2 my-2" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Email Address </span>
-                        <span>{user.userInfo.email}</span>
+                        <span>{user?.userInfo?.email}</span>
                       </div>
                     </div>
                   </div>

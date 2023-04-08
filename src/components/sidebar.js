@@ -1,7 +1,20 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useUser } from "./context";
+import { useNavigate, Link } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const { logout } = useUser();
+  
+  const handleLogout = () => {
+    logout();
+    setTimeout(() => {
+      navigate("/login");
+    }, 50);
+  };
+  
+
+
     return (
 
         <div className="sidebar py-2 py-md-2 me-0 border-end">
@@ -85,7 +98,7 @@ const Sidebar = () => {
                     </li>
                     
                     <li>
-                        <Link to="/signout" title="tickets" className="m-link">
+                        <Link  onClick={handleLogout} title="tickets" className="m-link">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" className="me-3">
                               <rect xmlns="http://www.w3.org/2000/svg" className="st0" width={24} height={24} style={{fill: 'none'}} fill="none" />
                               <path xmlns="http://www.w3.org/2000/svg" d="M20,4c0-1.104-0.896-2-2-2H6C4.896,2,4,2.896,4,4v16c0,1.104,0.896,2,2,2h12  c1.104,0,2-0.896,2-2V4z" style={{fill: 'var(--primary-color)'}} data-st="fill:var(--chart-color4);" />

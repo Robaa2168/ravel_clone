@@ -1,60 +1,19 @@
 import React from 'react';
 import './App.css';
-import { UserProvider } from "./components/context"; 
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { createBrowserHistory } from 'history';
-import Header from './components/header';
-import Sidebar from './components/sidebar';
-import Home from './components/home';
-import Footer from './components/footer';
-import Security from './components/security';
-import Loan from './components/cryptoloan';
-import Repay from './components/repay';
-import Ticket from './components/ticket';
-import Wallet from './components/wallet';
-import Login from './components/Login';
-import Signup from './components/signup';
-import Application from './components/application';
-import Verification from './components/verify';
-import Accounts from './components/accounts';
-import ProtectedRoute from './components/ProtectedRoute';
+import { UserProvider } from "./components/context";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AppLayout from './components/AppLayout'; // Import the AppLayout component
 
 function App() {
-  const location = useLocation();
-  const excludedRoutes = ["/login", "/signup", "/KYC", "/verify"];
-  
   return (
     <UserProvider>
-      <div id="cryptoon-layout" className="theme-tradewind">
-        {!excludedRoutes.includes(location.pathname) && <Sidebar />}
-        <div className="main px-lg-4 px-md-4">
-        {!excludedRoutes.includes(location.pathname) &&  <Header />}
+      <BrowserRouter>
         <Routes>
-  <Route path="/" element={<Login />} />
-  <Route path="/*" element={<Home />} />
-  <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
-  <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
-  <Route path="/repay" element={<ProtectedRoute><Repay /></ProtectedRoute>} />
-  <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
-  <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
-  <Route path="/login" element={<Login />} />
-  <Route path="/signup" element={<Signup />} />
-  <Route path="/KYC" element={<ProtectedRoute><Application /></ProtectedRoute>} />
-  <Route path="/verify" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
-  <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
-</Routes>
-        </div>
-      </div>
+          <Route path="*" element={<AppLayout />} />
+        </Routes>
+      </BrowserRouter>
     </UserProvider>
   );
 }
 
-function AppWrapper() {
-  return (
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-}
-
-export default AppWrapper;
+export default App;

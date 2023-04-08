@@ -1,6 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+import { useUser } from "./context";
 
 function Wallet() {
+  const { user } = useUser();
+  const accounts = user.accounts;
+
+  const getAccountByCurrency = (currency) => {
+    return accounts.find((account) => account.currency === currency);
+  };
+
+  const usdAccount = getAccountByCurrency('USD');
+  const eurAccount = getAccountByCurrency('EUR');
+  const audAccount = getAccountByCurrency('AUD');
+  const gbpAccount = getAccountByCurrency('GBP');
+  const cadAccount = getAccountByCurrency('KES');
+
+  const [conversionRates, setConversionRates] = useState({});
+
+  useEffect(() => {
+    const fetchConversionRates = async () => {
+      try {
+        const response = await fetch('https://www.freeforexapi.com/api/live?pairs=USDEUR,USDAUD,USDGBP,USDKES');
+        const data = await response.json();
+        const rates = {
+          EUR: 1 / data.rates.USDEUR.rate,
+          AUD: 1 / data.rates.USDAUD.rate,
+          GBP: 1 / data.rates.USDGBP.rate,
+          KES: 1 / data.rates.USDKES.rate,
+        };
+        setConversionRates(rates);
+        console.log(rates)
+        console.log(data)
+      } catch (error) {
+        console.error('Error fetching conversion rates:', error);
+      }
+    };
+
+    fetchConversionRates();
+  }, []);
+
+  const convertToUSD = (currency, amount) => {
+    return amount * (conversionRates[currency] || 1);
+  };
+
   return (
     <div>
     {/* Body: Titel Header */}
@@ -18,82 +60,82 @@ function Wallet() {
               <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
                 <h6 className="mb-0 fw-bold">Balance Details</h6> 
                 <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                  <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Spot" role="tab">USD</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#P2P" role="tab">EUR</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#Margin" role="tab">AUD</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#Future" role="tab">GBP</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#Earn" role="tab">CAD</a></li>
+                  <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#USD" role="tab">USD</a></li>
+                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#EUR" role="tab">EUR</a></li>
+                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#AUD" role="tab">AUD</a></li>
+                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#GBP" role="tab">GBP</a></li>
+                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#CAD" role="tab">CAD</a></li>
                 </ul>
               </div>
               <div className="card-body">
                 <div className="tab-content">
-                  <div className="tab-pane fade show active" id="Spot">
+                  <div className="tab-pane fade show active" id="USD">
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Account balance:</div>
-                        <h4>0.00 USD≈$0</h4>
+                        <h4>{usdAccount.balance.toFixed(2)} USD≈${convertToUSD('USD', usdAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
-                        <h5>0.00 USD</h5>
+                        <h5>{usdAccount.balance.toFixed(2)} USD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>0.00 USD</h5>
+                        <h5>{usdAccount.balance.toFixed(2)} USD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>$0.00</h5>
+                        <h5>${usdAccount.balance.toFixed(2)}</h5>
                       </div>
                    
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="P2P">
+                  <div className="tab-pane fade" id="EUR">
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Account balance:</div>
-                        <h4>0.00 EUR≈$0</h4>
+                        <h4>{eurAccount.balance.toFixed(2)} EUR≈${convertToUSD('EUR', eurAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
-                        <h5>0.00 EUR</h5>
+                        <h5>{eurAccount.balance.toFixed(2)}  EUR</h5>
                         <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>0.00 EUR</h5>
+                        <h5>{eurAccount.balance.toFixed(2)}  EUR</h5>
                         <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>$0.00</h5>
+                        <h5>${convertToUSD('EUR', eurAccount.balance).toFixed(2)}</h5>
                       </div>
                     
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="Margin">
+                  <div className="tab-pane fade" id="AUD">
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Total AUD balance:</div>
-                        <h4>0.00 AUD≈$0</h4>
+                        <h4>{audAccount.balance.toFixed(2)} AUD≈${convertToUSD('AUD', audAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month</div>
-                        <h5>0.00 AUD</h5>
+                        <h5>{audAccount.balance.toFixed(2)} AUD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>0.00 AUD</h5>
+                        <h5>{audAccount.balance.toFixed(2)} AUD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>0.00 AUD</h5>
+                        <h5>${convertToUSD('AUD', audAccount.balance).toFixed(2)}</h5>
                       </div>
                     
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="Future">
+                  <div className="tab-pane fade" id="GBP">
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Total GBP Balance:</div>
-                        <h4>0.00 GBP≈$0 </h4>
+                        <h4>{gbpAccount.balance.toFixed(2)} GBP≈${convertToUSD('GBP', gbpAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Total GBP Balance:</div>
-                        <h5>0.00 GBP</h5>
+                        <h5>{gbpAccount.balance.toFixed(2)} GBP</h5>
                         <div className="mt-3 text-uppercase text-muted small">Total Unrealized PNL:</div>
-                        <h5>0.00 GBP</h5>
+                        <h5>${convertToUSD('GBP', gbpAccount.balance).toFixed(2)}</h5>
                       </div>
                      
                     </div>
                   </div>
-                  <div className="tab-pane fade" id="Earn">
+                  <div className="tab-pane fade" id="CAD">
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Total CAD Balance:</div>
-                        <h4>0.00 CAD≈$0</h4>
+                        <h4>{cadAccount.balance.toFixed(2)} CAD≈${convertToUSD('KES', cadAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Locked:</div>
-                        <h5>0.00 CAD</h5>
+                        <h5>{cadAccount.balance.toFixed(2)} CAD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Flexible:</div>
-                        <h5>0.00 CAD</h5>
+                        <h5>${convertToUSD('CAD', cadAccount.balance).toFixed(2)}</h5>
                       </div>
                     
                     </div>

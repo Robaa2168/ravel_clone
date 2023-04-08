@@ -1,9 +1,8 @@
 import { createContext, useContext, useState } from "react";
-import { isTokenValid } from "./jwtHelper"; // Import the isTokenValid function
+import { isTokenValid } from "./jwtHelper";
 
 
 const UserContext = createContext();
-
 export const useUser = () => {
   return useContext(UserContext);
 };

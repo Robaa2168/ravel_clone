@@ -4,8 +4,16 @@ import { Spinner } from "react-bootstrap"; // import Spinner component
 import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
-    const userContext = useUser();
-    const { user } = userContext;
+    const navigate = useNavigate();
+    const { user, logout } = useUser();
+    const handleLogout = () => {
+        logout();
+        setTimeout(() => {
+          navigate("/login");
+        }, 50);
+      };
+      
+      
     return (
         
             <div className="header">
@@ -61,8 +69,8 @@ const Header = () => {
                           <div className="d-flex py-1">
                             <img className="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile" />
                             <div className="flex-fill ms-3">
-                              <p className="mb-0"><span className="font-weight-bold">{user.userInfo.firstName}</span></p>
-                              <small className>{user.userInfo.email}</small>
+                              <p className="mb-0"><span className="font-weight-bold">{user?.userInfo?.firstName}</span></p>
+                              <small className>{user?.userInfo?.email}</small>
                             </div>
                           </div>
                           <div><hr className="dropdown-divider border-dark" /></div>
@@ -91,7 +99,7 @@ const Header = () => {
                             </svg>Accounts
                             </Link>
                     
-                          <a href="ui-elements/auth-signin.html" className="list-group-item list-group-item-action border-0 ">
+                          <a onClick={handleLogout} className="list-group-item list-group-item-action border-0 ">
                             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24" className="me-3">
                               <rect xmlns="http://www.w3.org/2000/svg" className="st0" width={24} height={24} style={{fill: 'none'}} fill="none" />
                               <path xmlns="http://www.w3.org/2000/svg" d="M20,4c0-1.104-0.896-2-2-2H6C4.896,2,4,2.896,4,4v16c0,1.104,0.896,2,2,2h12  c1.104,0,2-0.896,2-2V4z" style={{fill: 'var(--primary-color)'}} data-st="fill:var(--chart-color4);" />
