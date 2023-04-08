@@ -1,19 +1,1 @@
-.linear-connector {
-  position: relative;
-  display: inline-block;
-  margin-right: 30px;
-}
 
-.linear-connector::after {
-  content: '';
-  position: absolute;
-  width: 30px;
-  height: 2px;
-  background-color: #000;
-  top: 50%;
-  left: 100%;
-}
-
-.linear-connector:last-child::after {
-  display: none;
-}
