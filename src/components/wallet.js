@@ -20,7 +20,7 @@ function Wallet() {
   useEffect(() => {
     const fetchConversionRates = async () => {
       try {
-        const response = await fetch('/forex');
+        const response = await fetch('/api/forex');
         const data = await response.json();
         if (data && data.rates) {
           setConversionRates(data.rates);
