@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { useUser } from "./context";
+import classNames from "classnames";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen }) => {
     const navigate = useNavigate();
     const { user, logout } = useUser();
     const handleLogout = () => {
@@ -13,8 +14,16 @@ const Sidebar = () => {
         navigate("/login");
       }, 50);
     };
+
+    const sidebarStyle = {
+        left: isOpen ? '0' : '-100%',
+        position: 'fixed',
+        transition: 'left 0.3s ease-in-out',
+      };
+      
+
     return (
-        <div className="sidebar">
+        <div className="sidebar" style={sidebarStyle}>
           <div className="logo">
             <a href="/home" className="brand-icon">
               <span className="logo-text">RavelMobile</span>

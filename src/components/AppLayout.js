@@ -18,6 +18,7 @@ import { useUser } from './context';
 import Header from './header';
 
 const AppLayout = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const excludedRoutes = ['/login', '/signup', '/KYC', '/verify'];
   const { user } = useUser();
@@ -31,11 +32,18 @@ const AppLayout = () => {
     return null; // Or replace with a loading component if desired
   }
 
+
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div id="cryptoon-layout" className="theme-tradewind">
-      {!excludedRoutes.includes(location.pathname) && <Sidebar />}
+  
+       <div id="cryptoon-layout" className="theme-tradewind">
+      {!excludedRoutes.includes(location.pathname) && <Sidebar isOpen={isSidebarOpen} />}
       <div className="main px-lg-4 px-md-4">
-      {!excludedRoutes.includes(location.pathname) && <Header />}
+      {!excludedRoutes.includes(location.pathname) && <Header onToggleSidebar={toggleSidebar} />}
         <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />

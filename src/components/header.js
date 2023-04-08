@@ -3,7 +3,7 @@ import { useUser } from "./context";
 import { Spinner } from "react-bootstrap"; // import Spinner component
 import { useNavigate, Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const { user, logout } = useUser();
   const handleLogout = () => {
@@ -111,11 +111,12 @@ const Header = () => {
             </div>
 
           </div>
+          
           {/* menu toggler */}
-          <button className="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
+          <button  onClick={onToggleSidebar}  className="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
             <span className="fa fa-bars" />
           </button>
-          {/* main menu Search*/}
+      
           <div className="order-0 col-lg-4 col-md-4 col-sm-12 col-12 mb-3 mb-md-0 d-flex align-items-center">
             <a className="menu-toggle-option me-3 text-primary d-flex align-items-center" href="#" title="Menu Option">
 
