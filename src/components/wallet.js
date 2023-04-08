@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useUser } from "./context";
 
 function Wallet() {
@@ -13,25 +13,29 @@ function Wallet() {
   const eurAccount = getAccountByCurrency('EUR');
   const audAccount = getAccountByCurrency('AUD');
   const gbpAccount = getAccountByCurrency('GBP');
-  const cadAccount = getAccountByCurrency('KES');
+  const kesAccount = getAccountByCurrency('KES');
 
-  const [conversionRates, setConversionRates] = useState({});
+  // Hardcoded conversion rates
+  const conversionRates = {
+    EUR: 1.09019,
+    GBP: 1.24180,
+    CAD: 1.351745,
+    KES: 1 / 131.08,
+  };
 
-  useEffect(() => {
-    const fetchConversionRates = async () => {
-      try {
-        const response = await fetch('/api/forex');
-        const data = await response.json();
-        if (data && data.rates) {
-          setConversionRates(data.rates);
-        }
-      } catch (error) {
-        console.error('Error fetching conversion rates:', error);
-      }
-    };
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const selectedAccount = getAccountByCurrency(selectedCurrency);
 
-    fetchConversionRates();
-  }, []);
+  // Adjust these values as needed
+  const minimumWithdrawal = 10;
+  const networkFeeMin = 0.00000;
+  const networkFeeMax = 0.00000;
+  const dailyLimit = 5000;
+
+  const handleCurrencySelection = (currency) => {
+    
+    setSelectedCurrency(currency);
+  };
 
   const convertToUSD = (currency, amount) => {
     return amount * (conversionRates[currency] || 1);
@@ -39,7 +43,6 @@ function Wallet() {
 
   return (
     <div>
-    {/* Body: Titel Header */}
     <div className="body-header border-bottom d-flex py-3">
       <div className="container-xxl">
        
@@ -125,11 +128,11 @@ function Wallet() {
                     <div className="row g-3">
                       <div className="col-lg-6">
                         <div>Total CAD Balance:</div>
-                        <h4>{cadAccount.balance.toFixed(2)} CAD≈${convertToUSD('KES', cadAccount.balance).toFixed(2)}</h4>
+                        <h4>{kesAccount.balance.toFixed(2)} CAD≈${convertToUSD('KES', kesAccount.balance).toFixed(2)}</h4>
                         <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Locked:</div>
-                        <h5>{cadAccount.balance.toFixed(2)} CAD</h5>
+                        <h5>0.00 CAD</h5>
                         <div className="mt-3 text-uppercase text-muted small">Flexible:</div>
-                        <h5>${convertToUSD('CAD', cadAccount.balance).toFixed(2)}</h5>
+                        <h5>${convertToUSD('KES', kesAccount.balance).toFixed(2)}</h5>
                       </div>
                     
                     </div>
@@ -150,15 +153,26 @@ function Wallet() {
                       <label className="form-label">Select currency</label>
                       <div className="input-group">
                         <input type="text" className="form-control" />
-                        <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">USD</button>
-                        <ul className="dropdown-menu dropdown-menu-end">
-                          <li><a className="dropdown-item" href="#">USD</a></li>
-                          <li><a className="dropdown-item" href="#">GBP</a></li>
-                          <li><a className="dropdown-item" href="#">AUD</a></li>
-                          <li><a className="dropdown-item" href="#">CAD</a></li>
-                          <li><a className="dropdown-item" href="#">EUR</a></li>
-                          <li><a className="dropdown-item" href="#">JPY</a></li>
-                        </ul>
+                        <button
+        className="btn btn-outline-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        {selectedCurrency}
+      </button>
+      <ul className="dropdown-menu dropdown-menu-end">
+        {['USD', 'GBP', 'AUD', 'CAD', 'EUR', 'KES'].map((currency) => (
+          <li key={currency}>
+            <button
+              className="dropdown-item"
+              onClick={() => handleCurrencySelection(currency)}
+            >
+              {currency}
+            </button>
+          </li>
+        ))}
+      </ul>
                       </div> 
                     </div>
                     <div className="col-sm-12">
@@ -176,11 +190,11 @@ function Wallet() {
                       <div className="d-flex justify-content-between flex-wrap">
                         <div>
                           <div className="truncated">Balance</div>
-                          <div className="text-muted truncated"> 0 USD</div>
+                          <div className="text-muted truncated">  {selectedAccount.balance.toFixed(2)} {selectedCurrency}</div>
                         </div>
                         <div>
                           <div className="truncated">Minimum withdrawal</div>
-                          <div className="text-muted  truncated"> 10 USD </div>
+                          <div className="text-muted  truncated">{minimumWithdrawal.toFixed(2)} {selectedCurrency}{' '}</div>
                         </div>
                       </div>
                     </div>
@@ -188,11 +202,11 @@ function Wallet() {
                       <div className="d-flex justify-content-between flex-wrap">
                         <div>
                           <div className="truncated">Network fee</div>
-                          <div className="text-muted truncated"> 0.00000 ~ 0.00000 USD</div>
+                          <div className="text-muted truncated"> {networkFeeMin.toFixed(2)} ~ {networkFeeMax.toFixed(2)} {selectedCurrency}</div>
                         </div>
                         <div>
                           <div className="truncated">24h remaining limit</div>
-                          <div className="text-muted  truncated"> 5000 USD </div>
+                          <div className="text-muted  truncated"> {dailyLimit.toFixed(2)} {selectedCurrency}{' '}</div>
                         </div>
                       </div>
                     </div>

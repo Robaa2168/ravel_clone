@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "./context";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
+import '../App.css';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -174,13 +175,11 @@ const Home = () => {
         </div>
        
         <div className="col-xl-12 col-xxl-5">
-          <div className="card">
-            <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
-            </div>
-            <div className="card-body">
-              <div className="row row-cols-2 g-0">
-                <div className="col">
-                  <div className="settings border-bottom border-end">
+        <div className="card card-custom">
+  <div className="card-body">
+    <div className="row row-cols-2 g-0">
+      <div className="col">
+        <div className="settings border-bottom border-end settings-custom">
                     <div className="d-flex align-items-start px-2 py-3">
                       <div className="dot-green mx-2 my-2" />
                       <div className="d-flex flex-column">
@@ -193,7 +192,7 @@ const Home = () => {
                 <div className="col">
                   <div className="settings border-bottom">
                     <div className="d-flex align-items-start px-2 py-3">
-                      <div className="dot-red mx-2 my-2" />
+                      <div className="dot-red  m-1" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Identity Verification</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">verify</Link>
@@ -204,7 +203,7 @@ const Home = () => {
                 <div className="col">
                   <div className="settings border-bottom border-end">
                     <div className="d-flex align-items-start px-2 py-3">
-                      <div className="dot-green mx-2 my-2" />
+                      <div className="dot-green  m-1" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Anti-phishing Code</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
@@ -215,7 +214,7 @@ const Home = () => {
                 <div className="col">
                   <div className="settings border-bottom">
                     <div className="d-flex align-items-start px-2 py-3">
-                      <div className="dot-green mx-2 my-2" />
+                      <div className="dot-green m-1" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Withdrawal Whitelist</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">Turn on</Link>
@@ -226,7 +225,7 @@ const Home = () => {
                 <div className="col">
                   <div className="settings border-bottom border-end">
                     <div className="d-flex align-items-start px-2 py-3">
-                      <div className="dot-green mx-2 my-2" />
+                      <div className="dot-green m-1" />
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">settings Key</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
@@ -237,11 +236,12 @@ const Home = () => {
                 <div className="col">
                   <div className="settings border-bottom">
                     <div className="d-flex align-items-start px-2 py-3">
-                      <div className="dot-green mx-2 my-2" />
+                      <div className="dot-green m-2" />
+                      </div>
                       <div className="d-flex flex-column">
                         <span className="flex-fill text-truncate">Google Authenticator</span>
                         <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
-                      </div>
+                    
                     </div>
                   </div>
                 </div>

@@ -1,1 +1,11 @@
+.card {
+  min-width: 100%;
+  word-wrap: break-word;
+}
 
+
+.settings,
+.settings div {
+  max-width: 100%;
+  word-wrap: break-word;
+}
