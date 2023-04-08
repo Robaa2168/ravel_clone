@@ -20,17 +20,11 @@ function Wallet() {
   useEffect(() => {
     const fetchConversionRates = async () => {
       try {
-        const response = await fetch('https://www.freeforexapi.com/api/live?pairs=USDEUR,USDAUD,USDGBP,USDKES');
+        const response = await fetch('/forex');
         const data = await response.json();
-        const rates = {
-          EUR: 1 / data.rates.USDEUR.rate,
-          AUD: 1 / data.rates.USDAUD.rate,
-          GBP: 1 / data.rates.USDGBP.rate,
-          KES: 1 / data.rates.USDKES.rate,
-        };
-        setConversionRates(rates);
-        console.log(rates)
-        console.log(data)
+        if (data && data.rates) {
+          setConversionRates(data.rates);
+        }
       } catch (error) {
         console.error('Error fetching conversion rates:', error);
       }
