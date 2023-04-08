@@ -29,6 +29,8 @@ function Wallet() {
           KES: 1 / data.rates.USDKES.rate,
         };
         setConversionRates(rates);
+        console.log(rates)
+        console.log(data)
       } catch (error) {
         console.error('Error fetching conversion rates:', error);
       }
