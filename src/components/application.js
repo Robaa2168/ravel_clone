@@ -6,6 +6,7 @@ import api from '../api';
 import { showToast } from '../utils/showToast';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Confetti from "react-confetti";
+import CheckmarkAnimation from './CheckmarkAnimation';
 
 function Application() {
   const [showConfetti, setShowConfetti] = useState(false);
@@ -308,17 +309,13 @@ function Application() {
                       )}
                      {step === 3 && formSubmitted && (
   <div className="step-tab-panel">
-    <div className="d-flex justify-content-center flex-column align-items-center text-center">
-      <i className="icofont-checked fs-1 my-2" />
-      <h1 className="mt-4 ">
-        
-        Success!
-      </h1>
-      <p>
-        Your Information has been Submitted.
-      </p>
-    </div>
+  <div className="d-flex justify-content-center flex-column align-items-center text-center">
+    <CheckmarkAnimation />
+    <h1 className="mt-4 text-center">Success!</h1>
+    <p>Your Information has been Submitted.</p>
   </div>
+</div>
+
 )}
 </div>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useUser } from "./context";
 import Confetti from 'react-dom-confetti';
+import CheckmarkAnimation from './CheckmarkAnimation';
 
 function Accounts() {
   const [confetti, setConfetti] = useState(false);
@@ -119,6 +120,8 @@ function Accounts() {
   <div className="card-body">
   <div style={{ position: 'relative', height: '100%', width: '100%' }}>
       <Confetti active={confetti} config={config} />
+
+      <CheckmarkAnimation />
     </div>
     <div className="table-responsive">
       <table id="myProjectTable" className="priceTable table table-hover custom-table table-bordered align-middle mb-0">

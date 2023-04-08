@@ -1,0 +1,55 @@
+/* header.css */
+.binance-header {
+    background-color: #12161c;
+    border-bottom: 1px solid #2d3035;
+  }
+  
+  .binance-header a,
+  .binance-header a:hover {
+    text-decoration: none;
+    color: #f0b90b;
+  }
+  
+  .binance-header .nav-link {
+    font-weight: 600;
+  }
+  
+  .binance-header .avatar {
+    border: 2px solid #f0b90b;
+  }
+  
+  .binance-header .dropdown-menu {
+    background-color: #1f2833;
+    border: 1px solid #2d3035;
+  }
+  
+  .binance-header .dropdown-menu .card-header,
+  .binance-header .dropdown-menu .card-footer {
+    background-color: #1f2833;
+    color: #f0b90b;
+    font-weight: 600;
+  }
+  
+  .binance-header .dropdown-menu .card-body {
+    background-color: #1f2833;
+    color: #cfd3da;
+  }
+  
+  .binance-header .pulse-ring {
+    border-color: #f0b90b;
+  }
+  
+  .binance-header .list-group-item,
+  .binance-header .list-group-item:hover {
+    background-color: transparent;
+    color: #cfd3da;
+  }
+  
+  .binance-header .list-group-item:hover {
+    color: #f0b90b;
+  }
+  
+  .binance-header .svg-inline--fa {
+    color: #f0b90b;
+  }
+  
