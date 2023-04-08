@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom';
 import api from '../api';
 import { showToast } from '../utils/showToast';
 import { useLocation, useNavigate } from 'react-router-dom';
+import Confetti from "react-confetti";
 
 function Application() {
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
   
@@ -82,6 +85,7 @@ function Application() {
   const handleNextStep = async () => {
     if (canProceedToNextStep()) {
       if (step === 2) {
+        setLoading(true);
         try {
           const response = await api.post("/api/KYC", {
             userId,
@@ -90,10 +94,11 @@ function Application() {
   
           const data = response.data;
   
-          if (response.status === 200) { // Check for success status code
+          if (response.status === 200 || response.status === 201) {
             setFormSubmitted(true);
             showToast("success", "Form submitted successfully.");
-            setStep(step + 1); // Move this line here to change the step only if the submission is successful
+            setStep(step + 1);
+            setShowConfetti(true);
           } else {
             // Handle error response from server
             const errorMessage = data.message || "Form submission failed";
@@ -105,8 +110,14 @@ function Application() {
             }
           }
         } catch (error) {
-          showToast("error", "Error during form submission.");
-          console.error("Error during form submission: ", error);
+          if (error.response && error.response.data && error.response.data.message) {
+            showToast("error", error.response.data.message);
+          } else {
+            showToast("error", "Error on form submission");
+            console.error("Error on form submission ", error);
+          }
+        } finally {
+          setLoading(false); // Set loading state to false
         }
       } else {
         setStep(step + 1);
@@ -120,12 +131,14 @@ function Application() {
   return (
     <div className="body d-flex p-0 p-xl-5">
     <div className="container-xxl">
+    <ToastContainer />
+            {showConfetti && <Confetti />}
       <div className="row g-3">
         <div className="col-lg-12 d-flex justify-content-center align-items-center auth-h100">
           <div className="d-flex flex-column">
   
             <div className="card">
-            <ToastContainer />
+          
               <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
                
               </div>
@@ -298,6 +311,7 @@ function Application() {
     <div className="d-flex justify-content-center flex-column align-items-center text-center">
       <i className="icofont-checked fs-1 my-2" />
       <h1 className="mt-4 ">
+        
         Success!
       </h1>
       <p>

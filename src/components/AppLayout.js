@@ -45,8 +45,8 @@ const AppLayout = () => {
           <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/KYC" element={<ProtectedRoute><Application /></ProtectedRoute>} />
-          <Route path="/verify" element={<ProtectedRoute><Verification /></ProtectedRoute>} />
+          <Route path="/KYC" element={<Application />} />
+          <Route path="/verify" element={<Verification />} />
           <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         </Routes>
       </div>

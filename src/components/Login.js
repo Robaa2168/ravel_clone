@@ -17,6 +17,7 @@ const formatPhoneNumber = (phoneNumber) => {
 };
 
 function Login() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -34,7 +35,7 @@ function Login() {
       type === "email"
         ? { email, password }
         : { phoneNumber: formatPhoneNumber(phoneNumber), password };
-  
+        setLoading(true);
     try {
       const response = await api.post("/api/login", credentials);
       const data = response.data;
@@ -91,6 +92,9 @@ function Login() {
         console.error("Error on login: ", error);
       }
     }
+    finally {
+      setLoading(false); // Set loading state to false
+    }
   };
   
   
@@ -111,7 +115,7 @@ function Login() {
                 <div className="tab-pane fade show active" id="Mobile">
                   <div className="card">
                     <div className="card-body p-4">
-                    <form>
+                    <form onSubmit={(event) => handleLogin(event, "phone")}>
                         <label className="form-label fs-6">Mobile</label>
                         <div className="input-group mb-3">
                           <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
@@ -121,6 +125,7 @@ function Login() {
                             className="form-control"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
+                            required
                           />
                         </div>
                         <div className="mb-3">
@@ -130,15 +135,24 @@ function Login() {
                             className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                           />
                         </div>
                         <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          onClick={(event) => handleLogin(event, "phone")}
-                        >
-                          Log in
-                        </button></form>
+    type="submit"
+    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+    disabled={loading}
+  >
+    {loading ? (
+      <div className="spinner-border text-light" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    ) : (
+      "Log in"
+    )}
+  </button>
+
+</form>
                      
                     </div>
                   </div>
@@ -146,7 +160,7 @@ function Login() {
                 <div className="tab-pane fade" id="Email">
                   <div className="card">
                     <div className="card-body p-4">
-                    <form>
+                    <form onSubmit={(event) => handleLogin(event, "email")}>
                         <div className="mb-3">
                           <label className="form-label fs-6">Email address</label>
                           <input
@@ -154,6 +168,7 @@ function Login() {
                             className="form-control"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                           />
                         </div>
                         <div className="mb-3">
@@ -163,15 +178,23 @@ function Login() {
                             className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            
                           />
                         </div>
                         <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          onClick={(event) => handleLogin(event, "email")}
-                        >
-                          Log in
-                        </button></form>
+    type="submit"
+    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+    disabled={loading}
+  >
+    {loading ? (
+      <div className="spinner-border text-light" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    ) : (
+      "Log in"
+    )}
+  </button>
+</form>
                      
 
 

@@ -8,6 +8,7 @@ import api from '../api';
 
 
 function Signup() {
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("Mobile");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,7 +54,7 @@ function Signup() {
   const formData = activeTab === "Email"
     ? { email, password, referralId }
     : { phoneNumber: formattedPhoneNumber, password, referralId };
-
+    setLoading(true);
   try {
     const response = await api.post(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`, formData);
     const data = response.data;
@@ -78,8 +79,7 @@ function Signup() {
       } catch (error) {
         showToast('error', "Error sending verification code.");
       }
-
-      // Redirect to the verify page
+      
       navigate("/verify", {
         state: {
           mode: activeTab.toLowerCase(),
@@ -97,8 +97,15 @@ function Signup() {
       }
     }
   } catch (error) {
-    showToast('error', "Error during registration.");
-    console.error("Error during registration: ", error);
+    if (error.response && error.response.data && error.response.data.message) {
+      showToast("error", error.response.data.message);
+    } else {
+      showToast("error", "Error on Registration");
+      console.error("Error on Registration: ", error);
+    }
+  }
+  finally {
+    setLoading(false); // Set loading state to false
   }
 };
 
@@ -148,7 +155,22 @@ function Signup() {
                   <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
                 </div>
               )}
-              <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+             
+              <button
+    type="submit"
+    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+    disabled={loading}
+  >
+    {loading ? (
+      <div className="spinner-border text-light" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    ) : (
+      "Create Account"
+    )}
+  </button>
+
+            
             </form>
             <div className="mt-2">
               <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>
@@ -174,7 +196,21 @@ function Signup() {
               <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
             </div>
           )}
-          <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2">Create Account</button>
+        
+          <button
+    type="submit"
+    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+    disabled={loading}
+  >
+    {loading ? (
+      <div className="spinner-border text-light" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    ) : (
+      "Create Account"
+    )}
+  </button>
+        
         </form>
         <div className="mt-2">
           <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>

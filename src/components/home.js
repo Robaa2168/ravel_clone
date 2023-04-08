@@ -28,13 +28,18 @@ const Home = () => {
     console.log("Phone number:", user?.phoneNumber);
   }, [user]);
 
+
+
+
   return (
     <div className="body d-flex py-3">
     <div className="container-xxl">
       <div className="row g-3 mb-3">
         <div className="col-lg-12">
           <div className="card">
+         
             <div className="card-body">
+              
               <div className="row g-3 align-items-center">
                 <div className="col-md-6 col-lg-6 col-xl-3">
                   <div className="d-flex">

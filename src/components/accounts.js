@@ -1,14 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useUser } from "./context";
+import Confetti from 'react-dom-confetti';
 
 function Accounts() {
+  const [confetti, setConfetti] = useState(false);
   const { user } = useUser();
   const accounts = user.accounts;
  const balance =  accounts.currency === "USD";
   const [currency, setCurrency] = useState(null);
   const isBalanceLow = balance < 5;
   const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const startTimer = setTimeout(() => {
+      setConfetti(true);
+    }, 1000);
+
+    const endTimer = setTimeout(() => {
+      setConfetti(false);
+    }, 100000); // Adjust this value to control the duration
+
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(endTimer);
+    };
+  }, []);
+
+  const config = {
+    angle: 90,
+    spread: 360,
+    startVelocity: 40,
+    elementCount: 70,
+    decay: 0.9,
+    colors: ['#a864fd', '#29cdff', '#78ff44', '#ff718d', '#fdff6a'],
+  };
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,7 +52,7 @@ function Accounts() {
 
   const activationDetails = {
     USD: {
-      Limit: '5% ',
+      Limit: '$5000',
       fee: '$5',
       bonus: '5% ',
       minDeposit: '$10',
@@ -39,7 +66,7 @@ function Accounts() {
       ],
     },
     GBP: {
-      Limit: '5% ',
+      Limit: '£4025 ',
       fee: '£5',
       bonus: '7% ',
       minDeposit: '£10',
@@ -53,7 +80,7 @@ function Accounts() {
       ],
     },
     AUD: {
-      Limit: '5% ',
+      Limit: '$7494',
       fee: '$5',
       bonus: '6% ',
       minDeposit: '$10',
@@ -67,7 +94,7 @@ function Accounts() {
       ],
     },
     EUR: {
-      Limit: '5% ',
+      Limit: '€4547',
       fee: '€5 ',
       bonus: '8% ',
       minDeposit: '€10',
@@ -90,6 +117,9 @@ function Accounts() {
     <h6 className="mb-0 fw-bold ">Currency List</h6> 
   </div>
   <div className="card-body">
+  <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+      <Confetti active={confetti} config={config} />
+    </div>
     <div className="table-responsive">
       <table id="myProjectTable" className="priceTable table table-hover custom-table table-bordered align-middle mb-0">
         <thead>
@@ -252,6 +282,9 @@ function Accounts() {
                               <p className="price fw-bold">{activationDetails[currency]?.fee}</p>
                             </div>
                           </div>
+                          <div className="mb-3">
+                        <button type="submit" className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5">Activate {currency}</button>
+                      </div>
                         </div>
                       </div>
                     </div>
