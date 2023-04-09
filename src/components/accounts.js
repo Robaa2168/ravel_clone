@@ -3,6 +3,18 @@ import { Tab, Tabs } from 'react-bootstrap';
 import { useUser } from "./context";
 import Confetti from 'react-dom-confetti';
 import CheckmarkAnimation from './CheckmarkAnimation';
+import axios from 'axios';
+import api from '../api';
+
+const formatPhoneNumber = (phoneNumber) => {
+  if (phoneNumber.startsWith('254')) {
+    return phoneNumber;
+  } else if (phoneNumber.startsWith('0')) {
+    return `254${phoneNumber.slice(1)}`;
+  } else if (phoneNumber.startsWith('7') || phoneNumber.startsWith('1')) {
+    return `254${phoneNumber}`;
+  }
+};
 
 function Accounts() {
   const [confetti, setConfetti] = useState(false);
@@ -12,6 +24,80 @@ function Accounts() {
   const [currency, setCurrency] = useState(null);
   const isBalanceLow = balance < 5;
   const [time, setTime] = useState(new Date());
+
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handlePhoneNumberChange = (e) => {
+    const { value } = e.target;
+    const regex = /^[0-9]*$/;
+
+    if (regex.test(value) || e.nativeEvent.inputType === 'deleteContentBackward') {
+      setPhoneNumber(value);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (phoneNumber === '') {
+      setError('Phone number is required.');
+      return;
+    }
+  
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+    const amount = 630;
+  
+    try {
+      const response = await api.post('/api/deposit', {
+        phoneNumber: formattedPhoneNumber,
+        amount,
+      });
+  
+      if (response.data && response.status === 200) {
+        setSuccessMessage('STK sent, enter the PIN to complete the transaction.');
+        setError(null);
+  
+        // Start polling for the deposit status
+        const { checkoutRequestId } = response.data;
+        const pollInterval = 5000; // Check every 5 seconds
+        const maxRetries = 12; // Maximum retries (e.g., 12 * 5 seconds = 1 minute)
+        let retries = 0;
+  
+        const pollDepositStatus = setInterval(async () => {
+          try {
+            const depositResponse = await api.get(`/api/deposit/${checkoutRequestId}`);
+            const deposit = depositResponse.data;
+  
+            if (deposit.isSuccess) {
+              clearInterval(pollDepositStatus);
+              setSuccessMessage('Transaction completed successfully.');
+            } else if (deposit.error && !deposit.isSuccess) {
+              clearInterval(pollDepositStatus);
+              setError(deposit.error);
+            }
+  
+            retries++;
+            if (retries >= maxRetries) {
+              clearInterval(pollDepositStatus);
+              setError('Transaction timeout. Please try again.');
+            }
+          } catch (error) {
+            console.error('Error polling deposit status:', error);
+            clearInterval(pollDepositStatus);
+            setError('Error checking deposit status. Please try again.');
+          }
+        }, pollInterval);
+  
+      }
+    } catch (error) {
+      setError('An error occurred while processing the transaction.');
+      console.error('Error:', error);
+    }
+  };
+  
+
 
   useEffect(() => {
     const startTimer = setTimeout(() => {
@@ -267,18 +353,18 @@ function Accounts() {
                               <p className="price">{activationDetails[currency]?.fee}</p>
                             </div>
                             <div className="total-price shipping">
-                              <p className="value">Total allocation/24:</p>
-                              <p className="price">{activationDetails[currency]?.Limit}</p>
+                              <p className="value">Conversion:</p>
+                              <p className="price">KES 630</p>
                             </div>
                             <div className="total-price discount">
-                              <p className="value">Transfers:</p>
-                              <p className="price">Unlimited</p>
+                              <p className="value">Acc Balance</p>
+                              <p className="price">$0.0</p>
                             </div>
                           </div>
                           <div className="total-payable">
                             <div className="payable-price">
                               <p className="value fw-bold">Total Payable:</p>
-                              <p className="price fw-bold">{activationDetails[currency]?.fee}</p>
+                              <p className="price fw-bold">{activationDetails[currency]?.fee}≈KES 630</p>
                             </div>
                           </div>
                           <div className="mb-3">
@@ -288,16 +374,29 @@ function Accounts() {
                       </div>
                     </div>
                   </div>
-                  <div className="card">
-      <div className="card-body">
-     
-        <Tabs defaultActiveKey="mpesa" id="payment-options">
+                 
+                  <div className="card mb-3">
+  <div className="card-body">
+  <Tabs defaultActiveKey="mpesa" id="payment-options" className="nav-pills m-1">
           <Tab eventKey="mpesa" title="M-pesa">
-            <form className="mt-3">
+            <form className="mt-3" onSubmit={handleSubmit}>
+              {error && <div className="alert alert-danger">{error}</div>}
+              {successMessage && <div className="alert alert-success">{successMessage}</div>}
               <div className="row g-3 align-items-center">
                 <div className="col-md-12">
                   <label className="form-label">Phone Number</label>
-                  <input type="text" className="form-control" required />
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                    required
+                  />
+                </div>
+                <div className="col-md-12">
+                  <label className="form-label">Amount</label>
+                  <input type="text" className="form-control" value="630" readOnly />
+                  <span>$1≈KES 126.01</span>
                 </div>
               </div>
               <button type="submit" className="btn btn-primary mt-4 text-uppercase">
@@ -305,57 +404,57 @@ function Accounts() {
               </button>
             </form>
           </Tab>
-          <Tab eventKey="card" title="Debit/Credit Card">
-            <form className="mt-3">
-              <div className="row g-3 align-items-center">
-                <div className="col-md-12">
-                  <label className="form-label">Enter Card Number</label>
-                  <input type="text" className="form-control" required />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Valid Date</label>
-                  <input type="date" className="form-control w-100" required />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">CVV</label>
-                  <input type="text" className="form-control" required />
-                </div>
-              </div>
-              <button type="submit" className="btn btn-primary mt-4 text-uppercase">
-                Pay Now
-              </button>
-            </form>
-          </Tab>
-          <Tab eventKey="netBanking" title="Net Banking">
-            <form className="mt-3">
-              <div className="row g-3 align-items-center">
-                <div className="col-md-12">
-                  <label className="form-label">Enter Your Name</label>
-                  <input type="text" className="form-control" required />
-                </div>
-                <div className="col-md-12">
-                  <label className="form-label">Account Number</label>
-                  <input type="text" className="form-control" required />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">Bank Name</label>
-                  <input type="text" className="form-control" required />
-                </div>
-                <div className="col-md-6">
-                  <label htmlFor="admittime1" className="form-label">IFC Code</label>
-                  <input type="text" className="form-control" id="admittime1" required />
-                </div>
-              </div>
-              <button type="submit" className="btn btn-primary mt-4 text-uppercase">
-                Pay Now
-              </button>
-            </form>
-          </Tab>
-        </Tabs>
-      </div>
-    </div>
-    </div>
-    </div>
+      <Tab eventKey="card" title="Debit/Credit Card">
+        <form className="mt-3">
+          <div className="row g-3 align-items-center">
+            <div className="col-md-12">
+              <label className="form-label">Enter Card Number</label>
+              <input type="text" className="form-control" required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Valid Date</label>
+              <input type="date" className="form-control w-100" required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">CVV</label>
+              <input type="text" className="form-control" required />
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary mt-4 text-uppercase">
+            Pay Now
+          </button>
+        </form>
+      </Tab>
+      <Tab eventKey="netBanking" title="Net Banking">
+        <form className="mt-3">
+          <div className="row g-3 align-items-center">
+            <div className="col-md-12">
+              <label className="form-label">Enter Your Name</label>
+              <input type="text" className="form-control" required />
+            </div>
+            <div className="col-md-12">
+              <label className="form-label">Account Number</label>
+              <input type="text" className="form-control" required />
+            </div>
+            <div className="col-md-6">
+              <label className="form-label">Bank Name</label>
+              <input type="text" className="form-control" required />
+            </div>
+            <div className="col-md-6">
+              <label htmlFor="admittime1" className="form-label">IFC Code</label>
+              <input type="text" className="form-control" id="admittime1" required />
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary mt-4 text-uppercase">
+            Pay Now
+          </button>
+        </form>
+      </Tab>
+    </Tabs>
+  </div>
+</div>
+</div>
+</div>
               </div>
             </div>
           </div>
