@@ -60,7 +60,7 @@ function Accounts() {
         setError(null);
   
         // Start polling for the deposit status
-        const checkoutRequestId = response.data.checkoutRequestId;
+        const checkoutRequestId = response.data.CheckoutRequestID;
         const pollInterval = 5000; // Check every 5 seconds
         const maxRetries = 12; // Maximum retries (e.g., 12 * 5 seconds = 1 minute)
         let retries = 0;
