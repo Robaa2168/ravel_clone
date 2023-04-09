@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useUser } from "./context";
-import { Spinner } from "react-bootstrap"; // import Spinner component
 import { useNavigate, Link } from "react-router-dom";
+import { BiWallet } from "react-icons/bi";
+import { BiBell } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
+import { BiMenuAltRight } from 'react-icons/bi';
+
 
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
@@ -16,22 +20,18 @@ const Header = ({ onToggleSidebar }) => {
   return (
 
     <div className="header">
-      <nav className="navbar py-4">
+      <nav className="navbar ">
         <div className="container-xxl">
-          <div className="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+          <div className="h-right d-flex align-items-center  order-1">
             <div className="d-flex">
-          
-              <Link to="/wallet" className="nav-link text-primary collapsed">
-                  <i className="bi bi-wallet menu-item-icon"></i>
-                  <span className="menu-item-text"></span>
-                </Link>
+            <Link to="/wallet" className="nav-link text-primary collapsed">
+                <BiWallet size={25} className="bi bi-wallet menu-item-icon" />
+                <span className="menu-item-text"></span>
+              </Link>
             </div>
             <div className="dropdown notifications zindex-popover">
               <a className="nav-link dropdown-toggle pulse" href="#" role="button" data-bs-toggle="dropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25px" height="25px" viewBox="0 0 38 38">
-                  <path d="M36,34v-2h-2.98c-0.598-0.363-1.081-3.663-1.4-5.847c-0.588-4.075-1.415-9.798-4.146-13.723  C26.584,12.154,25.599,12,24.5,12c-3.646,0-5.576,1.657-7.106,4.086C15.089,19.746,14,30.126,14,33c0,2.757,2.243,5,5,5  c2.414,0,4.435-1.721,4.898-4H36z" style={{ fill: 'var(--primary-color)' }} data-st="fill:var(--chart-color4);" />
-                  <path className="st0" d="M33.02,32c-0.598-0.363-1.081-3.663-1.4-5.847c-0.851-5.899-2.199-15.254-9.101-17.604  C23.433,7.643,24,6.386,24,5c0-2.757-2.243-5-5-5s-5,2.243-5,5c0,1.386,0.567,2.643,1.482,3.549  c-6.902,2.35-8.25,11.705-9.101,17.604C6.209,27.324,5.991,28.813,5.733,30h2.042c0.192-0.961,0.376-2.127,0.586-3.562  C9.36,19.501,10.73,10,19,10c8.27,0,9.64,9.501,10.641,16.442c0.386,2.636,0.682,4.394,1.108,5.558H2v2h12.101  c0.464,2.279,2.485,4,4.899,4c2.415,0,4.435-1.721,4.899-4H36v-2H33.02z M19,8c-1.654,0-3-1.346-3-3s1.346-3,3-3s3,1.346,3,3  S20.654,8,19,8z M19,36c-1.304,0-2.416-0.836-2.829-2h5.658C21.416,35.164,20.304,36,19,36z" />
-                </svg>
+              <BiBell size={25} className="bi bi-bell" />
                 <span className="pulse-ring" />
               </a>
               <div id="NotificationsDiv" className="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-md-end p-0 m-0">
@@ -61,9 +61,9 @@ const Header = ({ onToggleSidebar }) => {
               <div className="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
                 <div className="card border-0 w280">
                   <div className="card-body pb-0">
-                    <div className="d-flex py-1">
+                    <div className="d-flex ">
                       <img className="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile" />
-                      <div className="flex-fill ms-3">
+                      <div className="flex-fill ">
                         <p className="mb-0"><span className="font-weight-bold">{user?.userInfo?.firstName}</span></p>
                         <small className>{user?.userInfo?.email}</small>
                       </div>
@@ -107,16 +107,13 @@ const Header = ({ onToggleSidebar }) => {
             </div>
 
           </div>
-          
           {/* menu toggler */}
-          <button  onClick={onToggleSidebar}  className="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
-            <span className="fa fa-bars" />
+          <button onClick={onToggleSidebar}  className="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
+          <BiMenuAltRight size={25} />
           </button>
-      
-          <div className="order-0 col-lg-4 col-md-4 col-sm-12 col-12 mb-3 mb-md-0 d-flex align-items-center">
-            <a className="menu-toggle-option me-3 text-primary d-flex align-items-center" href="#" title="Menu Option">
-
-            </a>
+          {/* main menu Search*/}
+          <div className="d-flex align-items-center">
+          
 
           </div>
         </div>

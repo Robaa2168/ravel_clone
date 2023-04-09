@@ -210,7 +210,7 @@ function Accounts() {
       Limit: '$5000',
       fee: '$5',
       bonus: '5% ',
-      minDeposit: '$10',
+      minDeposit: '$5',
       freeTransfers: '3 free transfers',
       story: 'The US Dollar account is designed for individuals and businesses who frequently transact in USD. With this account, you can easily receive and send payments, shop online, and manage your USD funds efficiently. Take advantage of competitive exchange rates, fast international transfers, and exceptional customer service to make your transactions smoother.',
       features: [
@@ -224,7 +224,7 @@ function Accounts() {
       Limit: '£4025 ',
       fee: '£5',
       bonus: '7% ',
-      minDeposit: '£10',
+      minDeposit: '£5',
       freeTransfers: '5 free transfers',
       story: 'Our British Pound account is perfect for those dealing with UK-based businesses or individuals. Experience seamless transfers, attractive exchange rates, and top-notch customer service. Whether youre sending money to friends or family, paying for products and services, or managing your GBP funds, this account is tailored to meet your needs.',
       features: [
@@ -238,7 +238,7 @@ function Accounts() {
       Limit: '$7494',
       fee: '$5',
       bonus: '6% ',
-      minDeposit: '$10',
+      minDeposit: '$5',
       freeTransfers: '4 free transfers',
       story: 'The Australian Dollar account is an excellent choice for those transacting with businesses or individuals in Australia. This account offers great benefits, such as quick transfers, competitive exchange rates, and a dedicated customer support team. Manage your AUD funds effortlessly, send and receive payments, and enjoy a seamless banking experience.',
       features: [
@@ -252,7 +252,7 @@ function Accounts() {
       Limit: '€4547',
       fee: '€5 ',
       bonus: '8% ',
-      minDeposit: '€10',
+      minDeposit: '€5',
       freeTransfers: '6 free transfers',
       story: 'Our Euro account is tailored for those who have financial dealings within the Eurozone. This account provides a convenient way to send and receive payments, manage your EUR funds, and access attractive exchange rates. Benefit from low transaction fees, a user-friendly mobile app, and a dedicated customer support team that available around the clock.',
       features: [

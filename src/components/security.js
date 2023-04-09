@@ -244,14 +244,7 @@ const Header = () => {
                            </div>
                          </div>
                        </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Convert Limit</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
+                       
                        <div className="col">
                          <div className="d-flex flex-column">
                            <div className="d-flex flex-column">
@@ -268,22 +261,8 @@ const Header = () => {
                            </div>
                          </div>
                        </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Currency Apply</span>
-                             <span className="fw-bold">Unlimited</span>
-                           </div>
-                         </div>
-                       </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Loan Apply</span>
-                             <span className="fw-bold">Unlimited</span>
-                           </div>
-                         </div>
-                       </div>
+                       
+                   
                        <div className="col">
                          <div className="d-flex flex-column">
                            <div className="d-flex flex-column">
@@ -300,14 +279,7 @@ const Header = () => {
                            </div>
                          </div>
                        </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Spot Stand</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
+                       
                      </div>
                    </div>
                  </div>
