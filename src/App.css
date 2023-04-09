@@ -9,3 +9,23 @@
   max-width: 100%;
   word-wrap: break-word;
 }
+
+
+@keyframes dots {
+  0% {
+    content: '.';
+  }
+  33% {
+    content: '..';
+  }
+  67% {
+    content: '...';
+  }
+}
+
+.animation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

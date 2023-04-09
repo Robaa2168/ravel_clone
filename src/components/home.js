@@ -7,6 +7,7 @@ import '../App.css';
 const Home = () => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const [transactions, setTransactions] = useState([])
 
   useEffect(() => {
     console.log("User state changed", user);
@@ -154,29 +155,46 @@ const Home = () => {
       <div className="row g-3 mb-3 row-deck">
       <div className="col-xl-7">
       <div className="card">
-  <div className="card-header py-3 d-flex justify-content-between">
-    <h6 className="mb-0 fw-bold">Recent Transactions</h6> 
-  </div>
-  <div className="card-body" style={{overflowX: 'auto'}}>
-    <table id="ordertabthree" className="priceTable table table-hover custom-table-2 table-bordered align-middle mb-0" style={{maxWidth: '100%'}}>
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Pair</th>
-          <th>Side</th>
-          <th>Price</th>
-          <th>Executed</th>
-          <th>Fee</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-       
-      </tbody>
-    </table>
-  </div>
-</div>
-
+      <div className="card-header py-3 d-flex justify-content-between">
+        <h6 className="mb-0 fw-bold">Recent Transactions</h6>
+      </div>
+      <div className="card-body" style={{ overflowX: 'auto' }}>
+        {transactions.length === 0 ? (
+          <p className="text-center">No Recent transactions</p>
+        ) : (
+          <table
+            id="ordertabthree"
+            className="priceTable table table-hover custom-table-2 table-bordered align-middle mb-0"
+            style={{ maxWidth: '100%' }}
+          >
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Pair</th>
+                <th>Side</th>
+                <th>Price</th>
+                <th>Executed</th>
+                <th>Fee</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td>{transaction.date}</td>
+                  <td>{transaction.pair}</td>
+                  <td>{transaction.side}</td>
+                  <td>{transaction.price}</td>
+                  <td>{transaction.executed}</td>
+                  <td>{transaction.fee}</td>
+                  <td>{transaction.total}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
         </div>
        
         <div className="col-xl-12 col-xxl-5">
