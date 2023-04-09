@@ -37,12 +37,18 @@ const AppLayout = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  
+  const handleLinkClick = () => {
+    if (window.innerWidth <= 992) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   return (
   
        <div id="cryptoon-layout" className="theme-tradewind">
          {!excludedRoutes.includes(location.pathname) && (
-      <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} /> // Pass setIsSidebarOpen here
+         <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} onLinkClick={handleLinkClick} />
     )}
 
     <div className="main px-lg-4 px-md-4">

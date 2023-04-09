@@ -5,7 +5,7 @@ import "./Sidebar.css";
 import { useUser } from "./context";
 import classNames from "classnames";
 
-const Sidebar = ({ isOpen, setIsSidebarOpen }) => { // Add setIsSidebarOpen prop here
+const Sidebar = ({ isOpen, setIsSidebarOpen, onLinkClick }) => {
   const navigate = useNavigate();
   const { user, logout } = useUser();
   const sidebarRef = useRef(); // Add this line to create a ref for the sidebar element
@@ -49,43 +49,43 @@ const Sidebar = ({ isOpen, setIsSidebarOpen }) => { // Add setIsSidebarOpen prop
           <div className="menu">
             <ul>
               <li>
-                <Link to="/" className="menu-item active">
+                <Link to="/" onClick={onLinkClick} className="menu-item active">
                   <i className="bi bi-house menu-item-icon"></i>
                   <span className="menu-item-text">Dashboard</span>
                 </Link>
               </li>
               <li>
-                <Link to="/wallet" className="menu-item">
+                <Link to="/wallet" onClick={onLinkClick} className="menu-item">
                   <i className="bi bi-wallet menu-item-icon"></i>
                   <span className="menu-item-text">Wallet</span>
                 </Link>
               </li>
               <li>
-                <Link to="/loan" className="menu-item">
+                <Link to="/loan" onClick={onLinkClick} className="menu-item">
                   <i className="bi bi-cash menu-item-icon"></i>
                   <span className="menu-item-text">Loan</span>
                 </Link>
               </li>
               <li>
-                <Link to="/accounts" className="menu-item">
+                <Link to="/accounts" onClick={onLinkClick} className="menu-item">
                   <i className="bi bi-person menu-item-icon"></i>
                   <span className="menu-item-text">Accounts</span>
                 </Link>
               </li>
               <li>
-                <Link to="/settings" className="menu-item">
+                <Link to="/settings" onClick={onLinkClick} className="menu-item">
                 <i className="bi bi-shield-lock menu-item-icon"></i>
                   <span className="menu-item-text">Security</span>
                 </Link>
               </li>
               <li>
-                <Link to="/ticket" className="menu-item">
+                <Link to="/ticket" onClick={onLinkClick} className="menu-item">
                   <i className="bi bi-ticket menu-item-icon"></i>
                   <span className="menu-item-text">Tickets</span>
                 </Link>
               </li>
               <li>
-                <Link onClick={handleLogout} className="menu-item">
+                <Link onClick={handleLogout}  className="menu-item">
                   <i className="bi bi-box-arrow-right menu-item-icon"></i>
                   <span className="menu-item-text">Signout</span>
                 </Link>
