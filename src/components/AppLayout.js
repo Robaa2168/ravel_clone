@@ -41,10 +41,15 @@ const AppLayout = () => {
   return (
   
        <div id="cryptoon-layout" className="theme-tradewind">
-      {!excludedRoutes.includes(location.pathname) && <Sidebar isOpen={isSidebarOpen} />}
-      <div className="main px-lg-4 px-md-4">
-      {!excludedRoutes.includes(location.pathname) && <Header onToggleSidebar={toggleSidebar} />}
-        <Routes>
+         {!excludedRoutes.includes(location.pathname) && (
+      <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} /> // Pass setIsSidebarOpen here
+    )}
+
+    <div className="main px-lg-4 px-md-4">
+      {!excludedRoutes.includes(location.pathname) && (
+        <Header onToggleSidebar={toggleSidebar} />
+      )}
+       <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
           <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />

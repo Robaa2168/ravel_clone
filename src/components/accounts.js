@@ -118,11 +118,7 @@ function Accounts() {
     <h6 className="mb-0 fw-bold ">Currency List</h6> 
   </div>
   <div className="card-body">
-  <div style={{ position: 'relative', height: '100%', width: '100%' }}>
-      <Confetti active={confetti} config={config} />
 
-      <CheckmarkAnimation />
-    </div>
     <div className="table-responsive">
       <table id="myProjectTable" className="priceTable table table-hover custom-table table-bordered align-middle mb-0">
         <thead>

@@ -55,7 +55,7 @@ function Wallet() {
           <div className="col-xl-12 col-xxl-7">
             <div className="card">
               <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
-                <h6 className="mb-0 fw-bold">Balance Details</h6> 
+                <h6 className="fw-bold m-2">Balance Details</h6> 
                 <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
                   <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#USD" role="tab">USD</a></li>
                   <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#EUR" role="tab">EUR</a></li>
