@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { useUser } from "./context";
 
-function Wallet() {
+const Wallet = () => {
   const { user } = useUser();
   const accounts = user.accounts;
 
-  const getAccountByCurrency = (currency) => {
+   // Adjust these values as needed
+   const minimumWithdrawal = 10;
+   const networkFeeMin = 0.00000;
+   const networkFeeMax = 0.00000;
+   const dailyLimit = 5000;
+
+
+   const getAccountByCurrency = (currency) => {
     return accounts.find((account) => account.currency === currency);
   };
-
-  const usdAccount = getAccountByCurrency('USD');
-  const eurAccount = getAccountByCurrency('EUR');
-  const audAccount = getAccountByCurrency('AUD');
-  const gbpAccount = getAccountByCurrency('GBP');
-  const kesAccount = getAccountByCurrency('KES');
 
   // Hardcoded conversion rates
   const conversionRates = {
@@ -26,20 +27,23 @@ function Wallet() {
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const selectedAccount = getAccountByCurrency(selectedCurrency);
 
-  // Adjust these values as needed
-  const minimumWithdrawal = 10;
-  const networkFeeMin = 0.00000;
-  const networkFeeMax = 0.00000;
-  const dailyLimit = 5000;
-
   const handleCurrencySelection = (currency) => {
-    
     setSelectedCurrency(currency);
   };
 
   const convertToUSD = (currency, amount) => {
     return amount * (conversionRates[currency] || 1);
   };
+
+  const getUniqueCurrencies = (accounts) => {
+    const currenciesSet = new Set(accounts.map((account) => account.currency));
+    return Array.from(currenciesSet);
+  };
+  
+
+ // Retrieve accounts from localStorage
+ const storedAccounts = JSON.parse(localStorage.getItem('user')).accounts;
+ const currencies = getUniqueCurrencies(storedAccounts); // Fetch unique currencies from user's accounts
 
   return (
     <div>
@@ -52,95 +56,51 @@ function Wallet() {
     <div className="body d-flex py-3">
       <div className="container-xxl">
         <div className="row g-3 mb-3 row-deck">
-          <div className="col-xl-12 col-xxl-7">
-            <div className="card">
-              <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
-                <h6 className="fw-bold m-2">Balance Details</h6> 
-                <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                  <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#USD" role="tab">USD</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#EUR" role="tab">EUR</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#AUD" role="tab">AUD</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#GBP" role="tab">GBP</a></li>
-                  <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#CAD" role="tab">CAD</a></li>
-                </ul>
-              </div>
-              <div className="card-body">
-                <div className="tab-content">
-                  <div className="tab-pane fade show active" id="USD">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div>Account balance:</div>
-                        <h4>{usdAccount.balance.toFixed(2)} USD≈${convertToUSD('USD', usdAccount.balance).toFixed(2)}</h4>
-                        <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
-                        <h5>{usdAccount.balance.toFixed(2)} USD</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>{usdAccount.balance.toFixed(2)} USD</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>${usdAccount.balance.toFixed(2)}</h5>
-                      </div>
-                   
-                    </div>
-                  </div>
-                  <div className="tab-pane fade" id="EUR">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div>Account balance:</div>
-                        <h4>{eurAccount.balance.toFixed(2)} EUR≈${convertToUSD('EUR', eurAccount.balance).toFixed(2)}</h4>
-                        <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
-                        <h5>{eurAccount.balance.toFixed(2)}  EUR</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>{eurAccount.balance.toFixed(2)}  EUR</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>${convertToUSD('EUR', eurAccount.balance).toFixed(2)}</h5>
-                      </div>
-                    
-                    </div>
-                  </div>
-                  <div className="tab-pane fade" id="AUD">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div>Total AUD balance:</div>
-                        <h4>{audAccount.balance.toFixed(2)} AUD≈${convertToUSD('AUD', audAccount.balance).toFixed(2)}</h4>
-                        <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month</div>
-                        <h5>{audAccount.balance.toFixed(2)} AUD</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                        <h5>{audAccount.balance.toFixed(2)} AUD</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                        <h5>${convertToUSD('AUD', audAccount.balance).toFixed(2)}</h5>
-                      </div>
-                    
-                    </div>
-                  </div>
-                  <div className="tab-pane fade" id="GBP">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div>Total GBP Balance:</div>
-                        <h4>{gbpAccount.balance.toFixed(2)} GBP≈${convertToUSD('GBP', gbpAccount.balance).toFixed(2)}</h4>
-                        <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Total GBP Balance:</div>
-                        <h5>{gbpAccount.balance.toFixed(2)} GBP</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Total Unrealized PNL:</div>
-                        <h5>${convertToUSD('GBP', gbpAccount.balance).toFixed(2)}</h5>
-                      </div>
-                     
-                    </div>
-                  </div>
-                  <div className="tab-pane fade" id="CAD">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div>Total CAD Balance:</div>
-                        <h4>{kesAccount.balance.toFixed(2)} CAD≈${convertToUSD('KES', kesAccount.balance).toFixed(2)}</h4>
-                        <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Locked:</div>
-                        <h5>0.00 CAD</h5>
-                        <div className="mt-3 text-uppercase text-muted small">Flexible:</div>
-                        <h5>${convertToUSD('KES', kesAccount.balance).toFixed(2)}</h5>
-                      </div>
-                    
+        <div className="col-xl-12 col-xxl-7">
+      <div className="card">
+        <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
+          <h6 className="fw-bold m-2">Balance Details</h6>
+          <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+            {currencies.map((currency) => (
+              <li className="nav-item" key={currency}>
+                <a className={`nav-link${selectedCurrency === currency ? " active" : ""}`} data-bs-toggle="tab" href={`#${currency}`} role="tab" onClick={() => handleCurrencySelection(currency)}>
+                  {currency}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="card-body">
+          <div className="tab-content">
+            {currencies.map((currency) => {
+              const account = getAccountByCurrency(currency);
+              return (
+                <div key={currency} className={`tab-pane fade${selectedCurrency === currency ? " show active" : ""}`} id={currency}>
+                  <div className="row g-3">
+                    <div className="col-lg-6">
+                      <div>Account balance:</div>
+                      <h4>
+                        {account?.balance.toFixed(2)} {currency}≈${convertToUSD(currency, account?.balance).toFixed(2)}
+                      </h4>
+                      <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
+                      <h5>
+                        {account?.balance.toFixed(2)} {currency}
+                      </h5>
+                      <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
+                      <h5>
+                        {account?.balance.toFixed(2)} {currency}
+                      </h5>
+                      <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
+                      <h5>${convertToUSD(currency, account?.balance).toFixed(2)}</h5>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
+    </div>
           <div className="col-xl-12 col-xxl-5">
             <div className="card">
               <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
@@ -454,31 +414,7 @@ function Wallet() {
             </div>
           </div>
         </div>{/* Row End */}
-        <div className="row">
-          <div className="col-xl-12">
-            <div className="card no-bg">
-              <div className="card-header py-3 d-flex justify-content-between">
-                <h6 className="mb-0 fw-bold">Transaction History</h6> 
-              </div>
-              <div className="card-body">
-                <table id="ordertabthree" className="priceTable table table-hover custom-table table-bordered align-middle mb-0" style={{width: '100%'}}>
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Type</th>
-                      <th>Asset</th>
-                      <th>Amount</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-              
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>{/* Row End */}
+        
       </div>
     </div>
   </div>

@@ -54,7 +54,7 @@ const Home = () => {
                 </div>
                 <div className="col-md-6 col-lg-6 col-xl-3">
                   <div className="d-flex flex-column">
-                    <span className="text-muted mb-1">Pay ID:{user?.userInfo?.payID}</span>
+                    <span className="text-muted mb-1">Pay ID:{user?.primaryInfo?.payID}</span>
                     <span className="small text-muted flex-fill text-truncate">
   Last login time: {new Date(user?.primaryInfo?.lastLogin).toLocaleString()}
 </span>
@@ -75,83 +75,38 @@ const Home = () => {
         </div>
       </div>{/* Row End */}
       <div className="row g-3 mb-3 row-cols-1 row-cols-md-2 row-cols-lg-4">
-        <div className="col">
-          <div className="card">
-            <div className="card-body d-flex align-items-center">
-              <div className="flex-fill text-truncate">
-                <span className="text-muted small text-uppercase">USD</span>
-                <div className="d-flex flex-column">
-                  <div className="price-block">
-                    <span className="fs-6 fw-bold color-price-up">0.00</span>
-                    <span className="small text-muted px-2">$0</span>
-                  </div>
-                  <div className="price-report">
-                    <span className="small text-success"> 0.00% </span>
-                    <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
-                  </div>
-                </div>
+  {user?.accounts?.map(account => (
+    <div className="col" key={account.currency}>
+      <div className="card">
+        <div className="card-body d-flex align-items-center">
+          <div className="flex-fill text-truncate">
+            <span className="text-muted small text-uppercase">{account.currency}</span>
+            <div className="d-flex flex-column">
+              <div className="price-block">
+                <span className="fs-6 fw-bold color-price-up">0.00</span>
+                <span className="small text-muted px-2">$0</span>
+              </div>
+              <div className="price-report">
+                <span className="small text-success">0.00%</span>
+                <span className="small text-muted px-2">Volume: 0.00</span>
+                {account.isActive ? (
+                  <span className="text-success">
+                    <i className="bi bi-check-circle-fill me-2"></i>
+                  </span>
+                ) : (
+                  <span className="badge bg-careys-pink mb-1">Inactive</span>
+                )}
               </div>
             </div>
           </div>
         </div>
-        <div className="col">
-          <div className="card">
-            <div className="card-body d-flex align-items-center">
-              <div className="flex-fill text-truncate">
-                <span className="text-muted small text-uppercase">EUR</span>
-                <div className="d-flex flex-column">
-                  <div className="price-block">
-                    <span className="fs-6 fw-bold color-price-up">0.00</span>
-                    <span className="small text-muted px-2">$0</span>
-                  </div>
-                  <div className="price-report">
-                    <span className="small text-success">0.00% </span>
-                    <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card">
-            <div className="card-body d-flex align-items-center">
-              <div className="flex-fill text-truncate">
-                <span className="text-muted small text-uppercase">GBP</span>
-                <div className="d-flex flex-column">
-                  <div className="price-block">
-                    <span className="fs-6 fw-bold  color-price-up">0.00</span>
-                    <span className="small text-muted px-2">$0</span>
-                  </div>
-                  <div className="price-report">
-                    <span className="small text-success">0.00% </span>
-                    <span className="small text-muted px-2">Volume:0.00  <span className="badge bg-careys-pink mb-1">Inactive</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="card">
-            <div className="card-body d-flex align-items-center">
-              <div className="flex-fill text-truncate">
-                <span className="text-muted small text-uppercase">AUD</span>
-                <div className="d-flex flex-column">
-                  <div className="price-block">
-                    <span className="fs-6 fw-bold color-price-up">0.000</span>
-                    <span className="small text-muted px-2">$0</span>
-                  </div>
-                  <div className="price-report">
-                    <span className="small text-success"> 0.00% </span>
-                    <span className="small text-muted px-2">Volume:0.00 <span className="badge bg-careys-pink mb-1">Inactive</span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>{/* Row End */}
+      </div>
+    </div>
+  ))}
+</div>
+
+
+      
       <div className="row g-3 mb-3 row-deck">
       <div className="col-xl-7">
       <div className="card">

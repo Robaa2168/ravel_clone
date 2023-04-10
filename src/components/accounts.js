@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
+import Select from 'react-select';
 import { useUser } from "./context";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { showToast } from "../utils/showToast";
 import Confetti from 'react-dom-confetti';
@@ -21,6 +22,7 @@ const formatPhoneNumber = (phoneNumber) => {
 
 function Accounts() {
   const { user, login } = useUser();
+  const [accounts, setAccounts] = useState([]);
   const [balances, setBalances] = useState({});
   const [currency, setCurrency] = useState(null);
   const isBalanceLow = currency && balances[currency] !== undefined && balances[currency] < 5;
@@ -33,6 +35,79 @@ function Accounts() {
   const [isPolling, setIsPolling] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showConfetti2, setShowConfetti2] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+const [selectedCurrency, setSelectedCurrency] = useState(null);
+
+
+const handleCountryChange = (selectedOption) => {
+  setSelectedCountry(selectedOption);
+  setSelectedCurrency(selectedOption.currency);
+};
+
+const countries = [
+  { label: 'South Africa', value: 'South Africa', currency: 'ZAR' },
+  { label: 'Kenya', value: 'Kenya', currency: 'KES' },
+  { label: 'Uganda', value: 'Uganda', currency: 'UGX' },
+  { label: 'Zambia', value: 'Zambia', currency: 'ZMW' },
+  { label: 'Nigeria', value: 'Nigeria', currency: 'NGN' },
+  { label: 'Rwanda', value: 'Rwanda', currency: 'RWF' },
+];
+
+
+const handleAddCurrency = async (e) => {
+  e.preventDefault();
+
+  if (!selectedCountry || !selectedCurrency) {
+    // Show error: both country and currency are required
+    toast.error("Please select a country and its currency.");
+    return;
+  }
+
+  setProcessing(true);
+
+  try {
+    const response = await api.post('/api/add-currency', {
+      userId: user?.primaryInfo?._id,
+      currency: selectedCurrency,
+    }, {
+      headers: { Authorization: `Bearer ${user.token}` }, // Pass the user token
+    });
+
+    if (response.status === 200) {
+      const balanceResponse = await api.get('/api/getUserBalances', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'user-id': user?.primaryInfo?._id, // Pass the userId as a custom header
+        },
+      });
+  
+      if (balanceResponse.status === 200) {
+        // Update the local storage with the new balances
+        const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+        console.log(updatedUser)
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+  
+        // Update the context
+      login(updatedUser);
+      }
+      // Currency added successfully
+      toast.success("Currency added successfully.");
+     
+    } else {
+      // Handle any errors
+      toast.error("An error occurred while adding the currency.");
+    }
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("An error occurred while adding the currency.");
+    }
+  } finally {
+    setProcessing(false);
+  }
+};
+
 
 
 
@@ -47,6 +122,27 @@ function Accounts() {
   }, [user]);
 
   
+
+  useEffect(() => {
+    async function fetchAccounts() {
+      try {
+        const response = await api.get('/api/getUserBalances', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'user-id': user?.primaryInfo?._id,
+          },
+        });
+  
+        if (response.status === 200) {
+          setAccounts(response.data.accounts);
+        }
+      } catch (error) {
+        console.error('Error fetching accounts:', error);
+      }
+    }
+  
+    fetchAccounts();
+  }, [user]);
 
   const handlePhoneNumberChange = (e) => {
     const { value } = e.target;
@@ -269,9 +365,12 @@ function Accounts() {
       <div className="col-xl-12">
         <div className="card no-bg">
        
-          <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
-            <h6 className="mb-0 fw-bold ">Currency List</h6>
-          </div>
+        <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
+  <h6 className="mb-0 fw-bold">Currency List</h6>
+  <button  className="btn btn-light-success"
+          data-bs-toggle="modal"
+          data-bs-target="#addCurrencyModal">+ Add New</button>
+</div>
           <div className="card-body">
 
             <div className="table-responsive">
@@ -288,33 +387,102 @@ function Accounts() {
                   </tr>
                 </thead>
                 <tbody>
-                  {['USD', 'GBP', 'AUD', 'EUR'].map((currency) => (
-                    <tr key={currency}>
-                      <td>
-                        <span className="text-uppercase fw-bold"> {currency} </span>
-                      </td>
-                      <td>
-                        <button
-                          type="submit"
-                          className="btn btn-light-success"
-                          data-bs-toggle="modal"
-                          data-bs-target="#icoModal"
-                          onClick={() => handleActivate(currency)}
-                        >
-                          Activate
-                        </button>
-                      </td>
-                      <td className="d-none d-sm-block">-</td>
-                      <td>-</td>
-                      <td className="d-none d-sm-block">-</td>
-                      <td>$5,000</td>
-                    </tr>
-                  ))}
-                </tbody>
+  {accounts.map(account => (
+    <tr key={account.currency}>
+      <td>
+        <span className="text-uppercase fw-bold"> {account.currency} </span>
+      </td>
+      <td>
+        {account.isActive ? (
+          <span className="text-success">
+            <i className="bi bi-check-circle-fill me-2"></i>
+            Activated
+          </span>
+        ) : (
+          <button
+            type="submit"
+            className="btn btn-light-success"
+            data-bs-toggle="modal"
+            data-bs-target="#icoModal"
+            onClick={() => handleActivate(account.currency)}
+          >
+            Activate
+          </button>
+        )}
+      </td>
+      <td className="d-none d-sm-block">-</td>
+      <td>{account.state}</td>
+      <td className="d-none d-sm-block">{account.channel}</td>
+      <td>${account.limit}</td>
+    </tr>
+  ))}
+</tbody>
+
+
               </table>
             </div>
           </div>
         </div>
+
+        <div
+  className="modal fade"
+  id="addCurrencyModal"
+  tabIndex="-1"
+  aria-labelledby="addCurrencyModalLabel"
+  aria-hidden="true"
+>
+  <div className="modal-dialog">
+    <div className="modal-content">
+    <ToastContainer />
+      <div className="modal-header">
+        <h5 className="modal-title" id="addCurrencyModalLabel">
+          Add New Currency
+        </h5>
+        <button
+          type="button"
+          className="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div className="modal-body">
+        <form onSubmit={handleAddCurrency}>
+          <div className="mb-3">
+            <label htmlFor="country" className="form-label">
+              Select Country
+            </label>
+            <Select
+              options={countries}
+              onChange={handleCountryChange}
+              placeholder="Select a country"
+              autoFocus
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="currency" className="form-label">
+              Currency
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="currency"
+              value={selectedCurrency || ''}
+              readOnly
+            />
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" className="btn btn-primary">
+              Add Currency
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
         <div className="modal fade" id="icoModal" tabIndex={-1} aria-hidden="true">
           <div className="modal-dialog modal-fullscreen">
@@ -397,10 +565,10 @@ function Accounts() {
 
 
                         <p>
-                          {activationDetails[currency].story}
+                          {activationDetails[currency]?.story}
                         </p>
                         <ul>
-                          {activationDetails[currency].features.map((feature) => (
+                          {activationDetails[currency]?.features.map((feature) => (
                             <li key={feature}>{feature}</li>
                           ))}
                         </ul>
