@@ -1,15 +1,54 @@
 import React, { useState } from 'react';
 import { useUser } from "./context";
+import api from '../api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+// Add this helper function for creating avatars with the first letter of the name
+const generateAvatar = (name) => {
+  const firstLetter = name ? name[0].toUpperCase() : "";
+  return (
+    <div
+      style={{
+        backgroundColor: "gray",
+        borderRadius: "50%",
+        width: "40px",
+        height: "40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        color: "white",
+        fontSize: "20px",
+      }}
+    >
+      {firstLetter}
+    </div>
+  );
+};
 
 const Wallet = () => {
   const { user } = useUser();
   const accounts = user.accounts;
+  const [transferType, setTransferType] = useState(1); // 1 for Transfer, 2 for Request
+  const [fromCurrency, setFromCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('');
+  const [step, setStep] = useState(1);
+  const [payID, setPayID] = useState("");
+  const [amount, setAmount] = useState("90");
+  const [receiverInfo, setReceiverInfo] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
    // Adjust these values as needed
    const minimumWithdrawal = 10;
    const networkFeeMin = 0.00000;
    const networkFeeMax = 0.00000;
    const dailyLimit = 5000;
+
+   const handleTransferTypeChange = (type) => {
+    setTransferType(type);
+  };
 
 
    const getAccountByCurrency = (currency) => {
@@ -53,6 +92,94 @@ const Wallet = () => {
  const storedAccounts = JSON.parse(localStorage.getItem('user')).accounts;
  const currencies = getUniqueCurrencies(storedAccounts); // Fetch unique currencies from user's accounts
 
+
+
+ const fetchReceiverInfo = async (payID) => {
+  // Replace this code with an API call to get the actual receiver data using Pay ID
+  const dummyReceiverInfo = {
+    id: payID,
+    firstName: "John",
+  };
+
+  setReceiverInfo(dummyReceiverInfo);
+};
+
+
+const handleMax = () => {
+  // Logic for handling max amount
+};
+
+
+const handleConfirm = async (e) => {
+  e.preventDefault();
+
+  // Validate form fields
+  if (!payID || !amount || !fromCurrency) {
+    toast.error("Please complete all fields.");
+    return;
+  }
+
+  if (step === 1) {
+    setIsLoading(true); // Set the loading state
+    await fetchReceiverInfo(payID)
+      .then(() => {
+        setStep(2); // Proceed to step 2
+      })
+      .catch((error) => {
+        toast.error("Error fetching receiver info.");
+      });
+    setIsLoading(false); // Reset the loading state
+  } else if (step === 2) {
+    if (transferType === 1) {
+      await handleTransferSubmit(e);
+    } else if (transferType === 2) {
+      await handleRequestSubmit(e);
+    }
+  }
+};
+
+async function handleTransferSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const response = await api.post("/api/transfer", {
+      userId: user.userinfo?._id,
+      fromCurrency,
+      payID,
+      amount,
+    });
+    toast.success(response.data.message);
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error during transfer.");
+    }
+   
+  }
+}
+
+async function handleRequestSubmit(e) {
+  e.preventDefault();
+
+  try {
+    const response = await api.post("/api/request", {
+      userId: user.userinfo?._id,
+      payID,
+      amount,
+    });
+    toast.success(response.data.message);
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error("Error sending request.");
+    }
+   
+  }
+}
+
+
   return (
     <div>
     <div className="body-header border-bottom d-flex py-3">
@@ -66,6 +193,7 @@ const Wallet = () => {
         <div className="row g-3 mb-3 row-deck">
         <div className="col-xl-12 col-xxl-7">
       <div className="card">
+      <ToastContainer />
         <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
           <h6 className="fw-bold m-2">Balance Details</h6>
           <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
@@ -366,63 +494,190 @@ const Wallet = () => {
               </div>
             </div>
           </div>
+      
           <div className="col-xl-6 col-xxl-5">
-            <div className="card">
-              <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
-                <h6 className="mb-0 fw-bold">Transfer</h6> 
+          <div className="card">
+  <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
+    <h6 className="mb-0 fw-bold">
+      {transferType === 1 ? "Transfer" : "Request"}
+    </h6>
+    <div>
+      <button
+        className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
+        onClick={() => handleTransferTypeChange(1)}
+      >
+        Transfer
+      </button>
+      <button
+        className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
+        onClick={() => handleTransferTypeChange(2)}
+      >
+        Request
+      </button>
+    </div>
+  </div>
+  <div className="card-body">
+    {step === 2 && (
+      <div className="text-center mb-3">
+        <div className="d-flex justify-content-center">
+          {generateAvatar(receiverInfo.firstName)}
+        </div>
+        <p>
+          You're about to {transferType === 1 ? "send" : "request"}:
+        </p>
+        <h3>
+          {amount} {fromCurrency}
+        </h3>
+        <p>{transferType === 1 ? "to" : "from"}:</p>
+
+        <p>{receiverInfo.firstName}</p>
+      </div>
+    )}
+    {step === 1 && (
+      <>
+        {transferType === 1 && (
+          <form >
+            <div className="row g-3 mb-3">
+              <div className="col-sm-12">
+                <label className="form-label">From</label>
+                <select
+                  className="form-select"
+                  onChange={(e) => setFromCurrency(e.target.value)}
+                >
+                  {currencies.map((currency) => (
+                    <option key={currency} value={currency}>
+                      {currency}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div className="card-body">
-                <form>
-                  <div className="row g-3 mb-3">
-                    <div className="col-sm-12">
-                      <label className="form-label">From</label>
-                      <select className="form-select">
-                        <option selected>USD</option>
-                        <option value={1}>GBP</option>
-                        <option value={2}>EUR</option>
-                        <option value={3}>CAD</option>
-                        <option value={4}>AUD</option>
-                        <option value={5}>JPY</option>
-                      </select>
-                    </div>
-                    <div className="col-sm-12">
-                    <label className="form-label">To</label>
-                      <div className="input-group">
-                        <input type="text" className="form-control" placeholder="pay ID e.g 786341" />
-                      </div>
-                    </div>
-                    
-                    <div className="col-sm-12">
-                      <label className="form-label">Amount</label>
-                      <div className="input-group">
-                        <input type="text" className="form-control" />
-                        <button className="btn btn-outline-secondary" type="button">Max</button>
-                      </div>
-                    </div>
-                    <div className="col-sm-12">
-                      <button type="submit" className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5">Confirm</button>
-                    </div>
-                  </div>
-                </form>
-                <div className="table-responsive mt-1">
-                  <table className="table border">
-                    <tbody>
-                      <tr>
-                        <td>Total Transfer</td>
-                        <td>0.00 USD</td>
-                      </tr>
-                      <tr>
-                        <td>Available </td>
-                        <td>0.00 USD</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div className="col-sm-12">
+                <label className="form-label">To</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={payID}
+                    onChange={(e) => setPayID(e.target.value)}
+                    placeholder="Pay ID e.g., 786341"
+                  />
                 </div>
               </div>
+              <div className="col-sm-12">
+                <label className="form-label">Amount</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                  <button
+                    className="btn btn-outline-secondary"
+                    type="button"
+                    onClick={handleMax}
+                  >
+                    Max
+                  </button>
+                </div>
+              </div>
+              <div className="col-sm-12">
+              <button
+  onClick={handleConfirm}
+  className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+  disabled={isLoading}
+>
+  {isLoading ? "Processing..." : "Confirm"}
+</button>
+
+
+              </div>
             </div>
+          </form>
+        )}
+        {transferType === 2 && (
+          <form  >
+            <div className="col-sm-12 ">
+              <label className="form-label">From</label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  value={payID}
+                  onChange={(e) => setPayID(e.target.value)}
+                  placeholder="Pay ID e.g., 786341"
+                />
+              </div>
+            </div>
+            <div className="col-sm-12">
+                <label className="form-label">Amount</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+               
+                </div>
+              </div>
+            <div className="col-sm-12 mt-3">
+            <button
+  onClick={handleConfirm}
+  className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+  disabled={isLoading}
+>
+  {isLoading ? "Processing..." : "Confirm"}
+</button>
+
+            </div>
+          </form>
+        )}
+      </>
+    )}
+    {transferType === 1 && (
+      <div className="table-responsive mt-1">
+        <table className="table border">
+          <tbody>
+            <tr>
+              <td>Total Transfer</td>
+              <td>
+                {parseFloat(amount).toFixed(2)} {fromCurrency}
+              </td>
+            </tr>
+            <tr>
+              <td>Available</td>
+              <td>
+                {getAccountByCurrency(fromCurrency)?.balance?.toFixed(2)}{" "}
+                {fromCurrency}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    )}
+    {step === 2 && (
+      <div className="d-flex justify-content-center">
+     <button
+  onClick={handleConfirm}
+  className="btn btn-primary text-uppercase"
+  disabled={isLoading}
+>
+  {isLoading ? (
+    <span>Processing...</span>
+  ) : (
+    <span>{transferType === 1 ? "Send" : "Request"} Now</span>
+  )}
+</button>
+      </div>
+    )}
+      </div>
+</div>
+</div>
+
+
           </div>
-        </div>{/* Row End */}
-        
+   
       </div>
     </div>
   </div>
