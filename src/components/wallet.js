@@ -18,11 +18,19 @@ const Wallet = () => {
 
   // Hardcoded conversion rates
   const conversionRates = {
+    USD:1,
     EUR: 1.09019,
     GBP: 1.24180,
     CAD: 1.351745,
+    AUD: 1.30172, // Australian Dollar
     KES: 1 / 131.08,
+    ZAR: 1 / 14.87, // South Africa
+    UGX: 1 / 3725, // Uganda
+    ZMW: 1 / 19.98, // Zambia
+    NGN: 1 / 413.34, // Nigeria
+    RWF: 1 / 1010, // Rwanda
   };
+  
 
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const selectedAccount = getAccountByCurrency(selectedCurrency);
