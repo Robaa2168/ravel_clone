@@ -29,3 +29,14 @@
   align-items: center;
   height: 100%;
 }
+
+
+.has-error .form-control {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+}

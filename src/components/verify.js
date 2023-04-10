@@ -203,8 +203,6 @@ function Verification() {
               </button>
             </form>
             <a
-              href="#"
-              title="#"
               className="text-primary text-decoration-underline"
               role="button"
               onClick={handleResendCode}
