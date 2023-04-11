@@ -76,19 +76,19 @@ const Home = () => {
         </div>{/* Row End */}
         <div className="row g-3 mb-3 row-cols-1 row-cols-md-2 row-cols-lg-4">
           {user?.accounts?.map(account => (
-            <div className="col" key={account.currency}>
+            <div className="col" key={account?.currency}>
               <div className="card">
                 <div className="card-body d-flex align-items-center">
                   <div className="flex-fill text-truncate">
-                    <span className="text-muted small text-uppercase">{account.currency}</span>
+                    <span className="text-muted small text-uppercase">{account?.currency}</span>
                     <div className="d-flex flex-column">
                       <div className="price-block">
-                        <span className="fs-6 fw-bold color-price-up">0.00</span>
-                        <span className="small text-muted px-2">$0</span>
+                        <span className="fs-6 fw-bold color-price-up">{account?.balance}</span>
+                        <span className="small text-muted px-2">${account?.balance}</span>
                       </div>
                       <div className="price-report">
                         <span className="small text-success">0.00%</span>
-                        <span className="small text-muted px-2">Volume: 0.00</span>
+                        <span className="small text-muted px-2">Volume: {account?.balance}</span>
                         {account.isActive ? (
                           <span className="text-success">
                             <i className="bi bi-check-circle-fill me-2"></i>
