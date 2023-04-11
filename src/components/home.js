@@ -257,3 +257,11 @@ const Home = () => {
 };
 
 export default Home;
+
+
+{isTransactionSuccess && (
+  <div className="card">
+  <div className="card-body d-flex flex-column justify-content-center align-items-center">
+    <AnimatedCheckmark />
+    <h2 className="success-muted">Transaction Successful</h2>
+  </div>

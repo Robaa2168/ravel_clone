@@ -40,3 +40,14 @@
   color: #dc3545;
   font-size: 0.875rem;
 }
+.success-container {
+  height: 100vh;
+  flex-direction: column;
+}
+
+.success-muted {
+  color: #0c5460;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 20px;
+}
