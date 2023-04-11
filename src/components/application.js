@@ -86,6 +86,11 @@ function Application() {
   const handleNextStep = async () => {
     if (canProceedToNextStep()) {
       if (step === 2) {
+        if (!navigator.onLine) {
+          showToast("warning", "No internet connection");
+          return;
+        }
+      
         setLoading(true);
         try {
           const response = await api.post("/api/KYC", {

@@ -70,6 +70,11 @@ function Signup() {
       ? { email, password, referralId }
       : { phoneNumber: formattedPhoneNumber, password, referralId };
     setLoading(true);
+    if (!navigator.onLine) {
+      showToast("warning", "No internet connection");
+      return;
+    }
+  
     try {
       const response = await api.post(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`, formData);
       const data = response.data;

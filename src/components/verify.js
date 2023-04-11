@@ -39,6 +39,10 @@ function Verification() {
   
   const handleVerificationSubmit = async (event) => {
     if (event) event.preventDefault();
+    if (!navigator.onLine) {
+      showToast("warning", "No internet connection");
+      return;
+    }
     const enteredCode = verificationCode.join("");
     setLoading(true);
     try {
@@ -82,7 +86,11 @@ function Verification() {
       showToast("warning", "Please wait before resending the code.");
       return;
     }
-
+    if (!navigator.onLine) {
+      showToast("warning", "No internet connection");
+      return;
+    }
+  
     try {
       const response = await api.post("/api/verification", {
         [verificationType === "email" ? "email" : "phoneNumber"]: contact

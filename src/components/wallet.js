@@ -32,6 +32,7 @@ const generateAvatar = (name) => {
 const Wallet = () => {
   const { user } = useUser();
   const accounts = user?.accounts;
+  const { login } = useUser();
   const [transferType, setTransferType] = useState(1); // 1 for Transfer, 2 for Request
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('');
@@ -44,7 +45,9 @@ const Wallet = () => {
 
   const currentDate = new Date();
   const transactionDate = currentDate.toLocaleString();
-  
+
+
+
 
   // Adjust these values as needed
   const minimumWithdrawal = 10;
@@ -101,19 +104,20 @@ const Wallet = () => {
 
 
   const fetchReceiverInfo = async (payID) => {
+
     try {
       const response = await api.post(`/api/check/${payID}`);
-  
+
       // Check if the request was successful
       if (response.status !== 200) {
         // Handle HTTP errors
         const message = response.data?.message;
         throw new Error(`Error fetching receiver info: ${message || response.status}`);
       }
-  
+
       // Parse the JSON response
       const receiverInfo = response.data; // Use 'response.data' for Axios
-  
+
       // Update the state with the received data
       setReceiverInfo(receiverInfo);
     } catch (error) {
@@ -131,11 +135,11 @@ const Wallet = () => {
       }
     }
   };
-  
+
   const handleMax = () => {
     // Logic for handling max amount
   };
-  
+
 
 
   const handleNumericInput = (e, setValue) => {
@@ -184,6 +188,22 @@ const Wallet = () => {
         amount,
       });
       if (response.status === 200) {
+        const balanceResponse = await api.get('/api/getUserBalances', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'user-id': user?.primaryInfo?._id, // Pass the userId as a custom header
+          },
+        });
+
+        if (balanceResponse.status === 200) {
+          // Update the local storage with the new balances
+          const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+          console.log(updatedUser)
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+
+          // Update the context
+          login(updatedUser);
+        }
         toast.success(response.data.message);
         setIsTransactionSuccess(true);
       }
@@ -208,6 +228,22 @@ const Wallet = () => {
       if (response.status === 200) {
         toast.success(response.data.message);
         setIsTransactionSuccess(true);
+        const balanceResponse = await api.get('/api/getUserBalances', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'user-id': user?.primaryInfo?._id, // Pass the userId as a custom header
+          },
+        });
+
+        if (balanceResponse.status === 200) {
+          // Update the local storage with the new balances
+          const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+          console.log(updatedUser)
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+
+          // Update the context
+          login(updatedUser);
+        }
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
@@ -536,69 +572,70 @@ const Wallet = () => {
 
             <div className="col-xl-6 col-xxl-5">
               <div className="card">
-              <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
-                        <h6 className="mb-0 fw-bold">
-                          {transferType === 1 ? "Transfer" : "Request"}
-                        </h6>
-                        <div>
-                        <button
-  className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
-  style={{ marginRight: "10px" }}
-  onClick={() => handleTransferTypeChange(1)}
->
-  Transfer
-</button>
-<button
-  className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
-  style={{ marginRight: "10px" }}
-  onClick={() => handleTransferTypeChange(2)}
->
-  Request
-</button>
+                <div className="card-header  d-flex justify-content-between bg-transparent align-items-center">
+                  <h6 className="mb-0 fw-bold">
+                    {transferType === 1 ? "Transfer" : "Request"}
+                  </h6>
+                  <div>
+                    <button
+                      className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => handleTransferTypeChange(1)}
+                    >
+                      Transfer
+                    </button>
+                    <button
+                      className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
+                      style={{ marginRight: "10px" }}
+                      onClick={() => handleTransferTypeChange(2)}
+                    >
+                      Request
+                    </button>
 
+                  </div>
+                </div>
+                <div className="card-body d-flex flex-column justify-content-center align-items-center">
+
+                  {isTransactionSuccess ? (
+                    <div className="transaction-success" style={{ backgroundColor: "#f5f5f5", fontFamily: "Helvetica Neue,Helvetica,Arial,sans-serif", fontSize: "16px", border: "1px solid #e5e5e5", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", padding: "20px", margin: "20px auto", maxWidth: "500px" }}>
+                      <div className="text-center">
+                        <div className="mt-5 py-2 d-flex flex-column align-items-center justify-content-center">
+                          <AnimatedCheckmark />
+                          <h2 className="fw-bold mt-2 text-success" style={{ fontSize: "24px" }}>
+                            {transferType === 1 ? "Payment" : "Request"} Successful</h2>
                         </div>
                       </div>
-                <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                
-                  {isTransactionSuccess ? (
-                   <div className="transaction-success" style={{ backgroundColor: "#f5f5f5", fontFamily: "Helvetica Neue,Helvetica,Arial,sans-serif", fontSize: "16px", border: "1px solid #e5e5e5", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", padding: "20px", margin: "20px auto", maxWidth: "500px" }}>
-                   <div className="text-center">
-                     <div className="mt-5 py-2 d-flex flex-column align-items-center justify-content-center">
-                       <AnimatedCheckmark />
-                       <h2 className="fw-bold mt-2 text-success" style={{ fontSize: "24px" }}>Payment Successful</h2>
-                     </div>
-                   </div>
-                   <div className="transaction-details mx-auto d-flex flex-column align-items-start" style={{ flexWrap: 'nowrap' }}>
-                     <h3 className="text-muted fw-bold text-center" style={{ fontSize: "18px", marginTop: "20px", marginBottom: "10px" }}>Transaction Details</h3>
-                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
-                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Sender:</span>
-                       <span>{user?.userInfo?.firstName}</span>
-                     </div>
-                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
-                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Receiver:</span>
-                       <span>{receiverInfo?.firstName}</span>
-                     </div>
-                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
-                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Amount:</span>
-                       <span>{fromCurrency} {amount}</span>
-                     </div>
-                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
-                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Transaction ID:</span>
-                       <span>{user?.userInfo?._id}</span>
-                     </div>
-                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
-                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Date:</span>
-                       <span>{transactionDate}</span>
-                     </div>
-                   </div>
-                 </div>
-                 
-         
-            
-              
+                      <div className="transaction-details mx-auto d-flex flex-column align-items-start" style={{ flexWrap: 'nowrap' }}>
+                        <h3 className="text-muted fw-bold text-center" style={{ fontSize: "18px", marginTop: "20px", marginBottom: "10px" }}>Transaction Details</h3>
+                        <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                          <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Sender:</span>
+                          <span>{user?.userInfo?.firstName}</span>
+                        </div>
+                        <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                          <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Receiver:</span>
+                          <span>{receiverInfo?.firstName}</span>
+                        </div>
+                        <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                          <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Amount:</span>
+                          <span>{fromCurrency} {amount}</span>
+                        </div>
+                        <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                          <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Transaction ID:</span>
+                          <span>{user?.userInfo?._id}</span>
+                        </div>
+                        <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                          <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Date:</span>
+                          <span>{transactionDate}</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
                   ) : (
                     <>
-                     
+
                       {step === 2 && (
                         <div className="text-center mb-3 col-sm-12">
                           <div className="d-flex justify-content-center">
@@ -635,11 +672,14 @@ const Wallet = () => {
                                   <div className="input-group">
                                     <input
                                       type="text"
+                                      pattern="[0-9]*"
+                                      maxLength="6" // Set maximum length to 6 digits
                                       className="form-control"
                                       value={payID}
                                       onChange={(e) => setPayID(e.target.value)}
                                       placeholder="Pay ID e.g., 786341"
                                     />
+
                                   </div>
                                 </div>
                                 <div className="col-sm-12">
@@ -647,6 +687,8 @@ const Wallet = () => {
                                   <div className="input-group">
                                     <input
                                       type="text"
+                                      pattern="[0-9]*"
+                                      maxLength="5" // Set maximum length to 5 digits
                                       className="form-control"
                                       value={amount}
                                       onChange={(e) => setAmount(e.target.value)}
@@ -654,7 +696,6 @@ const Wallet = () => {
                                     <button
                                       className="btn btn-outline-secondary"
                                       type="button"
-                                      onClick={handleMax}
                                     >
                                       Max
                                     </button>
@@ -671,47 +712,58 @@ const Wallet = () => {
                                 </div>
                               </div>
                             </form>
+
+
                           )}
                           {transferType === 2 && (
-                            <form>
-                              <div className="col-sm-12">
-                                <label className="form-label">From</label>
-                                <div className="input-group">
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    value={payID}
-                                    onChange={(e) => setPayID(e.target.value)}
-                                    placeholder="Pay ID e.g., 786341"
-                                  />
+                            <div className=" col-sm-12 col-lg-12" style={{ width: "100%" }}>
+                              <form>
+
+                                <div className="col-sm-12">
+                                  <label className="form-label">From</label>
+                                  <div className="input-group">
+                                    <input
+                                      type="text"
+                                      pattern="[0-9]*"
+                                      maxLength="6" // Set maximum length to 6 digits
+                                      className="form-control"
+                                      value={payID}
+                                      onChange={(e) => setPayID(e.target.value)}
+                                      placeholder="Pay ID e.g., 786341"
+                                    />
+
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="col-sm-12">
-                                <label className="form-label">Amount</label>
-                                <div className="input-group">
-                                  <input
-                                    type="text"
-                                    className="form-control"
-                                    value={amount}
-                                    onChange={(e) => setAmount(e.target.value)}
-                                  />
+                                <div className="col-sm-12">
+                                  <label className="form-label">Amount</label>
+                                  <div className="input-group">
+                                    <input
+                                      type="text"
+                                      pattern="[0-9]*"
+                                      maxLength="5"
+                                      className="form-control"
+                                      value={amount}
+                                      onChange={(e) => setAmount(e.target.value)}
+                                    />
+
+                                  </div>
                                 </div>
-                              </div>
-                              <div className="col-sm-12 mt-3">
-                                <button
-                                  onClick={handleConfirm}
-                                  className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
-                                  disabled={isLoading}
-                                >
-                                  {isLoading ? "Processing..." : "Confirm"}
-                                </button>
-                              </div>
-                            </form>
+                                <div className="col-sm-12 mt-3">
+                                  <button
+                                    onClick={handleConfirm}
+                                    className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+                                    disabled={isLoading}
+                                  >
+                                    {isLoading ? "Processing..." : "Confirm"}
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
                           )}
                         </>
                       )}
                       {transferType === 1 && (
-                        <div className="table-responsive mt-1 col-sm-12 col-lg-12">
+                        <div className="table-responsive mt-1 col-sm-12 col-lg-12" style={{ width: "100%" }}>
                           <table className="table border">
                             <tbody>
                               <tr>

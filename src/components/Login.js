@@ -31,36 +31,40 @@ function Login() {
   const handleLogin = async (event, type) => {
     event.preventDefault();
   
+    if (!navigator.onLine) {
+      showToast("warning", "No internet connection");
+      return;
+    }
+  
     const credentials =
       type === "email"
         ? { email, password }
         : { phoneNumber: formatPhoneNumber(phoneNumber), password };
-        setLoading(true);
+    setLoading(true);
     try {
       const response = await api.post("/api/login", credentials);
       const data = response.data;
   
-      if (response.status === 200) { // Check for success status code
+      if (response.status === 200) {
         logout();
         if (data.isVerified) {
-            if (data.hasCompletedKYC) {
-              showToast("success", "Logged in successfully");
-              login({
-                email: data.primaryInfo.email,
-                phoneNumber: data.primaryInfo.phoneNumber,
-                isVerified: data.isVerified,
-                userId: data.userId,
-                payID: data.primaryInfo.payID,
-                userInfo: data.userInfo,
-                accounts: data.accounts,
-                token: data.token, 
-                primaryInfo: data.primaryInfo,
-              });
-            
-              localStorage.setItem("user", JSON.stringify(data)); 
-              navigate("/home");
-            } else {
-      
+          if (data.hasCompletedKYC) {
+            showToast("success", "Logged in successfully");
+            login({
+              email: data.primaryInfo.email,
+              phoneNumber: data.primaryInfo.phoneNumber,
+              isVerified: data.isVerified,
+              userId: data.userId,
+              payID: data.primaryInfo.payID,
+              userInfo: data.userInfo,
+              accounts: data.accounts,
+              token: data.token,
+              primaryInfo: data.primaryInfo,
+            });
+  
+            localStorage.setItem("user", JSON.stringify(data));
+            navigate("/home");
+          } else {
             showToast("warning", "Please complete the KYC process");
             navigate("/KYC", { state: { userId: data.userId } });
           }
@@ -70,12 +74,11 @@ function Login() {
             state: {
               mode: type,
               contact: type === "email" ? email : formatPhoneNumber(phoneNumber),
-              userId: data.userId, // Add the userId to the state
+              userId: data.userId,
             },
           });
         }
       } else {
-        // Handle error response from server
         const errorMessage = data.message || "Login failed";
         if (response.status === 400 && data.errors) {
           const errorFields = Object.keys(data.errors).join(", ");
@@ -91,11 +94,11 @@ function Login() {
         showToast("error", "Error on login");
         console.error("Error on login: ", error);
       }
-    }
-    finally {
-      setLoading(false); // Set loading state to false
+    } finally {
+      setLoading(false);
     }
   };
+  
   
   
   return (
