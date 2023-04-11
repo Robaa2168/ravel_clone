@@ -31,7 +31,7 @@ const generateAvatar = (name) => {
 
 const Wallet = () => {
   const { user } = useUser();
-  const accounts = user.accounts;
+  const accounts = user?.accounts;
   const [transferType, setTransferType] = useState(1); // 1 for Transfer, 2 for Request
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('');
@@ -42,7 +42,9 @@ const Wallet = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isTransactionSuccess, setIsTransactionSuccess] = useState(false);
 
-
+  const currentDate = new Date();
+  const transactionDate = currentDate.toLocaleString();
+  
 
   // Adjust these values as needed
   const minimumWithdrawal = 10;
@@ -98,21 +100,42 @@ const Wallet = () => {
   const currencies = getUniqueCurrencies(storedAccounts); // Fetch unique currencies from user's accounts
 
 
-
   const fetchReceiverInfo = async (payID) => {
-    // Replace this code with an API call to get the actual receiver data using Pay ID
-    const dummyReceiverInfo = {
-      id: payID,
-      firstName: "John",
-    };
-
-    setReceiverInfo(dummyReceiverInfo);
+    try {
+      const response = await api.post(`/api/check/${payID}`);
+  
+      // Check if the request was successful
+      if (response.status !== 200) {
+        // Handle HTTP errors
+        const message = response.data?.message;
+        throw new Error(`Error fetching receiver info: ${message || response.status}`);
+      }
+  
+      // Parse the JSON response
+      const receiverInfo = response.data; // Use 'response.data' for Axios
+  
+      // Update the state with the received data
+      setReceiverInfo(receiverInfo);
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        // Handle fetch AbortError, in case you decide to abort the request later
+        console.error('Fetch request was aborted:', error);
+      } else if (navigator.onLine === false) {
+        // Check if the user is offline
+        console.error('Network error:', error);
+        toast.error('Network error: Please check your internet connection and try again.');
+      } else {
+        // Handle other errors
+        console.error('Error fetching receiver info:', error);
+        toast.error(`Error fetching receiver info: ${error.message}`);
+      }
+    }
   };
-
-
+  
   const handleMax = () => {
     // Logic for handling max amount
   };
+  
 
 
   const handleNumericInput = (e, setValue) => {
@@ -513,44 +536,80 @@ const Wallet = () => {
 
             <div className="col-xl-6 col-xxl-5">
               <div className="card">
-                <div className="card-body d-flex flex-column justify-content-center align-items-center">
-                  {isTransactionSuccess ? (
-                    <div>
-                      <AnimatedCheckmark />
-                      <h2 className="success-muted">Transaction Successful</h2>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
+              <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center">
                         <h6 className="mb-0 fw-bold">
                           {transferType === 1 ? "Transfer" : "Request"}
                         </h6>
                         <div>
-                          <button
-                            className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
-                            onClick={() => handleTransferTypeChange(1)}
-                          >
-                            Transfer
-                          </button>
-                          <button
-                            className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
-                            onClick={() => handleTransferTypeChange(2)}
-                          >
-                            Request
-                          </button>
+                        <button
+  className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
+  style={{ marginRight: "10px" }}
+  onClick={() => handleTransferTypeChange(1)}
+>
+  Transfer
+</button>
+<button
+  className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
+  style={{ marginRight: "10px" }}
+  onClick={() => handleTransferTypeChange(2)}
+>
+  Request
+</button>
+
                         </div>
                       </div>
+                <div className="card-body d-flex flex-column justify-content-center align-items-center">
+                
+                  {isTransactionSuccess ? (
+                   <div className="transaction-success" style={{ backgroundColor: "#f5f5f5", fontFamily: "Helvetica Neue,Helvetica,Arial,sans-serif", fontSize: "16px", border: "1px solid #e5e5e5", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", padding: "20px", margin: "20px auto", maxWidth: "500px" }}>
+                   <div className="text-center">
+                     <div className="mt-5 py-2 d-flex flex-column align-items-center justify-content-center">
+                       <AnimatedCheckmark />
+                       <h2 className="fw-bold mt-2 text-success" style={{ fontSize: "24px" }}>Payment Successful</h2>
+                     </div>
+                   </div>
+                   <div className="transaction-details mx-auto d-flex flex-column align-items-start" style={{ flexWrap: 'nowrap' }}>
+                     <h3 className="text-muted fw-bold text-center" style={{ fontSize: "18px", marginTop: "20px", marginBottom: "10px" }}>Transaction Details</h3>
+                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Sender:</span>
+                       <span>{user?.userInfo?.firstName}</span>
+                     </div>
+                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Receiver:</span>
+                       <span>{receiverInfo?.firstName}</span>
+                     </div>
+                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Amount:</span>
+                       <span>{fromCurrency} {amount}</span>
+                     </div>
+                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Transaction ID:</span>
+                       <span>{user?.userInfo?._id}</span>
+                     </div>
+                     <div className="detail-row text-start" style={{ marginBottom: "10px" }}>
+                       <span className="text-muted fw-bold" style={{ marginRight: "10px" }}>Date:</span>
+                       <span>{transactionDate}</span>
+                     </div>
+                   </div>
+                 </div>
+                 
+         
+            
+              
+                  ) : (
+                    <>
+                     
                       {step === 2 && (
-                        <div className="text-center mb-3">
+                        <div className="text-center mb-3 col-sm-12">
                           <div className="d-flex justify-content-center">
-                            {generateAvatar(receiverInfo.firstName)}
+                            {generateAvatar(receiverInfo?.firstName)}
                           </div>
                           <p>You're about to {transferType === 1 ? "send" : "request"}:</p>
                           <h3>
                             {amount} {fromCurrency}
                           </h3>
                           <p>{transferType === 1 ? "to" : "from"}:</p>
-                          <p>{receiverInfo.firstName}</p>
+                          <p>{receiverInfo?.firstName}</p>
                         </div>
                       )}
                       {step === 1 && (
@@ -652,7 +711,7 @@ const Wallet = () => {
                         </>
                       )}
                       {transferType === 1 && (
-                        <div className="table-responsive mt-1">
+                        <div className="table-responsive mt-1 col-sm-12 col-lg-12">
                           <table className="table border">
                             <tbody>
                               <tr>
