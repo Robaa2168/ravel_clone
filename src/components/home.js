@@ -50,12 +50,24 @@ const Home = () => {
 
   const accounts = user.accounts;
   let usdBalance = 0;
+  let accountStatus = "";
+  
   for (let i = 0; i < accounts.length; i++) {
     if (accounts[i].currency === 'USD') {
       usdBalance = accounts[i].balance;
+  
+      if (accounts[i].isBanned) {
+        accountStatus = "banned";
+      } else if (accounts[i].isActive) {
+        accountStatus = "active";
+      } else {
+        accountStatus = "inactive";
+      }
+  
       break;
     }
   }
+  
 
 
   return (
@@ -75,7 +87,16 @@ const Home = () => {
           <h2>Summary</h2>
           <div className="dashboard-account-summary">
             <div className="dashboard-account-balance" style={{ position: 'relative' }}>
-              <span className="dashboard-status-pill inactive">Active</span>
+            {accountStatus === "active" && (
+  <span className="dashboard-status-pill active">Active</span>
+)}
+{accountStatus === "inactive" && (
+  <span className="dashboard-status-pill inactive">Inactive</span>
+)}
+{accountStatus === "banned" && (
+  <span className="dashboard-status-pill banned">Banned</span>
+)}
+
 
               <p>Available Balance</p>
               <h3>${usdBalance} USD</h3>
