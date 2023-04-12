@@ -9,6 +9,7 @@ import Repay from './repay';
 import Ticket from './ticket';
 import Wallet from './wallet';
 import Login from './Login';
+import Sample from './sample';
 import Signup from './signup';
 import Application from './application';
 import Verification from './verify';
@@ -63,6 +64,7 @@ const AppLayout = () => {
           <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
           <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/sample" element={<Sample />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/KYC" element={<Application />} />
           <Route path="/verify" element={<Verification />} />

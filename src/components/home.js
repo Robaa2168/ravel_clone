@@ -2,257 +2,156 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "./context";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-import '../App.css';
+import './home.css';
+
+
+function generateAvatarBackgroundColor(initial) {
+  const baseHue = (initial.charCodeAt(0) * 39) % 360;
+  return `hsl(${baseHue}, 50%, 50%)`;
+}
 
 const Home = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const [transactions, setTransactions] = useState([])
 
-  useEffect(() => {
-    console.log("User state changed", user);
-  }, [user]);
 
-  // Your existing useEffect for the login redirect
-  useEffect(() => {
-    console.log("Inside useEffect");
-    console.log(user);
-    if (!user && !localStorage.getItem("user")) {
-      navigate("/login");
+  const dummyActivities = [
+ ]
+
+  const creditCardSVG = (
+    <svg className="credit-card" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+      {/* Background gradient */}
+      <defs>
+        <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style={{stopColor: '#00008B', stopOpacity: 1}} />
+          <stop offset="100%" style={{stopColor: '#7F7F7F', stopOpacity: 1}} />
+        </linearGradient>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+
+      {/* Rounded corners */}
+      <rect x="0" y="0" rx="15" ry="15" width="100%" height="100%" fill="none" stroke="white" strokeWidth="3" />
+
+      {/* Card Logo */}
+      <circle cx="45" cy="45" r="30" fill="#ffffff" />
+      <text x="45" y="50" fontFamily="Arial" fontSize="22" textAnchor="middle" fill="#00008B">AE</text>
+
+      {/* Card Number */}
+      <text x="50" y="135" fontFamily="Arial" fontSize="18" textAnchor="start" fill="#ffffff">1234 5678 9012 3456</text>
+
+      {/* Cardholder Name */}
+      <text x="50" y="185" fontFamily="Arial" fontSize="16" textAnchor="start" fill="#ffffff">CARDHOLDER NAME</text>
+
+      {/* Expiration Date */}
+      <text x="280" y="185" fontFamily="Arial" fontSize="14" textAnchor="start" fill="#ffffff">EXP: 12/25</text>
+    </svg>
+  );
+
+  const accounts = user.accounts;
+  let usdBalance = 0;
+  for (let i = 0; i < accounts.length; i++) {
+    if (accounts[i].currency === 'USD') {
+      usdBalance = accounts[i].balance;
+      break;
     }
-  }, [navigate, user]);
-
-  useEffect(() => {
-    console.log("User state changed", user);
-    console.log("Email:", user?.email);
-    console.log("PayID:", user?.payID);
-    console.log("Phone number:", user?.phoneNumber);
-  }, [user]);
-
-
+  }
 
 
   return (
-    <div className="body d-flex py-3">
-      <div className="container-xxl">
-        <div className="row g-3 mb-3">
-          <div className="col-lg-12">
-            <div className="card">
+    <div className="dashboard">
+      <div className="dashboard-info-message">
+        <p>Note: This site undergoes frequent changes, and users may experience major visual updates. However, functionality remains intact.</p>
+      </div>
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Dashboard</h1>
+        <div className="dashboard-actions">
+          <button onClick={() => navigate('/wallet')} className="dashboard-send-btn">Send</button>
+          <button onClick={() => navigate('/wallet')} className="dashboard-request-btn">Request</button>
+        </div>
+      </div>
+      <div className="dashboard-content">
+        <div className="dashboard-summary">
+          <h2>Summary</h2>
+          <div className="dashboard-account-summary">
+            <div className="dashboard-account-balance" style={{ position: 'relative' }}>
+              <span className="dashboard-status-pill inactive">Active</span>
 
-              <div className="card-body">
+              <p>Available Balance</p>
+              <h3>${usdBalance} USD</h3>
 
-                <div className="row g-3 align-items-center">
-                  <div className="col-md-6 col-lg-6 col-xl-3">
-                    <div className="d-flex">
-                      <img className="avatar rounded-circle" src="assets/images/profile_av.svg" alt="profile" />
-                      <div className="flex-fill ms-3">
-                        <p className="mb-0"><span className="font-weight-bold">{user?.userInfo?.firstName} {user?.userInfo?.lastName}
-                        </span></p>
-                        <small className>{user?.userInfo?.email}</small>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-lg-6 col-xl-3">
-                    <div className="d-flex flex-column">
-                      <span className="text-muted mb-1">Pay ID:{user?.primaryInfo?.payID}</span>
-                      <span className="small text-muted flex-fill text-truncate">
-                        Last login time: {new Date(user?.primaryInfo?.lastLogin).toLocaleString()}
-                      </span>
-
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-lg-6 col-xl-2">
-                    <div className="d-flex-inline">
-                    </div>
-                  </div>
-                  <div className="col-md-6 col-lg-6 col-xl-4">
-                    <a title="invite" className="btn btn-primary text-dark mb-1">25% commission:Invite friends now!</a>
-                    <a title="invite" className="d-block"><i class="fas fa-share-alt  m-2"></i>{user?.primaryInfo?.referralId}</a>
-                  </div>
-                </div>
-              </div>
+            </div>
+            <div className="dashboard-account-hold">
+              <p>Money on Hold</p>
+              <h3>$0.00 USD</h3>
             </div>
           </div>
-        </div>{/* Row End */}
-        <div className="row g-3 mb-3 row-cols-1 row-cols-md-2 row-cols-lg-4">
-          {user?.accounts?.map(account => (
-            <div className="col" key={account?.currency}>
-              <div className="card">
-                <div className="card-body d-flex align-items-center">
-                  <div className="flex-fill text-truncate">
-                    <span className="text-muted small text-uppercase">{account?.currency}</span>
-                    <div className="d-flex flex-column">
-                      <div className="price-block">
-                        <span className="fs-6 fw-bold color-price-up">{account?.balance}</span>
-                        <span className="small text-muted px-2">${account?.balance}</span>
-                      </div>
-                      <div className="price-report">
-                        <span className="small text-success">0.00%</span>
-                        <span className="small text-muted px-2">Volume: {account?.balance}</span>
-                        {account.isActive ? (
-                          <span className="text-success">
-                            <i className="bi bi-check-circle-fill me-2"></i>
-                          </span>
-                        ) : (
-                          <span className="badge bg-careys-pink mb-1">Inactive</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+
+          <div className="dashboard-banks-cards">
+            <h3>Banks and Cards</h3>
+            {creditCardSVG}
+            {/* Add your bank and card content here */}
+          </div>
+          <div className="dashboard-currency-menu">
+            <button className="dashboard-currency-btn">•••</button>
+            <div className="dashboard-currency-dropdown">
+              {/* Add your currency actions here, such as "Add currency" */}
+            </div>
+          </div>
+        </div>
+        <div className="dashboard-activity-list ">
+          <h3 className="mb-3 " >Recent Activity</h3>
+          {dummyActivities.length === 0 ? (
+            <p>No data found</p>
+          ) : (
+            dummyActivities.map((activity) => (
+              <div key={activity.id} className="dashboard-activity-item">
+                <div
+                  className="dashboard-activity-avatar"
+                  style={{
+                    backgroundColor: generateAvatarBackgroundColor(activity.initial),
+                  }}
+                >
+
+
+                </div>
+
+                <div className="dashboard-activity-info">
+                  <p className="dashboard-activity-title">{activity.title}</p>
+                  <p className="dashboard-activity-user">{activity.user}</p>
+                </div>
+                <div className="dashboard-activity-date">
+                  <p>{activity.date}</p>
+                </div>
+                <div className="dashboard-activity-amount">
+                  <p>{activity.amount}</p>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
-
-
-        <div className="row g-3 mb-3 row-deck">
-          <div className="col-xl-7">
-            <div className="card">
-              <div className="card-header py-3 d-flex justify-content-between">
-                <h6 className="mb-0 fw-bold">Recent Transactions</h6>
-              </div>
-              <div className="card-body" style={{ overflowX: 'auto' }}>
-                {transactions.length === 0 ? (
-                  <p className="text-center">No Recent transactions</p>
-                ) : (
-                  <table
-                    id="ordertabthree"
-                    className="priceTable table table-hover custom-table-2 table-bordered align-middle mb-0"
-                    style={{ maxWidth: '100%' }}
-                  >
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Pair</th>
-                        <th>Side</th>
-                        <th>Price</th>
-                        <th>Executed</th>
-                        <th>Fee</th>
-                        <th>Total</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {transactions.map((transaction) => (
-                        <tr key={transaction.id}>
-                          <td>{transaction.date}</td>
-                          <td>{transaction.pair}</td>
-                          <td>{transaction.side}</td>
-                          <td>{transaction.price}</td>
-                          <td>{transaction.executed}</td>
-                          <td>{transaction.fee}</td>
-                          <td>{transaction.total}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                )}
-              </div>
-            </div>
+        <div className="dashboard-tools">
+          <h2>Tools</h2>
+          <div className="dashboard-tool-cards">
+            {/* Add your tool cards or links here */}
           </div>
-
-          <div className="col-xl-12 col-xxl-5">
-            <div className="card card-custom">
-              <div className="card-body">
-                <div className="row row-cols-2 g-0">
-                  <div className="col">
-                    <div className="settings border-bottom border-end settings-custom">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green mx-2 my-2" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Enable 2FA</span>
-                          <span>Enabled</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings border-bottom">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-red  m-1" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Identity Verification</span>
-                          <Link to="/settings" title="setup" className="text-decoration-underline">verify</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings border-bottom border-end">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green  m-1" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Anti-phishing Code</span>
-                          <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings border-bottom">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green m-1" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Withdrawal Whitelist</span>
-                          <Link to="/settings" title="setup" className="text-decoration-underline">Turn on</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings border-bottom border-end">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green m-1" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">settings Key</span>
-                          <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings border-bottom">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green m-2" />
-
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Google Authenticator</span>
-                          <Link to="/settings" title="setup" className="text-decoration-underline">Setup</Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings  border-end">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-green mx-2 my-2" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Phone Number</span>
-                          <span>{user?.userInfo?.phoneNumber}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col">
-                    <div className="settings ">
-                      <div className="d-flex align-items-start px-2 py-3">
-                        <div className="dot-red mx-2 my-2" />
-                        <div className="d-flex flex-column">
-                          <span className="flex-fill text-truncate">Email Address </span>
-                          <span>{user?.userInfo?.email}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>{/* Row End */}
-
+        </div>
       </div>
+      <div className="dashboard-footer">
+        <div>
+          <i  onClick={() => navigate('/')} className="fas fa-home"></i>
+        </div>
+        <div>
+          <i onClick={() => navigate('/wallet')} className="fas fa-paper-plane"></i>
+        </div>
+        <div>
+          <i onClick={() => navigate('/wallet')} className="fas fa-hand-holding-usd"></i>
+        </div>
+      </div>
+
     </div>
+
   );
 };
 
