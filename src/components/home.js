@@ -76,7 +76,7 @@ const Home = () => {
         <p>Note: This site undergoes frequent changes, and users may experience major visual updates. However, functionality remains intact.</p>
       </div>
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Dashboard</h1>
+      <h1 className="dashboard-title d-none d-md-block">Dashboard</h1>
         <div className="dashboard-actions">
           <button onClick={() => navigate('/wallet')} className="dashboard-send-btn">Send</button>
           <button onClick={() => navigate('/wallet')} className="dashboard-request-btn">Request</button>
