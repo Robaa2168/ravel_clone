@@ -3,6 +3,7 @@ import { useUser } from "./context";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import './home.css';
+import api from '../api';
 
 
 function generateAvatarBackgroundColor(initial) {
@@ -12,8 +13,50 @@ function generateAvatarBackgroundColor(initial) {
 
 const Home = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user,login } = useUser();
   const [transactions, setTransactions] = useState([])
+
+
+  const fetchBalance = async () => {
+    try {
+      const balanceResponse = await api.get('/api/getUserBalances', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'user-id': user?.primaryInfo?._id, // Pass the userId as a custom header
+        },
+      });
+
+      if (balanceResponse.status === 200) {
+        // Update the local storage with the new balances
+        const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+
+        // Update the context
+        login(updatedUser);
+      }
+    } catch (error) {
+      console.error('Failed to fetch balance:', error);
+    }
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchBalance();
+      }
+    };
+
+    // Initial fetch
+    fetchBalance();
+
+    // Add event listener to update balance when the page becomes visible
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Clean up the event listener when the component is unmounted
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
 
   const dummyActivities = [
