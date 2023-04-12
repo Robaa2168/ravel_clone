@@ -106,6 +106,9 @@ const Home = () => {
               <p>Money on Hold</p>
               <h3>$0.00 USD</h3>
             </div>
+            <div className="dashboard-payid">
+  <p>Pay ID: {user?.primaryInfo?.payID}</p>
+</div>
           </div>
 
           <div className="dashboard-banks-cards">
