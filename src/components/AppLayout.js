@@ -33,8 +33,6 @@ const AppLayout = () => {
     return null; // Or replace with a loading component if desired
   }
 
-
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -46,17 +44,17 @@ const AppLayout = () => {
   };
 
   return (
-  
-       <div id="cryptoon-layout" className="theme-tradewind">
-         {!excludedRoutes.includes(location.pathname) && (
-         <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} onLinkClick={handleLinkClick} />
-    )}
-
-    <div className="main px-lg-4 px-md-4">
+    <div id="cryptoon-layout" className="theme-tradewind">
       {!excludedRoutes.includes(location.pathname) && (
-        <Header onToggleSidebar={toggleSidebar} />
+        <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} onLinkClick={handleLinkClick} />
       )}
-       <Routes>
+
+      <div className="main px-lg-4 px-md-4">
+        {!excludedRoutes.includes(location.pathname) && (
+          <Header onToggleSidebar={toggleSidebar} />
+        )}
+
+        <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
           <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
@@ -70,10 +68,14 @@ const AppLayout = () => {
           <Route path="/verify" element={<Verification />} />
           <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         </Routes>
+
+        {!excludedRoutes.includes(location.pathname) && (
+          <Footer />
+        )}
       </div>
-      <Footer />
     </div>
   );
 };
 
 export default AppLayout;
+
