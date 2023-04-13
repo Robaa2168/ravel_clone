@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "./context";
 import { Spinner } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
+import { createPopper } from '@popperjs/core';
+
 import './home.css';
 import api from '../api';
 
@@ -15,6 +17,20 @@ const Home = () => {
   const navigate = useNavigate();
   const { user,login } = useUser();
   const [transactions, setTransactions] = useState([])
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleMouseEnter = () => {
+    setShowDropdown(true);
+  };
+
+  const handleMouseLeave = () => {
+    setTimeout(() => {
+      setShowDropdown(false);
+    }, 300); // Add a 300ms delay before hiding the dropdown
+  };
+  
+
+  
 
 
   const fetchBalance = async () => {
@@ -129,29 +145,41 @@ const Home = () => {
         <div className="dashboard-summary">
           <h2>Summary</h2>
           <div className="dashboard-account-summary">
-            <div className="dashboard-account-balance" style={{ position: 'relative' }}>
-            {accountStatus === "active" && (
-  <span className="dashboard-status-pill active">Active</span>
-)}
-{accountStatus === "inactive" && (
-  <span className="dashboard-status-pill inactive">Inactive</span>
-)}
-{accountStatus === "banned" && (
-  <span className="dashboard-status-pill banned">Banned</span>
-)}
+          <div className="dashboard-account-balance" style={{ position: 'relative' }}>
+          <div className="dashboard-currency-menu">
+          <button id="dashboard-currency-btn" className="dashboard-currency-btn">⋮</button>
+        <div className="dashboard-currency-dropdown">
+          <p>Add currency</p>
+          <p>Remove currency</p>
+          <p>Change primary currency</p>
+        </div>
+     
+    </div>
 
+  {accountStatus === "active" && (
+    <span className="dashboard-status-pill active">Active</span>
+  )}
+  {accountStatus === "inactive" && (
+    <span className="dashboard-status-pill inactive">Inactive</span>
+  )}
+  {accountStatus === "banned" && (
+    <span className="dashboard-status-pill banned">Banned</span>
+  )}
+  <p>Available Balance</p>
+  <h3  className="mb-2">${usdBalance} USD</h3>
+</div>
 
-              <p>Available Balance</p>
-              <h3>${usdBalance} USD</h3>
-
-            </div>
             <div className="dashboard-account-hold">
               <p>Money on Hold</p>
               <h3>$0.00 USD</h3>
             </div>
-            <div className="dashboard-payid">
-  <p>Pay ID: {user?.primaryInfo?.payID}</p>
+            <div className="dashboard-payid-and-currency">
+  <div className="dashboard-payid">
+    <p>Pay ID: {user?.primaryInfo?.payID}</p>
+  </div>
+
 </div>
+
           </div>
 
           <div className="dashboard-banks-cards">
@@ -159,12 +187,7 @@ const Home = () => {
             {creditCardSVG}
             {/* Add your bank and card content here */}
           </div>
-          <div className="dashboard-currency-menu">
-            <button className="dashboard-currency-btn">•••</button>
-            <div className="dashboard-currency-dropdown">
-              {/* Add your currency actions here, such as "Add currency" */}
-            </div>
-          </div>
+         
         </div>
         <div className="dashboard-activity-list ">
           <h3 className="mb-3 " >Recent Activity</h3>

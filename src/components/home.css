@@ -141,9 +141,7 @@
     margin-bottom: 10px;
   }
   
-  .dashboard-currency-menu {
-    position: relative;
-  }
+ 
   
   .dashboard-currency-btn {
     font-size: 24px;
@@ -152,20 +150,21 @@
     cursor: pointer;
     padding: 5px;
   }
-  
   .dashboard-currency-dropdown {
-    display: none;
+    display: none; /* Change the initial display value to 'none' */
     position: absolute;
     background-color: #f5f5f5;
     border-radius: 4px;
     padding: 10px;
-    margin-top:5px;
+    margin-top: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dashboard-currency-btn:hover + .dashboard-currency-dropdown {
-    display: block;
-    }
+  }
+  
+  .dashboard-currency-menu:hover .dashboard-currency-dropdown {
+    display: none; /* Remove the duplicate display property */
+  }
+  
+      
     
     .dashboard-activity-list {
     flex: 1;
@@ -307,13 +306,15 @@
   
     .dashboard-status-pill {
       position: absolute;
-      top: 5px;
-      right: 5px;
+      bottom: 5px;
+      left: 5px;
       padding: 2px 6px;
       border-radius: 10px;
-      font-size: 10px;
+      font-size: 6px;
       color: #fff;
     }
+    
+    
     
     .dashboard-status-pill.active {
       background-color: #329449;
@@ -338,4 +339,18 @@
         font-weight: bold;
         color: #333;
       }
+      
+
+      .dashboard-payid-and-currency {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .dashboard-currency-menu {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+
       
