@@ -113,7 +113,7 @@ const handleAddCurrency = async (e) => {
 
   useEffect(() => {
     if (user) {
-      const newBalances = user.accounts.reduce((acc, account) => {
+      const newBalances = user?.accounts?.reduce((acc, account) => {
         acc[account.currency] = account.balance;
         return acc;
       }, {});
@@ -217,6 +217,7 @@ const handleAddCurrency = async (e) => {
       const response = await api.post('/api/deposit', {
         phoneNumber: formattedPhoneNumber,
         amount,
+        currency: currency,
       });
 
       if (response.data && response.status === 200) {

@@ -110,6 +110,7 @@ const Home = () => {
   const accounts = user.accounts;
   let usdBalance = 0;
   let accountStatus = "";
+  let isHeld = false;
   
   for (let i = 0; i < accounts.length; i++) {
     if (accounts[i].currency === 'USD') {
@@ -123,6 +124,7 @@ const Home = () => {
         accountStatus = "inactive";
       }
   
+      isHeld = accounts[i].isHeld; // Add this line
       break;
     }
   }
@@ -166,12 +168,12 @@ const Home = () => {
     <span className="dashboard-status-pill banned">Banned</span>
   )}
   <p>Available Balance</p>
-  <h3  className="mb-2">${usdBalance} USD</h3>
+  <h3  className="mb-2"> ${isHeld ? "0.00" : usdBalance} USD</h3>
 </div>
 
             <div className="dashboard-account-hold">
               <p>Money on Hold</p>
-              <h3>$0.00 USD</h3>
+              <h3>  ${isHeld ? usdBalance: "0.00"} USD</h3>
             </div>
             <div className="dashboard-payid-and-currency">
   <div className="dashboard-payid">

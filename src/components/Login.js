@@ -91,7 +91,7 @@ function Login() {
       if (error.response && error.response.data && error.response.data.message) {
         showToast("error", error.response.data.message);
       } else {
-        showToast("error", "Error on login");
+        showToast("error", "Error on login check your Internet connection");
         console.error("Error on login: ", error);
       }
     } finally {

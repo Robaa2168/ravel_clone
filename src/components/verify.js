@@ -129,8 +129,8 @@ function Verification() {
         <h1>Verification</h1>
         <span className="text-muted">
           We sent a verification code to your{" "}
-          {verificationType === "email" ? "email" : "phone"}. <br />
-          Enter the code in the field below.
+          {verificationType === "email" ? "email" : "phone"}. {contact} <br />
+          Kindly check your spam folder and enter the code in the field below.
         </span>
         <div
           className="card mt-4 mb-3"
