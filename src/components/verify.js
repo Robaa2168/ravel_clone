@@ -12,6 +12,7 @@ function Verification() {
   const [resendTimeout, setResendTimeout] = useState(60);
   const location = useLocation();
   const navigate = useNavigate();
+  const [disableResend, setDisableResend] = useState(false);
   const { mode = "email", contact = "" } = location.state || {};
   const verificationType = mode === "email" ? "email" : "phone";
 
@@ -81,7 +82,7 @@ function Verification() {
 
   const handleResendCode = async (event) => {
     event.preventDefault();
-
+  
     if (resendTimeout > 0) {
       showToast("warning", "Please wait before resending the code.");
       return;
@@ -91,12 +92,14 @@ function Verification() {
       return;
     }
   
+    setDisableResend(true); // Disable the resend button
+  
     try {
       const response = await api.post("/api/verification", {
         [verificationType === "email" ? "email" : "phoneNumber"]: contact
       });
       const data = response.data;
-
+  
       if (response.status === 200) { // Check for success status code
         showToast("success", "Verification code has been resent");
         setResendTimeout(60);
@@ -108,9 +111,12 @@ function Verification() {
     } catch (error) {
       showToast("error", "Error resending verification code");
       console.error("Error resending verification code: ", error);
+    } finally {
+      if (resendTimeout === 0) {
+        setDisableResend(false); // Enable the resend button
+      }
     }
   };
-
 
   useEffect(() => {
     if (resendTimeout > 0) {
@@ -118,6 +124,8 @@ function Verification() {
         setResendTimeout(resendTimeout - 1);
       }, 1000);
       return () => clearTimeout(timer);
+    } else {
+      setDisableResend(false); // Enable the resend button
     }
   }, [resendTimeout]);
 
@@ -211,12 +219,13 @@ function Verification() {
               </button>
             </form>
             <a
-              className="text-primary text-decoration-underline"
-              role="button"
-              onClick={handleResendCode}
-            >
-              {resendTimeout > 0 ? `Resend again in ${resendTimeout}s` : "Resend a new code"}
-            </a>
+  className="text-primary text-decoration-underline m-2"
+  role="button"
+  onClick={handleResendCode}
+  style={{ pointerEvents: disableResend ? "none" : "auto" }} // Disable pointer events if resend is disabled
+>
+  {resendTimeout > 0 ? `Resend again in ${resendTimeout}s` : "Resend a new code"}
+</a>
           </div>
         </div>
       </div>
