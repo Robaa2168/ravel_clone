@@ -230,17 +230,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="dashboard-footer">
-        <div>
-          <i  onClick={() => navigate('/')} className="fas fa-home"></i>
-        </div>
-        <div>
-          <i onClick={() => navigate('/wallet')} className="fas fa-paper-plane"></i>
-        </div>
-        <div>
-          <i onClick={() => navigate('/wallet')} className="fas fa-hand-holding-usd"></i>
-        </div>
-      </div>
+
 
     </div>
 

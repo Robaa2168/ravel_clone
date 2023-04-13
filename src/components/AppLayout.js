@@ -71,6 +71,7 @@ const AppLayout = () => {
           <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 };

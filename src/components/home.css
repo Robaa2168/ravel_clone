@@ -282,28 +282,6 @@
     }
     
     
-    .dashboard-footer {
-      display: none;
-    }
-    
-    @media (max-width: 767px) {
-      .dashboard-footer {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 60px;
-        background-color: #ffffff;
-        box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
-      }
-      .dashboard-footer i {
-        font-size: 24px;
-        color: #0070ba;
-      }
-    }
   
     .dashboard-status-pill {
       position: absolute;
