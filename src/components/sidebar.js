@@ -8,7 +8,7 @@ import classNames from "classnames";
 const Sidebar = ({ isOpen, setIsSidebarOpen, onLinkClick }) => {
   const navigate = useNavigate();
   const { user, logout } = useUser();
-  const sidebarRef = useRef(); // Add this line to create a ref for the sidebar element
+  const sidebarRef = useRef(); 
 
   const handleLogout = () => {
     logout();

@@ -1,40 +1,130 @@
-import React from 'react';
-import { FaBars, FaExchangeAlt } from 'react-icons/fa';
-import './header.css';
+import React, { useState, useEffect, useRef } from "react";
+import "./header.css";
+import { Link, useLocation } from "react-router-dom";
+import { IoNotifications } from "react-icons/io5";
+import { RiSettings5Fill } from "react-icons/ri";
+import { SlMenu } from "react-icons/sl";
+import { RxCross2 } from "react-icons/rx";
+import { useUser } from "./context";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ onToggleSidebar }) => {
+const Header = () => {
+  const [toggle, setToggle] = useState(false);
+  const navigate = useNavigate();
+  const { user, logout } = useUser();
+  const popUpRef = useRef(null);
+
+  const handleLogout = () => {
+    logout();
+    setTimeout(() => {
+      navigate("/login");
+    }, 50);
+  };
+  // Detect the click outside the sidebar pop
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (popUpRef.current && !popUpRef.current.contains(event.target)) {
+        setToggle(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+    // Close the sidebar pop when the route changes
+    const location = useLocation();
+    useEffect(() => {
+      setToggle(false);
+    }, [location]);
+
+  function handleToggle() {
+    setToggle(!toggle);
+  }
+
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="header-logo">
- 
-          <FaExchangeAlt className="header-logo-icon" />
-         
+    <div className="header-container">
+      <div
+        className="navbar"
+        style={{
+          transform: toggle ? "translateX(60%)" : "translateX(0)",
+          transition: "all 0.3s",
+        }}
+      >
+        {!toggle ? (
+          <SlMenu className="sideMenu" onClick={handleToggle} />
+        ) : (
+          <RxCross2 className="sideMenu" onClick={handleToggle} />
+        )}
+
+        <div className="dashboardheader">
+     
+          <div className="navLinks">
+            <Link to="/" className="navLink">
+              Dashboard
+            </Link>
+            <Link to="/wallet" className="navLink">
+              Send and Request
+            </Link>
+            <Link to="/wallet" className="navLink">
+              Wallet
+            </Link>
+            
+            <Link to="/activity" className="navLink">
+              Activity
+            </Link>
+            <Link to="/ticket" className="navLink">
+              Help
+            </Link>
+          </div>
         </div>
-        <nav className="header-nav">
-          <ul className="header-nav-list">
-            <li className="header-nav-item">
-              <a href="#personal" className="header-nav-link">Personal</a>
-            </li>
-            <li className="header-nav-item">
-              <a href="#business" className="header-nav-link">Business</a>
-            </li>
-            <li className="header-nav-item">
-              <a href="#developer" className="header-nav-link">Developer</a>
-            </li>
-          </ul>
-        </nav>
-        <div className="header-buttons">
-          <button className="header-login-button">Log In</button>
-          <button className="header-signup-button">Sign Up</button>
+        <div className="logOut">
+          <IoNotifications className="settings" />
+          <Link to="" className="settings1">
+            <RiSettings5Fill className="settings" />
+          </Link>
+          <Link  onClick={handleLogout}  className="logout">LOG OUT</Link>
         </div>
-        <button onClick={onToggleSidebar}  className="navbar-toggler p-0 border-0 menu-toggle order-3" type="button" data-bs-toggle="collapse" data-bs-target="#mainHeader">
-        <FaBars className="header-menu-icon" />
-          </button>
- 
       </div>
-    </header>
+        {toggle ? (
+        <div className="popUp" ref={popUpRef}>
+          <div className="popUp1">
+            <Link  onClick={handleLogout}  className="popUp2">LOG OUT</Link>
+            <Link to="" className="popUp2">
+              <RiSettings5Fill className="" />
+            </Link>
+          </div>
+
+          <p className="popUpP">{user?.userInfo?.firstName} {user?.userInfo?.lastName}</p>
+
+          <div className="popLinks">
+            <Link to="/" className="popLink">
+              Dashboard
+            </Link>
+            <Link to="/wallet" className="popLink">
+              Send and Request
+            </Link>
+            <Link to="/wallet" className="popLink">
+              Wallet
+            </Link>
+            <Link to="/accounts" className="popLink">
+              Accounts
+            </Link>
+            <Link to="/Activity" className="popLink">
+              Activity
+            </Link>
+            <Link to="/ticket" className="popLink">
+              Help
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
+    </div>
   );
-}
+};
 
 export default Header;

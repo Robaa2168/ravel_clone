@@ -1,135 +1,172 @@
-.header {
-  background-color: #0070ba;
-  padding: 10px 20px;
-  font-family: Arial, sans-serif;
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
-.header-container {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-align: center;
+  background-color: #0070BA;
+  padding: 20px 20%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  position: fixed; /* Changed to 'fixed' */
+  top: 0; /* Added */
+  left: 0; /* Added */
+  width: 100%; /* Added */
+  z-index: 9999 !important;
+}
+.header-container{
+  margin-bottom: 2em;
 }
 
-.header-menu-icon {
-  color: white;
-  font-size: 24px;
+.sideMenu {
+  color: #FFFFFF;
   display: none;
+  font-size: 20px;
+  z-index: 9999 !important;
 }
-.header-logo {
+
+.dashboardheader {
   display: flex;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: none;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-.header-logo-icon {
-  color: white;
-  font-size: 32px;
-}
-
-.header-logo-text {
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.header-logo:hover {
-  opacity: 0.8;
-}
-
-
-.header-nav {
+.navLinks,
+.logOut {
   display: flex;
-}
-
-.header-nav-list {
-  display: flex;
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.header-nav-item {
-  margin-left: 20px;
-}
-
-.header-nav-link {
-  color: white;
-  text-decoration: none;
-  font-size: 16px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
-}
-
-.header-nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.header-buttons {
-  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.header-login-button,
-.header-signup-button {
-  background-color: transparent;
-  border: 2px solid white;
-  color: white;
+.navLink {
+  margin: 0 10px;
+  color: #FFFFFF;
+  text-decoration: none;
   font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  outline: none;
+  font-weight: bold;
+  padding: 10px 15px;
+  border: 1px solid #0070BA;
+  border-radius: 24px;
+}
+
+.navLink:hover {
+  color: #a1c7f1;
+  border: 1px solid #FFFFFF;
+  border-radius: 24px;
+  text-decoration: none;
+}
+
+.settings {
+  color: #FFFFFF;
+  font-size: 20px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  margin: auto 10px;
 }
 
-.header-login-button {
-  margin-right: 10px;
+.settings1 {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding: 0;
+  text-decoration: none;
 }
 
-.header-login-button:hover,
-.header-signup-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+.logout {
+  color: #FFFFFF;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: auto 0 auto 10px;
 }
 
-@media screen and (max-width: 768px) {
-  .header-container {
-    flex-wrap: wrap;
+.popUp {
+  left: 0;
+  padding: 4% 0;
+  height: 100%;
+  width: 60%;
+  background-color: #0070BA;
+  top: 0;
+  position: absolute;
+  z-index: 9998; /* Added */
+}
+
+.popUp1 {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 4%;
+  padding-right: 4%;
+}
+
+.popUpP {
+  color: #FFFFFF;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.popUp2 {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+.popLinks {
+  display: grid;
+  text-align: start;
+}
+
+.popLink {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 10px 6%;
+  border-top: 1px solid #0070BA;
+  border-bottom: 1px solid #0070BA;
+}
+
+.popLink:hover {
+  color: #a1c7f1;
+  border-top: 1px solid #FFFFFF;
+  border-bottom: 1px solid #FFFFFF;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 3%;
+    overflow-x: hidden;
+    z-index: 9999 !important;
   }
 
-  .header-logo {
-    order: 1;
-    flex: 1;
-    text-align: left;
-  }
-
-  .header-menu-icon {
-    order: 2;
-    flex: 1;
-    text-align: right;
+  .sideMenu {
     display: block;
+    z-index: 9999 !important;
   }
 
-  .header-nav {
-    order: 3;
-    display: none;
-    width: 100%;
-    text-align: center;
-  }
-
-  .header-buttons {
-    order: 4;
-    display: none;
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .header-logo-icon {
+  .navLinks {
     display: none;
   }
-}
 
+  #logo1 {
+  display: block;
+  }
+  
+  .settings1,
+  .logout {
+  display: none;
+  }
+  }
+  
+  @media (min-width: 769px) {
+  .navbar {
+  justify-content: center;
+  z-index: 9999 !important;
+  }
+  
+  .dashboard {
+  margin-right: auto;
+  margin-left: auto;
+  }
+  }

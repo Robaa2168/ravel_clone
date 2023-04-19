@@ -1,335 +1,690 @@
-* {
-    box-sizing: border-box;
+.myapp-dashboard {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 2rem;
+  background-color: var(--bg) !important;
+}
+
+.myapp-cards-container {
+  padding-top: 2rem;
+  padding-right: 3rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: 3rem;
+}
+
+.myapp-cards-container .myapp-card-balance-card {
+  margin-bottom: 3rem;
+}
+
+.myapp-pypl-card {
+  border-radius: 1.25rem;
+  width: 35em;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 0.0625rem solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+.myapp-pypl-card.myapp-card-balance-card:hover {
+  transition: 0.30s ease;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  text-decoration: none !important;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 1.125rem;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-body {
+  color: #001435;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-body .myapp-pypl-balance {
+  font-size: 2.60rem;
+  font-weight: 400;
+}
+
+.balance-title{
+  color: #001435;
+
+}
+
+.myapp-pypl-icon-container {
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  padding: 1rem;
+}
+
+.myapp-pypl-icon-container:hover {
+  background-color: #faf8f5;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-footer {
+  margin: 16px 0;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-footer .myapp-pypl-primary-btn {
+  border-radius: 1000px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  background-color: #0070BA;
+  border: 1px solid #0070BA;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  padding: 0.35rem 0.975rem;
+  min-width: 3.75rem;
+}
+.myapp-status-pill {
+  display: inline-block;
+  border-radius: 10px;
+  padding: 2px 5px;
+  font-size: 8px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.myapp-status-active {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.myapp-status-inactive {
+  background-color: #f1c40f;
+  color: #fff;
+}
+
+.myapp-status-banned {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.myapp-payid {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+  color: #7f8c8d;
+}
+
+.myapp-card-balance-card .myapp-pypl-card-footer .myapp-pypl-primary-btn:hover {
+  background-color: #0070e0;
+  border: 1px solid #0070e0;
+  transition: color 0.60s ease;
+}
+
+.myapp-activity-card .myapp-heading {
+  font-weight: 400;
+}
+
+.myapp-activity-card p {
+  padding: 0.75rem;
+}
+
+.myapp-activity-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.myapp-activity {
+  display: flex;
+  align-items: center;
+  border: 1px solid grey;
+  border-radius: 0.75rem;
+  padding: 1.375rem;
+  margin-bottom: 1.75rem;
+}
+
+.myapp-activity .myapp-activity-icon {
+  font-size: 125rem;
+  color: var(--white);
+  background-color: var(--berry);
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  margin-right: 1em;
   }
   
-  body {
-    margin: 0;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  .myapp-activity-icon .myapp-icon {
+  margin: 10px;
   }
   
-  .dashboard {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+  .myapp-activity-card .myapp-pypl-card-body {
+  margin-top: 1.5rem;
   }
   
-  .dashboard-info-message {
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 12px;
-    color: #666;
+  .myapp-activity-info {
+  width: 100%;
   }
   
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+  .myapp-activity-info .myapp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  margin-bottom: 1em;
   }
   
-  .dashboard-title {
-    font-size: 24px;
-    color: #333;
+  .myapp-header .myapp-activity-name {
+  font-size: 20px;
   }
   
-  .dashboard-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+  .myapp-header .myapp-payment {
+  font-size: 18px;
+  font-weight: 400;
   }
   
-  .dashboard-send-btn,
-  .dashboard-request-btn {
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  .myapp-activity-card .myapp-show-all {
+  color: #0070e0;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: 400 !important;
   }
   
-  .dashboard-send-btn {
-    background-color: #0070ba;
+  .myapp-activity-card .myapp-show-all:hover {
+  text-decoration: underline;
   }
   
-  .dashboard-send-btn:hover {
-    background-color: #005a9c;
+  /* sidebar */
+  
+  .myapp-desktop-sidebar {
+  background-color: #fff;
+  justify-content: right;
+  height: 110vh;
+  padding: 3rem 2.75rem 10.75rem 2.75rem;
+  width: 42%;
+  display: block;
+  justify-content: right;
   }
   
-  .dashboard-request-btn {
-    background-color: #cccccc;
+  .myapp-buttons-container {
+  display: flex;
+  margin-bottom: 32.5px;
+  width: 70%;
   }
   
-  .dashboard-request-btn:hover {
-    background-color: #bbbbbb;
+  .myapp-buttons-container :first-child {
+  margin-right: 10px;
   }
   
-  .dashboard-content {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding-bottom: 60px;
+  .myapp-pypl-secondary-btn {
+  background-color: #ffd149;
+  border: 1px solid #ffd140;
+  text-align: center;
+  color: #003087;
+  border-radius: 1000px;
+  display: inline-block;
+  font-weight: 700;
+  min-width: 6rem;
+  line-height: 30px;
+  padding: 0.625rem 1.875rem;
+  cursor: pointer;
+  flex: 1;
   }
   
-  .dashboard-summary {
-    flex: 1;
-    min-width: 300px;
+  .myapp-kebab-menu-container {
+  margin-bottom: 18px;
   }
   
-  .dashboard-summary h2,
-  .dashboard-summary h3 {
-    margin: 0;
+  .myapp-kebab-menu-container button{
+  background: transparent;
+  border: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   }
   
-  .dashboard-summary h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .dashboard-account-summary {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  
-  .dashboard-account-balance,
-  .dashboard-account-hold {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 4px;
-    flex: 1;
-    min-width: calc(50% - 10px);
-    margin-bottom: 20px;
-  }
-  
-  .dashboard-account-balance h3,
-  .dashboard-account-hold h3 {
-    font-size: 24px;
-    color: #333;
-    margin-top: 10px;
-  }
-  
-  .dashboard-account-balance p,
-  .dashboard-account-hold p {
-    font-size: 14px;
-    color: #888;
-  }
-  
-  .dashboard-actions-small {
-    display: flex;
-    gap: 5px;
-  }
-  
-  .dashboard-actions-small button {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-  
-  .dashboard-banks-cards {
-    margin-bottom: 20px;
-  }
-  
-  .dashboard-banks-cards h3 {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
- 
-  
-  .dashboard-currency-btn {
-    font-size: 24px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 5px;
-  }
-  .dashboard-currency-dropdown {
-    display: none; /* Change the initial display value to 'none' */
-    position: absolute;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    padding: 10px;
-    margin-top: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .dashboard-currency-menu:hover .dashboard-currency-dropdown {
-    display: none; /* Remove the duplicate display property */
-  }
-  
-      
-    
-    .dashboard-activity-list {
-    flex: 1;
-    min-width: 300px;
-    }
-    
-    .dashboard-activity-list h3 {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 10px;
-    }
-    
-    .dashboard-activity-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    }
-    
-    .dashboard-activity-avatar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
+  .myapp-hidden-dropdown-item .myapp-icon-container,
+  .myapp-kebab-menu-container button .myapp-icon-container {
+    border: 1px solid #faf8f5;
+    background-color: #faf8f5;
     border-radius: 50%;
-    font-size: 18px;
-    color: #fff;
-    margin-right: 10px;
-    }
-    
-    .dashboard-activity-info {
-    flex: 1;
-    }
-    
-    .dashboard-activity-title {
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-    }
-    
-    .dashboard-activity-user {
-    font-size: 12px;
-    color: #888;
-    margin: 0;
-    }
-    
-    .dashboard-activity-date {
-    font-size: 12px;
-    color: #666;
-    margin: 0 10px;
-    }
-    
-    .dashboard-activity-amount {
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-    }
-    
-    .dashboard-tools {
-    flex: 1;
-    min-width: 300px;
-    }
-    
-    .dashboard-tools h2 {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 20px;
-    }
-    
-  
-      
-      @media (max-width: 768px) {
-      .dashboard-actions {
-        display: none;
-    }
+    display: inline-flex;
+    align-items: center; /* Add this line */
+    justify-content: center; /* Add this line */
+    padding: 16px;
+    margin-right: 16px;
+    width: 50px; /* Add this line, set equal width and height */
+    height: 50px; /* Add this line, set equal width and height */
   }
-    @media (max-width: 768px) {
-    .dashboard-content {
+  
+  .myapp-hidden-dropdown-item .myapp-icon-container:hover,
+  .myapp-kebab-menu-container button .myapp-icon-container:hover {
+    background-color: #edecec;
+    transition: 0.3s ease-in-out;
+    text-decoration: underline; /* Move this line from the other hover block */
+  }
+  
+  
+  .myapp-kebab-menu-container button .myapp-pypl-icon {
+  color: #003087;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  }
+  
+  .myapp-kebab-menu-container .myapp-more-info {
+  margin-top: 16px;
+  }
+  
+  .myapp-links-container {
+  margin-bottom: 48px;
+  }
+  
+  .myapp-hidden-dropdown {
+  transition: 0.4s ease-in-out;
+  }
+  
+  .myapp-hidden-dropdown ul {
+  display: flex;
+  flex-direction: column;
+  }
+  
+  .myapp-hidden-dropdown-item {
+  margin-bottom: 18px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  }
+  .myapp-hidden-dropdown-item .myapp-dropdown-link:hover {
+    text-decoration: underline;
+    }
+    
+    
+    .myapp-hidden-dropdown-item .myapp-icon-container {
+      border: 1px solid #faf8f5;
+      background-color: #faf8f5;
+      border-radius: 50%;
+      display: inline-flex;
+      padding: 16px;
+    }
+    
+    .myapp-hidden-dropdown-item .myapp-icon-container:hover {
+    background-color: #edecec;
+    transition: 0.3s ease-in-out;
+    }
+    
+    .myapp-banks-and-cards {
+    width: 70%;
+    display: flex;
     flex-direction: column;
     }
     
-    .dashboard-summary,
-    .dashboard-activity-list,
-    .dashboard-tools {
-    min-width: 100%;
+    .myapp-banks-and-cards .myapp-pypl-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
     }
     
-    .dashboard-account-balance,
-    .dashboard-account-hold {
-    min-width: 100%;
+    .myapp-banks-and-cards .myapp-pypl-header h4 {
+    font-weight: 700;
     }
+    
+    .myapp-banks-and-cards .myapp-pypl-body {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1.5rem
     }
-    .dashboard-activity-avatar {
+    
+    .myapp-banks-and-cards .myapp-pypl-body span {
+    margin-right: 10px;
+    font-size: 25px;
+    }
+    
+    .myapp-banks-and-cards .myapp-pypl-body p {
+    font-size: 18px;
+    display: flex;
+    color: #000;
+    }
+    
+    .myapp-banks-and-cards .myapp-pypl-footer {
+    color: #0070e0;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5rem;
+    }
+    
+    .myapp-banks-and-cards .myapp-pypl-footer:hover {
+    color: #003087;
+    transition: 0.3s ease-in-out;
+    text-decoration: underline !important;
+    }
+    
+    /* responsiveness */
+    
+    @media screen and (max-width: 767px) {
+    .myapp-desktop-sidebar {
+    display: none;
+    }
+    
+    .myapp-dashboard {
+    justify-content: center;
+    max-width: 100%;
+    }
+    
+    .myapp-cards-container {
+    margin: 0;
+    padding-left: 3rem;
+    }
+    
+    .myapp-pypl-card {
+    max-width: 90vw;
+    }
+    
+    .myapp-card-balance-card .myapp-pypl-card-header {
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1.5rem;
+    }
+    
+    .myapp-card-balance-card .myapp-pypl-card-body .balance {
+    font-size: 1.75rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    }
+    
+    .myapp-pypl-card-footer {
+      margin: 16px 0;
       display: flex;
       justify-content: center;
-      align-items: center;
-      width: 40px;
-      min-width: 40px;
-      max-width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      font-size: 18px;
-      color: #fff;
-      margin-right: 10px;
-      background-color: var(--avatar-bg-color);
-      overflow: hidden;
     }
     
-    
-    .dashboard-activity-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
+    .myapp-pypl-primary-btn {
+    width: 85%;
     }
     
-    
-  
-    .dashboard-status-pill {
-      position: absolute;
-      bottom: 5px;
-      left: 5px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-size: 6px;
-      color: #fff;
+    .myapp-banks-and-cards__mobile {
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
     }
     
-    
-    
-    .dashboard-status-pill.active {
-      background-color: #329449;
+    .myapp-banks-and-cards__mobile .myapp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
     }
     
-    .dashboard-status-pill.inactive {
-      background-color: #ffc107;
+    .myapp-banks-and-cards__mobile .myapp-body {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1.5rem
     }
     
-    .dashboard-status-pill.banned {
-      background-color: #dc3545;
+    .myapp-banks-and-cards__mobile .myapp-body span {
+    margin-right: 10px;
+    font-size: 25px;
     }
-  
-    .credit-card {
-        max-width: 100%;
-        height: auto;
-      }
-      
-      .dashboard-payid {
-        margin-top: 15px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #333;
-      }
-      
+    
+    .myapp-banks-and-cards__mobile .myapp-body p {
+    font-size: 18px;
+    display: flex;
+    justify-content: right;
+    }
+    
+    .myapp-banks-and-cards__mobile .myapp-footer {
+    color: #003087;
+    cursor: pointer;
+    }
+    
+    }
+    
+    @media screen and (min-width: 768px) and (max-width: 1023px ) {
+    
+    .myapp-dashboard {
+    justify-content: center;
+    }
+    
+    .myapp-cards-container {
+    margin: 0;
+    }
+    
+    .myapp-desktop-sidebar {
+    display: none;
+    }
+    }
+    
+    @media screen and (min-width: 1024px) {
+    
+    }
+    
+    /* Additional Styles */
+    
+    .myapp-notification-badge {
+    background-color: #ff0000;
+    border-radius: 50%;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 0.75rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    min-width: 1.5rem;
+    position: absolute;
+    right: -0.375rem;
+    text-align: center;
+    top: -0.375rem;
+    }
+    
+    .myapp-footer {
+    background-color: var(--bg);
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    }
+    
+    .myapp-footer a {
+    color: #003087;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 0 1rem;
+    text-decoration: none;
+    }
+    
+    .myapp-footer a:hover {
+    text-decoration: underline;
+    }
+  /* Alerts and Modals */
 
-      .dashboard-payid-and-currency {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      
-      .dashboard-currency-menu {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-      }
+.myapp-alert {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 0.25rem;
+  color: #721c24;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1.25rem;
+  position: relative;
+  }
+  
+  .myapp-alert-dismissible {
+  padding-right: 4rem;
+  }
+  
+  .myapp-alert-dismissible .myapp-close {
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  }
+  
+  .myapp-modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
+  }
+  
+  .myapp-modal {
+  background-color: #ffffff;
+  border-radius: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  max-height: calc(100% - 4rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  width: 50%;
+  z-index: 100;
+  }
+  .pypl-icon-container {
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 50%;
+    display: inline-flex;
+    padding: 1rem;
+    position: relative;
+}
 
-      
+.pypl-icon-container:hover {
+    background-color: #faf8f5;
+}
+.pypl-popup {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  font-size: 16px;
+  font-weight: 500;
+  width: 50%;
+  border-radius: 10px;
+  padding: 0.75rem;
+  z-index: 10;
+  min-width: 200px;
+}
+
+.pypl-popup ul {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Add this line */
+}
+
+
+.pypl-popup ul > * {
+  margin-bottom: 0.5em;
+}
+  .myapp-modal-header {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  }
+  
+  .myapp-modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  }
+  
+  .myapp-modal-close {
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-left: 0.5rem;
+  opacity: 0.5;
+  padding: 0;
+  }
+  
+  .myapp-modal-close:hover {
+  opacity: 1;
+  }
+  
+  .myapp-modal-body {
+  position: relative;
+  }
+  
+  .myapp-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  }
+  
+  .myapp-modal-button {
+  background-color: #0070e0;
+  border: none;
+  border-radius: 0.25rem;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  }
+  
+  .myapp-modal-button:hover {
+  background-color: #003087;
+  transition: background-color 0.3s ease-in-out;
+  }
+  
+  .myapp-modal-button.myapp-btn-secondary {
+  background-color: #6c757d;
+  }
+  
+  .myapp-modal-button.myapp-btn-secondary:hover {
+  background-color: #343a40;
+  }
+  
+  @media screen and (max-width: 575px) {
+  .myapp-modal {
+  width: 90%;
+  }
+  }
+  /* Add a media query for smaller devices */
+@media screen and (max-width: 768px) {
+  .pypl-popup {
+    width: 75%; /* Adjust the width to your preference */
+  }
+}
+
+.dashboard-info-message {
+  background-color: red; /* Replace 'red' with the desired background color */
+  color: white; /* Set the text color */
+  border-radius: 5px; /* Optional: Add rounded corners to the container */
+  padding: 10px; /* Add padding for better spacing */
+  margin-bottom: 20px; /* Add some margin below the container */
+}
+  /* Add margin-top only on LG devices */
+  @media screen and (min-width: 992px) {
+    .dashboard-info-message{
+      margin-top: 30px;
+  }
+}
+
+

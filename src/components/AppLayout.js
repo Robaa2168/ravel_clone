@@ -17,6 +17,7 @@ import Accounts from './accounts';
 import ProtectedRoute from './ProtectedRoute';
 import { useUser } from './context';
 import Header from './header';
+import Activity from './activity';
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -45,22 +46,19 @@ const AppLayout = () => {
 
   return (
     <div id="cryptoon-layout" className="theme-tradewind">
-      {!excludedRoutes.includes(location.pathname) && (
-        <Sidebar isOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} onLinkClick={handleLinkClick} />
-      )}
-
-      <div className="main px-lg-4 px-md-4">
-        {!excludedRoutes.includes(location.pathname) && (
+   {!excludedRoutes.includes(location.pathname) && (
           <Header onToggleSidebar={toggleSidebar} />
         )}
 
-        <Routes>
+      <div className="container ">
+         <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
           <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
           <Route path="/repay" element={<ProtectedRoute><Repay /></ProtectedRoute>} />
           <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
           <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
+          <Route path="/Activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/sample" element={<Sample />} />
           <Route path="/signup" element={<Signup />} />

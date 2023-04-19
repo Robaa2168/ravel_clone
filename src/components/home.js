@@ -1,37 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { FaCcApplePay, FaEllipsisV, FaFileInvoice, FaStore, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import { useUser } from "./context";
-import { Spinner } from "react-bootstrap";
-import { useNavigate, Link } from "react-router-dom";
-import { createPopper } from '@popperjs/core';
-
-import './home.css';
 import api from '../api';
+import './home.css';
 
+const Dashboard = () => {
 
-function generateAvatarBackgroundColor(initial) {
-  const baseHue = (initial.charCodeAt(0) * 39) % 360;
-  return `hsl(${baseHue}, 50%, 50%)`;
-}
-
-const Home = () => {
-  const navigate = useNavigate();
+  const [showMore, setShowMore] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const { user,login } = useUser();
-  const [transactions, setTransactions] = useState([])
-  const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleMouseEnter = () => {
-    setShowDropdown(true);
-  };
+  const paymentActivity = [
 
-  const handleMouseLeave = () => {
-    setTimeout(() => {
-      setShowDropdown(false);
-    }, 300); // Add a 300ms delay before hiding the dropdown
-  };
-  
-
-  
-
+  ];
 
   const fetchBalance = async () => {
     try {
@@ -75,38 +57,6 @@ const Home = () => {
   }, []);
 
 
-  const dummyActivities = [
- ]
-
-  const creditCardSVG = (
-    <svg className="credit-card" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
-      {/* Background gradient */}
-      <defs>
-        <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" style={{stopColor: '#00008B', stopOpacity: 1}} />
-          <stop offset="100%" style={{stopColor: '#7F7F7F', stopOpacity: 1}} />
-        </linearGradient>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#bg-gradient)" />
-
-      {/* Rounded corners */}
-      <rect x="0" y="0" rx="15" ry="15" width="100%" height="100%" fill="none" stroke="white" strokeWidth="3" />
-
-      {/* Card Logo */}
-      <circle cx="45" cy="45" r="30" fill="#ffffff" />
-      <text x="45" y="50" fontFamily="Arial" fontSize="22" textAnchor="middle" fill="#00008B">AE</text>
-
-      {/* Card Number */}
-      <text x="50" y="135" fontFamily="Arial" fontSize="18" textAnchor="start" fill="#ffffff">1234 5678 9012 3456</text>
-
-      {/* Cardholder Name */}
-      <text x="50" y="185" fontFamily="Arial" fontSize="16" textAnchor="start" fill="#ffffff">CARDHOLDER NAME</text>
-
-      {/* Expiration Date */}
-      <text x="280" y="185" fontFamily="Arial" fontSize="14" textAnchor="start" fill="#ffffff">EXP: 12/25</text>
-    </svg>
-  );
-
   const accounts = user.accounts;
   let usdBalance = 0;
   let accountStatus = "";
@@ -128,114 +78,155 @@ const Home = () => {
       break;
     }
   }
-  
-
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-info-message">
-        <p>Note: This site undergoes frequent changes, and users may experience major visual updates. However, functionality remains intact.</p>
-      </div>
-      <div className="dashboard-header">
-      <h1 className="dashboard-title d-none d-md-block">Dashboard</h1>
-        <div className="dashboard-actions">
-          <button onClick={() => navigate('/wallet')} className="dashboard-send-btn">Send</button>
-          <button onClick={() => navigate('/wallet')} className="dashboard-request-btn">Request</button>
-        </div>
-      </div>
-      <div className="dashboard-content">
-        <div className="dashboard-summary">
-          <h2>Summary</h2>
-          <div className="dashboard-account-summary">
-          <div className="dashboard-account-balance" style={{ position: 'relative' }}>
-          <div className="dashboard-currency-menu">
-          <button id="dashboard-currency-btn" className="dashboard-currency-btn">⋮</button>
-        <div className="dashboard-currency-dropdown">
-          <p>Add currency</p>
-          <p>Remove currency</p>
-          <p>Change primary currency</p>
-        </div>
-     
-    </div>
+    <main >
+{isHeld && (
+  <div className="dashboard-info-message ">
+    <p>
+      Attention: Your account is temporarily on hold. Please contact{" "}
+      <a href="mailto:support@ravelmobile.com" style={{ color: "inherit" }}>
+        support@ravelmobile.com
+      </a>{" "}
+      for further information.
+    </p>
+  </div>
+)}
 
-  {accountStatus === "active" && (
-    <span className="dashboard-status-pill active">Active</span>
+
+ <div className='myapp-dashboard'>
+      <section className='myapp-cards-container'>
+        <div className="myapp-pypl-card myapp-card-balance-card">
+          <div className="myapp-pypl-card-header">
+            <h3 className='balance-title'>Ravel balance</h3>
+            <div className="pypl-icon-container">
+              <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
+            </div>
+            {showPopup && <div className="pypl-popup">
+              <ul>
+                <Link to="/accounts">Activate currencies</Link>
+                <Link to="/wallet">Manage currencies</Link>
+                <Link to="/">Get help</Link>
+              </ul>
+            </div>}
+          </div>
+          <div className="myapp-pypl-card-body">
+          <h1 className={`myapp-pypl-balance ${isHeld ? "text-danger" : ""}`}>
+  ${usdBalance}
+</h1>
+
+    <span className='myapp-pypl-card-text'>Status:</span>
+    {accountStatus === "active" && (
+    <span className='myapp-status-pill myapp-status-active'>Active</span> 
   )}
   {accountStatus === "inactive" && (
-    <span className="dashboard-status-pill inactive">Inactive</span>
+   <span className='myapp-status-pill myapp-status-inactive'>Inactive</span> 
   )}
   {accountStatus === "banned" && (
-    <span className="dashboard-status-pill banned">Banned</span>
+  <span className='myapp-status-pill myapp-status-banned'>Banned</span> 
   )}
-  <p>Available Balance</p>
-  <h3  className="mb-2"> ${isHeld ? "0.00" : usdBalance} USD</h3>
-</div>
-
-            <div className="dashboard-account-hold">
-              <p>Money on Hold</p>
-              <h3>  ${isHeld ? usdBalance: "0.00"} USD</h3>
-            </div>
-            <div className="dashboard-payid-and-currency">
-  <div className="dashboard-payid">
-    <p>Pay ID: {user?.primaryInfo?.payID}</p>
+  
+    <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
   </div>
-
-</div>
-
+          <div className="myapp-pypl-card-footer">
+          <Link to="/wallet"className='myapp-pypl-primary-btn'>Transfer funds</Link>
           </div>
-
-          <div className="dashboard-banks-cards">
-            <h3>Banks and Cards</h3>
-            {creditCardSVG}
-            {/* Add your bank and card content here */}
-          </div>
-         
         </div>
-        <div className="dashboard-activity-list ">
-          <h3 className="mb-3 " >Recent Activity</h3>
-          {dummyActivities.length === 0 ? (
-            <p>No data found</p>
-          ) : (
-            dummyActivities.map((activity) => (
-              <div key={activity.id} className="dashboard-activity-item">
-                <div
-                  className="dashboard-activity-avatar"
-                  style={{
-                    backgroundColor: generateAvatarBackgroundColor(activity.initial),
-                  }}
-                >
 
-
-                </div>
-
-                <div className="dashboard-activity-info">
-                  <p className="dashboard-activity-title">{activity.title}</p>
-                  <p className="dashboard-activity-user">{activity.user}</p>
-                </div>
-                <div className="dashboard-activity-date">
-                  <p>{activity.date}</p>
-                </div>
-                <div className="dashboard-activity-amount">
-                  <p>{activity.amount}</p>
-                </div>
+        <div className="myapp-pypl-card myapp-activity-card">
+          <div className="myapp-pypl-card-header">
+            <h5 className='myapp-activity-heading'>Recent Activity</h5>
+            <div className="myapp-pypl-card-body">
+              {paymentActivity.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
+              <div className='myapp-acitvity-cards'>
+                {
+                  paymentActivity.map((activity, index) => (
+                    <div key={activity.id} className="myapp-activity">
+                      <div className='myapp-activity-icon'>
+                        <FaStore className='myapp-icon' />
+                      </div>
+                      <div className='myapp-activity-info'>
+                        <div className="myapp-header">
+                          <span className="myapp-activity-name">{activity.name}</span>
+                          <span className='myapp-payment'>-${activity.amount}</span>
+                        </div>
+                        <div className="myapp-date">
+                          <span>{activity.date} . {activity.type}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
               </div>
-            ))
-          )}
-        </div>
-
-        <div className="dashboard-tools">
-          <h2>Tools</h2>
-          <div className="dashboard-tool-cards">
-            {/* Add your tool cards or links here */}
+            </div>
+            <div className="myapp-pypl-card-footer">
+              <Link to="/activity" className='myapp-show-all'>Show all</Link>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section className='myapp-desktop-sidebar'>
+        <div className="myapp-links-container">
+          <div className="myapp-buttons-container">
+            <Link to="/send-money" className="myapp-pypl-secondary-btn">Send</Link>
+            <Link t0="/request-money" className="myapp-pypl-secondary-btn">Request</Link>
+          </div>
+          <ul className='myapp-kebab-menu-container'>
+            <li>
+              <button>
+                <span className='myapp-icon-container'>
+                  {showMore
+                    ? <FaTimes className='myapp-pypl-icon' onClick={() => setShowMore(false)} />
+                    : <FaEllipsisV className='myapp-pypl-icon' onClick={() => setShowMore(true)} />
+                  }
+                </span>
+                <span className='myapp-more-info'>{showMore ? "Close" : "More"}</span>
+              </button>
+            </li>
+          </ul>
+
+          {showMore && <div className="myapp-hidden-dropdown">
+            <ul>
+              <li className='myapp-hidden-dropdown-item'>
+                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                <span className='myapp-dropdown-link'>Create an invoice</span>
+              </li>
+              <li className='myapp-hidden-dropdown-item'>
+                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                <span className='myapp-dropdown-link'>Create an estimate</span>
+              </li>
+              <li className='myapp-hidden-dropdown-item'>
+                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                <span className='myapp-dropdown-link'>Go to Resolution Center</span>
+              </li>
+            </ul>
+          </div>}
+        </div>
+
+        <div className="myapp-banks-and-cards">
+          <div className="myapp-pypl-header">
+            <h4>Banks and cards</h4>
+            <span>
+              <FaEllipsisV />
+            </span>
+          </div>
+          <div className="myapp-pypl-body">
+            <span>
+              <FaCcApplePay />
+            </span>
+            <p>Shop and send payments more securely. Link your credit card now</p>
+          </div>
+          <Link to="/" className='myapp-pypl-footer'>
+            Link a Card or Bank
+          </Link>
+        </div>
+
+      </section>
       </div>
-
-
-    </div>
-
+    </main>
   );
-};
+}
 
-export default Home;
+export default Dashboard;
 
