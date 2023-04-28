@@ -8,7 +8,6 @@
 }
 
 .myapp-cards-container {
-  padding-top: 2rem;
   padding-right: 3rem;
   display: flex;
   flex-direction: column;
@@ -669,7 +668,7 @@
   /* Add a media query for smaller devices */
 @media screen and (max-width: 768px) {
   .pypl-popup {
-    width: 75%; /* Adjust the width to your preference */
+    width: 55%; /* Adjust the width to your preference */
   }
 }
 

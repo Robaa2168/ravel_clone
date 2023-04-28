@@ -1,0 +1,126 @@
+.modalMakePrimary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(228, 224, 224);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000 !important;
+}
+
+.modal-contentMakePrimary {
+  background-color: white;
+  padding: 20px;
+
+  width: 80%;
+  max-width: 600px;
+  height: 100vh;
+}
+
+.closeContainerMakePrimary {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.closeMakePrimary {
+  font-size: 25px;
+  color: #777272;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+}
+
+.closeMakePrimary:hover {
+  color: #0070BA;
+}
+
+.makePrimaryImg {
+  height: 30px;
+}
+
+.modalContentMakePrimaryDiv {
+  width: 60%;
+  margin: auto;
+}
+
+.currency {
+  text-align: center;
+  margin: 20px 0;
+}
+.currencyImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+}
+
+
+
+.currencyP {
+  text-align: center;
+}
+
+.makePrimaryPa {
+  font-size: 28px;
+  font-weight: 400;
+  color: black;
+  margin: 10px 0;
+  text-align: center;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.makePrimaryPa2 {
+  font-size: 13px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.btnMakePrimary {
+  width: 100%;
+  padding: 8px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: 1px solid #0070BA !important;
+  background-color: #0070BA !important;
+  color: white;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.btnMakePrimary:hover {
+  background-color: #0070BA;
+  text-decoration: none !important;
+}
+
+@media (max-width: 641px) {
+  .modal-contentMakePrimary {
+    width: 100%;
+  }
+
+  .modalContentMakePrimary {
+    width: 90%;
+    padding: 10px;
+  }
+}
+
+.activationError {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  color: #721c24;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  text-align: center;
+}

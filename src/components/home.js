@@ -104,8 +104,8 @@ const Dashboard = () => {
             </div>
             {showPopup && <div className="pypl-popup">
               <ul>
-                <Link to="/accounts">Activate currencies</Link>
-                <Link to="/wallet">Manage currencies</Link>
+                <Link to="/wallet1">Activate currencies</Link>
+                <Link to="/wallet1">Manage currencies</Link>
                 <Link to="/">Get help</Link>
               </ul>
             </div>}
@@ -229,4 +229,3 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
-

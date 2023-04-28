@@ -18,6 +18,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { useUser } from './context';
 import Header from './header';
 import Activity from './activity';
+import Wallet1 from "./wallet1/Wallet1";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -59,6 +60,7 @@ const AppLayout = () => {
           <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
           <Route path="/wallet" element={<ProtectedRoute><Wallet /></ProtectedRoute>} />
           <Route path="/Activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
+          <Route path="/Currencies" element={<ProtectedRoute><Wallet1 /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/sample" element={<Sample />} />
           <Route path="/signup" element={<Signup />} />
@@ -76,4 +78,3 @@ const AppLayout = () => {
 };
 
 export default AppLayout;
-

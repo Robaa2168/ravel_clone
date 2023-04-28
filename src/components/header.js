@@ -109,8 +109,8 @@ const Header = () => {
             <Link to="/wallet" className="popLink">
               Wallet
             </Link>
-            <Link to="/accounts" className="popLink">
-              Accounts
+            <Link to="/Currencies" className="popLink">
+              Currencies
             </Link>
             <Link to="/Activity" className="popLink">
               Activity
