@@ -13,7 +13,7 @@ function Footer() {
         <i onClick={() => navigate('/wallet')} className="fas fa-paper-plane"></i>
       </div>
       <div>
-        <i onClick={() => navigate('/wallet')} className="fas fa-hand-holding-usd"></i>
+        <i onClick={() => navigate('/Currencies')} className="fas fa-hand-holding-usd"></i>
       </div>
     </div>
   );

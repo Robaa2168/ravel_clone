@@ -49,13 +49,13 @@ const Wallet = () => {
   const [transferType, setTransferType] = useState(1); // 1 for Transfer, 2 for Request
   const [withdrawConvert, setWithdrawConvert] = useState(1); // 1 for Transfer, 2 for Request
   const [fromCurrency, setFromCurrency] = useState('USD');
-  const [toCurrency, setToCurrency] = useState('');
+  const [toCurrency, setToCurrency] = useState('EUR');
   const [step, setStep] = useState(1);
   const [payID, setPayID] = useState("");
   const [receiverInfo, setReceiverInfo] = useState(null);
   const [isTransactionSuccess, setIsTransactionSuccess] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [amount, setAmount] = useState('0');
+  const [amount, setAmount] = useState('');
   const [amountdeposit, setAmountdeposit] = useState('');
   const [amountwithdrawal, setamountwithdrawal] = useState('');
   const [currency, setCurrency] = useState('USD');
@@ -99,6 +99,7 @@ const Wallet = () => {
     setTransferType(type);
   };
   const handleWithdrawConvert = (type) => {
+    setError("");
     setWithdrawConvert(type);
   };
 
@@ -178,18 +179,68 @@ const Wallet = () => {
     }
   };
   
-  
-  const handleConvertSubmit = (e) => {
+  const handleConvertSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
     setSuccessMessage('');
   
-    // Handle the convert request here
-    // After processing, set isLoading back to false
-    // and setError or setSuccessMessage based on the result
-    setIsLoading(false);
+    // Check if fromCurrency and toCurrency are the same
+    if (fromCurrency === toCurrency) {
+      setError("From currency and to currency cannot be the same.");
+      setIsLoading(false);
+      return;
+    }
+  
+    // Check if the amount is less than the minimum conversion amount
+    if (parseFloat(amount) < 10) {
+      setError("Minimum conversion amount is 10.");
+      setIsLoading(false);
+      return;
+    }
+    try {
+      const response = await api.post('/api/conversion', {
+        fromCurrency,
+        toCurrency,
+        amount,
+        userId: user.primaryInfo?._id,
+      }, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+  
+      if (response.status === 201) {
+        const balanceResponse = await api.get('/api/getUserBalances', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            'user-id': user?.primaryInfo?._id,
+          },
+        });
+  
+        if (balanceResponse.status === 200) {
+          // Update the local storage with the new balances
+          const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+          console.log(updatedUser);
+          localStorage.setItem("user", JSON.stringify(updatedUser));
+  
+          // Update the context
+          login(updatedUser);
+        }
+        setSuccessMessage('Conversion completed successfully');
+      } else {
+        setError('An error occurred while processing your conversion.');
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An error occurred while processing your conversion.');
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
+  
+  
 
   
   const handleSubmit = async (e) => {
@@ -628,7 +679,7 @@ const Wallet = () => {
                           </div>
                           <div>
                             <div className="truncated">Minimum withdrawal</div>
-                            <div className="text-muted  truncated">{minimumWithdrawal.toFixed(2)} {selectedCurrency}{' '}</div>
+                            <div className="text-muted  truncated">10.00 USD</div>
                           </div>
                         </div>
                       </div>
@@ -640,7 +691,7 @@ const Wallet = () => {
                           </div>
                           <div>
                             <div className="truncated">24h remaining limit</div>
-                            <div className="text-muted  truncated"> {dailyLimit.toFixed(2)} {selectedCurrency}{' '}</div>
+                            <div className="text-muted  truncated"> 5000.00 USD</div>
                           </div>
                         </div>
                       </div>
@@ -660,31 +711,42 @@ const Wallet = () => {
       <div className="row g-3 mb-3">
         <div className="col-sm-12">
           <label className="form-label">From</label>
-          <select className="form-select">
-            {currencies.map((cur) => (
-              <option key={cur} value={cur}>
-                {cur}
-              </option>
-            ))}
-          </select>
+          <select
+  className="form-select"
+  value={fromCurrency}
+  onChange={(e) => setFromCurrency(e.target.value)}
+>
+  {currencies.map((cur) => (
+    <option key={cur} value={cur}>
+      {cur}
+    </option>
+  ))}
+</select>
         </div>
         <div className="col-sm-12">
           <label className="form-label">To</label>
-          <select className="form-select">
-            {currencies.map((cur) => (
-              <option key={cur} value={cur}>
-                {cur}
-              </option>
-            ))}
-          </select>
+          <select
+  className="form-select"
+  value={toCurrency}
+  onChange={(e) => setToCurrency(e.target.value)}
+>
+  {currencies.map((cur) => (
+    <option key={cur} value={cur}>
+      {cur}
+    </option>
+  ))}
+</select>
         </div>
         <div className="col-sm-12">
           <label className="form-label">Amount</label>
           <input
-            type="text"
-            placeholder="Amount"
-            className="form-control"
-          />
+  type="tel"
+  placeholder="Amount"
+  className="form-control"
+  value={amount}
+  onChange={(e) => setAmount(e.target.value)}
+  required
+/>
         </div>
         <div className="col-sm-12">
         <button
