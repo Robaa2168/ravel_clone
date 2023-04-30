@@ -170,7 +170,7 @@ const Dashboard = () => {
         <div className="myapp-links-container">
           <div className="myapp-buttons-container">
             <Link to="/wallet" className="myapp-pypl-secondary-btn">Send</Link>
-            <Link t0="/wallet" className="myapp-pypl-secondary-btn">Request</Link>
+            <Link to="/wallet" className="myapp-pypl-secondary-btn">Request</Link>
           </div>
           <ul className='myapp-kebab-menu-container'>
             <li>
