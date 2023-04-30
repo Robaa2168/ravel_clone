@@ -95,7 +95,7 @@ function ActivateCurrencyModal({ isVisible, onClose, activeCurrency }) {
   </div>
   <p className="makePrimaryPa">Activate {currencyCode} currency</p>
   <p className="makePrimaryPa2">
-    To activate {currencyCode} currency, a fee of $8 will be charged. Please note
+    To activate {currencyCode} currency, a fee of $5 will be charged. Please note
      that the funds used to pay this fee must be in the same currency as the one being activated.
   </p>
   {error && <div className="activationError">{error}</div>}
