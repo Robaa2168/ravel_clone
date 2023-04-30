@@ -104,8 +104,8 @@ const Dashboard = () => {
             </div>
             {showPopup && <div className="pypl-popup">
               <ul>
-                <Link to="/wallet1">Activate currencies</Link>
-                <Link to="/wallet1">Manage currencies</Link>
+                <Link to="/Currencies">Activate currencies</Link>
+                <Link to="/Currencies">Manage currencies</Link>
                 <Link to="/">Get help</Link>
               </ul>
             </div>}
@@ -169,8 +169,8 @@ const Dashboard = () => {
       <section className='myapp-desktop-sidebar'>
         <div className="myapp-links-container">
           <div className="myapp-buttons-container">
-            <Link to="/send-money" className="myapp-pypl-secondary-btn">Send</Link>
-            <Link t0="/request-money" className="myapp-pypl-secondary-btn">Request</Link>
+            <Link to="/wallet" className="myapp-pypl-secondary-btn">Send</Link>
+            <Link t0="/wallet" className="myapp-pypl-secondary-btn">Request</Link>
           </div>
           <ul className='myapp-kebab-menu-container'>
             <li>
