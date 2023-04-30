@@ -26,7 +26,7 @@ function SetPreferredModal({ isVisible, onClose }) {
             &times;
           </button>
         </div>
-        <img src="/paypal123.png" alt="walletLogo" className="chooseImg" />
+      
         <div className="modalContentChooseDiv">
           <p className="choosePreference">Preferred when paying online</p>
           <p className="goodsAndServices">
@@ -51,11 +51,11 @@ function SetPreferredModal({ isVisible, onClose }) {
                       value="preferred"
                     />
                     <img
-                      src="/paypal123.png"
+                      src="/assets/images/favicon/apple-icon-180x180.png"
                       alt="walletLogo"
                       className="chooseImg1"
                     />
-                    PayPal Balance
+                    Primary Balance
                   </label>
                 </div>
                 {errors.paypalPreferred && touched.paypalPreferred ? (

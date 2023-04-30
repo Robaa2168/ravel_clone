@@ -15,7 +15,7 @@ function PaymentPreferencesModal({ isVisible, onClose }) {
             &times;
           </button>
         </div>
-        <img src="/paypal123.png" alt="walletLogo" className="paymentImg" />
+  
         <div className="modalContentPaymentDiv">
           <p className="payingOnline">Preferred when paying online</p>
           <p className="settingPreferred">
@@ -33,10 +33,10 @@ function PaymentPreferencesModal({ isVisible, onClose }) {
           <p className="friends">Sending money to friends and family</p>
           <p className="paymentOptions">
             We'll first show the options that can save you money on fees, like
-            your PayPal balance or your bank.
+            your Ravel balance or your bank.
           </p>
           <p className="usingPaypal">
-            More about using PayPal balance as preferred
+            More about using Ravel balance as preferred
           </p>
           <p className="multipleCurrencies">
             If you have multiple currencies, transactions using balance may be

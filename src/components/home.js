@@ -58,13 +58,12 @@ const Dashboard = () => {
 
 
   const accounts = user.accounts;
-  let usdBalance = 0;
+  let primaryAccount;
   let accountStatus = "";
-  let isHeld = false;
   
-  for (let i = 0; i < accounts.length; i++) {
-    if (accounts[i].currency === 'USD') {
-      usdBalance = accounts[i].balance;
+  for (let i = 0; i < accounts?.length; i++) {
+    if (accounts[i].isPrimary) {
+      primaryAccount = accounts[i];
   
       if (accounts[i].isBanned) {
         accountStatus = "banned";
@@ -74,14 +73,32 @@ const Dashboard = () => {
         accountStatus = "inactive";
       }
   
-      isHeld = accounts[i].isHeld; // Add this line
       break;
     }
   }
 
+  const getCurrencySymbol = (currency) => {
+    const currencySymbols = {
+      USD: "$",
+      GBP: "£",
+      AUD: "A$",
+      CAD: "C$",
+      EUR: "€",
+      ZAR: "R",
+      KES: "KSh",
+      UGX: "USh",
+      ZMW: "ZK",
+      NGN: "₦",
+      RWF: "FRw",
+    };
+  
+    return currencySymbols[currency] || currency;
+  };
+  
+
   return (
     <main >
-{isHeld && (
+{primaryAccount && primaryAccount.isHeld && (
   <div className="dashboard-info-message ">
     <p>
       Attention: Your account is temporarily on hold. Please contact{" "}
@@ -111,9 +128,11 @@ const Dashboard = () => {
             </div>}
           </div>
           <div className="myapp-pypl-card-body">
-          <h1 className={`myapp-pypl-balance ${isHeld ? "text-danger" : ""}`}>
-  ${usdBalance}
-</h1>
+          {primaryAccount && (
+      <h1 className={`myapp-pypl-balance ${primaryAccount.isHeld ? "text-danger" : ""}`}>
+        <span className="myapp-pypl-currency">{getCurrencySymbol(primaryAccount.currency)}</span> {primaryAccount.balance}
+      </h1>
+    )}
 
     <span className='myapp-pypl-card-text'>Status:</span>
     {accountStatus === "active" && (
