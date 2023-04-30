@@ -60,6 +60,7 @@ const Wallet = () => {
   const [amountwithdrawal, setamountwithdrawal] = useState('');
   const [currency, setCurrency] = useState('USD');
   const [error, setError] = useState(null);
+  const [withdrawerror, setWithdrawError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessCheckmark, setShowSuccessCheckmark] = useState(false);
@@ -99,7 +100,7 @@ const Wallet = () => {
     setTransferType(type);
   };
   const handleWithdrawConvert = (type) => {
-    setError("");
+    setWithdrawError("");
     setWithdrawConvert(type);
   };
 
@@ -128,12 +129,12 @@ const Wallet = () => {
   const handleWithdrawSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setWithdrawError('');
     setSuccessMessage('');
 
     if (!selectedCurrency) {
     
-      setError("Please select a currency.");
+      setWithdrawError("Please select a currency.");
       return;
     }
   
@@ -166,13 +167,13 @@ const Wallet = () => {
         }
         setSuccessMessage('Withdrawal created successfully');
       } else {
-        setError('An error occurred while processing your withdrawal.');
+        setWithdrawError('An error occurred while processing your withdrawal.');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
+        setWithdrawError(error.response.data.message);
       } else {
-        setError('An error occurred while processing your withdrawal.');
+        setWithdrawError('An error occurred while processing your withdrawal.');
       }
     } finally {
       setIsLoading(false);
@@ -182,19 +183,19 @@ const Wallet = () => {
   const handleConvertSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError('');
+    setWithdrawError('');
     setSuccessMessage('');
   
     // Check if fromCurrency and toCurrency are the same
     if (fromCurrency === toCurrency) {
-      setError("From currency and to currency cannot be the same.");
+      setWithdrawError("From currency and to currency cannot be the same.");
       setIsLoading(false);
       return;
     }
   
     // Check if the amount is less than the minimum conversion amount
     if (parseFloat(amount) < 10) {
-      setError("Minimum conversion amount is 10.");
+      setWithdrawError("Minimum conversion amount is 10.");
       setIsLoading(false);
       return;
     }
@@ -227,13 +228,13 @@ const Wallet = () => {
         }
         setSuccessMessage('Conversion completed successfully');
       } else {
-        setError('An error occurred while processing your conversion.');
+        setWithdrawError('An error occurred while processing your conversion.');
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        setError(error.response.data.message);
+        setWithdrawError(error.response.data.message);
       } else {
-        setError('An error occurred while processing your conversion.');
+        setWithdrawError('An error occurred while processing your conversion.');
       }
     } finally {
       setIsLoading(false);
@@ -614,7 +615,7 @@ const Wallet = () => {
                   </ul>
                 </div>
                 <div className="card-body">
-  {error && <div className="alert alert-danger">{error}</div>}
+  {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
   {successMessage && <div className="alert alert-success">{successMessage}</div>}
   {pendingWithdrawal && (
  <div className="alert alert-info">
