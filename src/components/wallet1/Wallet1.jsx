@@ -292,7 +292,13 @@ function Wallet1() {
                       >
                         Activate currency
                       </Link>
-                      <Link className="popupLink" onClick={toggleModal5}>
+                      <Link className="popupLink"
+                           onClick={() => {
+                            setActiveCurrency(account);
+                            toggleModal5();
+                          }}
+                       
+                       >
                         Close currency
                       </Link>
                     </div>

@@ -61,6 +61,7 @@ const Wallet = () => {
   const [currency, setCurrency] = useState('USD');
   const [error, setError] = useState(null);
   const [withdrawerror, setWithdrawError] = useState(null);
+  const [transferError, setTransferError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessCheckmark, setShowSuccessCheckmark] = useState(false);
@@ -397,22 +398,20 @@ const Wallet = () => {
 
 
   const fetchReceiverInfo = async (payID) => {
-
     try {
       const response = await api.post(`/api/check/${payID}`);
-
-      // Check if the request was successful
+  
       if (response.status !== 200) {
-        // Handle HTTP errors
         const message = response.data?.message;
         throw new Error(`Error fetching receiver info: ${message || response.status}`);
       }
-
-      // Parse the JSON response
-      const receiverInfo = response.data; // Use 'response.data' for Axios
-
-      // Update the state with the received data
+  
+      const receiverInfo = response.data;
+  
       setReceiverInfo(receiverInfo);
+      setTransferError("");
+      return receiverInfo;
+
     } catch (error) {
       if (error.name === 'AbortError') {
         // Handle fetch AbortError, in case you decide to abort the request later
@@ -420,11 +419,11 @@ const Wallet = () => {
       } else if (navigator.onLine === false) {
         // Check if the user is offline
         console.error('Network error:', error);
-        toast.error('Network error: Please check your internet connection and try again.');
+        setTransferError('Network error: Please check your internet connection and try again.');
       } else {
         // Handle other errors
         console.error('Error fetching receiver info:', error);
-        toast.error(`Error fetching receiver info: ${error.message}`);
+        setTransferError(`Error fetching receiver info: ${error.message}`);
       }
     }
   };
@@ -444,22 +443,21 @@ const Wallet = () => {
 
   const handleConfirm = async (e) => {
     e.preventDefault();
-
+  
     // Validate form fields
     if (!payID || !amount || !fromCurrency) {
-      toast.error("Please complete all fields.");
+      setTransferError("Please complete all fields.");
       return;
     }
-
+  
     if (step === 1) {
       setIsLoading(true); // Set the loading state
-      await fetchReceiverInfo(payID)
-        .then(() => {
-          setStep(2); // Proceed to step 2
-        })
-        .catch((error) => {
-          toast.error("Error fetching receiver info.");
-        });
+      const receiverInfo = await fetchReceiverInfo(payID);
+      if (receiverInfo) {
+        setStep(2); // Proceed to step 2
+      } else {
+        setTransferError("Receiver info not found.");
+      }
       setIsLoading(false); // Reset the loading state
     } else if (step === 2) {
       if (transferType === 1) {
@@ -469,9 +467,11 @@ const Wallet = () => {
       }
     }
   };
+  
 
   async function handleTransferSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await api.post("/api/transfer", {
@@ -497,21 +497,24 @@ const Wallet = () => {
           // Update the context
           login(updatedUser);
         }
-        toast.success(response.data.message);
+        setIsLoading(false);
         setIsTransactionSuccess(true);
+        setTransferError("");
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
+        setTransferError(error.response.data.message);
+        setIsLoading(false);
       } else {
-        toast.error("Error during transfer.");
+        setTransferError("Error during transfer.");
+        setIsLoading(false);
       }
     }
   }
 
   async function handleRequestSubmit(e) {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       const response = await api.post("/api/request", {
         userId: user.primaryInfo?._id,
@@ -519,7 +522,6 @@ const Wallet = () => {
         amount,
       });
       if (response.status === 200) {
-        toast.success(response.data.message);
         setIsTransactionSuccess(true);
         const balanceResponse = await api.get('/api/getUserBalances', {
           headers: {
@@ -537,12 +539,16 @@ const Wallet = () => {
           // Update the context
           login(updatedUser);
         }
+        setIsLoading(false);
+        setTransferError("");
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
-        toast.error(error.response.data.message);
+        setTransferError(error.response.data.message);
+        setIsLoading(false);
       } else {
-        toast.error("Error sending request.");
+        setTransferError("Error sending request.");
+        setIsLoading(false);
       }
     }
   }
@@ -1013,9 +1019,10 @@ const Wallet = () => {
 
                   </div>
                 </div>
-                <div className="card-body d-flex flex-column justify-content-center align-items-center">
-
-                  {isTransactionSuccess ? (
+                <div className="card-body d-flex flex-column ">
+               
+  {transferError && <div className="alert alert-danger">{transferError}</div>}
+  {isTransactionSuccess ? (
                     <div className="transaction-success" style={{ backgroundColor: "#f5f5f5", fontFamily: "Helvetica Neue,Helvetica,Arial,sans-serif", fontSize: "16px", border: "1px solid #e5e5e5", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", padding: "20px", margin: "20px auto", maxWidth: "500px" }}>
                       <div className="text-center">
                         <div className="mt-5 py-2 d-flex flex-column align-items-center justify-content-center">
@@ -1206,7 +1213,7 @@ const Wallet = () => {
                         <div className="d-flex justify-content-center">
                           <button
                             onClick={handleConfirm}
-                            className="btn btn-primary text-uppercase"
+                            className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
                             disabled={isLoading}
                           >
                             {isLoading ? (

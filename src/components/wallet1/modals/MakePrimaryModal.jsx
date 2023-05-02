@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./MakePrimaryModal.css";
 import { BiArrowBack } from "react-icons/bi";
 
 function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary }) {
+  const [isLoading, setIsLoading] = useState(false);
   const currencyCode = activeCurrency?.currency;
   if (!isVisible) {
     return null;
@@ -14,7 +15,12 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
       EUR: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/1280px-Flag_of_Europe.svg.png',
       GBP: 'https://cdn.britannica.com/25/4825-050-977D8C5E/Flag-United-Kingdom.jpg',
       AUD: 'https://cdn.britannica.com/78/6078-004-77AF7322/Flag-Australia.jpg',
-      KES: 'https://cdn.britannica.com/15/15-004-B5D6BF80/Flag-Kenya.jpg'
+      NGN: 'https://cdn.britannica.com/68/5068-004-72A3F250/Flag-Nigeria.jpg',
+      RWF: 'https://upload.wikimedia.org/wikipedia/commons/1/17/Flag_of_Rwanda.svg',
+      ZAR: 'https://cdn.britannica.com/27/4227-004-32423B42/Flag-South-Africa.jpg',
+      UGX: 'https://cdn.britannica.com/22/22-004-0165975D/Flag-Uganda.jpg',
+      KES: 'https://cdn.britannica.com/15/15-004-B5D6BF80/Flag-Kenya.jpg',
+      ZMW: 'https://cdn.britannica.com/31/4231-004-F1DBFAE7/Flag-Zambia.jpg'
       // Add more currency codes and their respective flag image URLs here
     };
   
@@ -22,6 +28,7 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
   }
 
   async function handleMakePrimary() {
+    setIsLoading(true); // Set loading state to true
     try {
       // Call the onMakePrimary function passed as a prop
       await onMakePrimary(activeCurrency);
@@ -30,8 +37,11 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
     } catch (error) {
       // Handle the error (e.g., show an error message)
       console.error("Error making the currency primary:", error);
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
   }
+
 
   return (
     <div className="modalMakePrimary">
@@ -56,9 +66,9 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
             You should be able to see your total balance in this currency in
             case of multiple currenies in wallet
           </p>
-          <button className="btnMakePrimary" onClick={handleMakePrimary}>
-    <span className="btnTMakePrimary">Set  {currencyCode} as Primary</span>
-  </button>
+          <button className="btnMakePrimary" onClick={handleMakePrimary} disabled={isLoading}>
+            {isLoading ? "Processing..." : <span className="btnTMakePrimary">Set {currencyCode} as Primary</span>}
+          </button>
         </div>
       </div>
     </div>
