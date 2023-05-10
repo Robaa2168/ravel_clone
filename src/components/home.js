@@ -57,7 +57,7 @@ const Dashboard = () => {
   }, []);
 
 
-  const accounts = user.accounts;
+  const accounts = user?.accounts;
   let primaryAccount;
   let accountStatus = "";
   
@@ -97,19 +97,25 @@ const Dashboard = () => {
   
 
   return (
-    <main >
-{primaryAccount && primaryAccount.isHeld && (
-  <div className="dashboard-info-message ">
-    <p>
-      Attention: Your account is temporarily on hold. Please contact{" "}
-      <a href="mailto:support@ravelmobile.com" style={{ color: "inherit" }}>
-        support@ravelmobile.com
-      </a>{" "}
-      for further information.
-    </p>
-  </div>
-)}
-
+<main>
+      {user?.primaryInfo?.isBanned ? (
+        <div className="dashboard-info-message ">
+          <p>
+            Attention: Your account has been permanently limited. <br></br>
+            You can no longer use Ravel as we've decided to permanently limit your account after a review.
+          </p>
+        </div>
+      ) : primaryAccount && primaryAccount.isHeld && (
+        <div className="dashboard-info-message ">
+          <p>
+            Attention: Your account is temporarily on hold. Please contact{" "}
+            <a href="mailto:support@ravelmobile.com" style={{ color: "inherit" }}>
+              support@ravelmobile.com
+            </a>{" "}
+            for further information.
+          </p>
+        </div>
+      )}
 
  <div className='myapp-dashboard'>
       <section className='myapp-cards-container'>
