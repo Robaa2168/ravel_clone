@@ -1195,8 +1195,9 @@ const Wallet = () => {
                               <tr>
                                 <td>Total Transfer</td>
                                 <td>
-                                  {parseFloat(amount).toFixed(2)} {fromCurrency}
-                                </td>
+  {isNaN(parseFloat(amount)) ? '0' : parseFloat(amount).toFixed(2)} {fromCurrency}
+</td>
+
                               </tr>
                               <tr>
                                 <td>Available</td>
