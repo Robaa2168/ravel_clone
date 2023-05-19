@@ -170,3 +170,54 @@ html, body {
   margin-left: auto;
   }
   }
+
+  /* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+  .navbar {
+    padding: 3%;
+    overflow-x: hidden;
+    z-index: 9999 !important;
+    justify-content: space-between; /* Added */
+  }
+
+  .sideMenu {
+    display: block;
+    z-index: 9999 !important;
+  }
+
+  .navLinks {
+    display: none;
+  }
+
+  #logo1 {
+    display: block;
+  }
+  
+  .settings1,
+  .logout {
+    display: block; /* Modified */
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .navbar {
+    padding: 20px 20%;
+    z-index: 9999 !important;
+    justify-content: space-between; /* Added */
+  }
+
+  .sideMenu {
+    display: none;
+  }
+
+  .navLinks {
+    display: flex;
+    justify-content: center; /* Added */
+  }
+
+  .settings1,
+  .logout {
+    display: block;
+  }
+}
