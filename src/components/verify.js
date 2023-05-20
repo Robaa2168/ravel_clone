@@ -224,7 +224,7 @@ function Verification() {
   onClick={handleResendCode}
   style={{ pointerEvents: disableResend ? "none" : "auto" }} // Disable pointer events if resend is disabled
 >
-  {resendTimeout > 0 ? `Resend again in ${resendTimeout}s` : "Resend a new code"}
+  {resendTimeout > 0 ? `Resend a new code in ${resendTimeout}s` : "Resend a new code"}
 </a>
           </div>
         </div>
