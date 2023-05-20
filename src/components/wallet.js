@@ -349,7 +349,7 @@ const Wallet = () => {
 
 
   const getAccountByCurrency = (currency) => {
-    return accounts.find((account) => account.currency === currency);
+    return accounts?.find((account) => account.currency === currency);
   };
 
   // Hardcoded conversion rates

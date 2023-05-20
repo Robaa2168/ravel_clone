@@ -13,6 +13,8 @@ function Application() {
   const [loading, setLoading] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
+  const [dobError, setDobError] = useState("");
+
   
 
   const [step, setStep] = useState(1);
@@ -41,11 +43,30 @@ function Application() {
 
 
   const handleChange = (e) => {
+    if (e.target.name === "dob") {
+      const dob = new Date(e.target.value);
+      const today = new Date();
+  
+      const year = today.getFullYear() - dob.getFullYear();
+      const month = today.getMonth() - dob.getMonth();
+      
+      const age = month < 0 || (month === 0 && today.getDate() < dob.getDate())
+                  ? year - 1 
+                  : year;
+                  
+      if (age < 18) {
+        setDobError("You must be at least 18 years old.");
+        return;
+      } else {
+        setDobError(""); // Clear the error if age is valid
+      }
+    }
     setFormState({
       ...formState,
       [e.target.name]: e.target.value,
     });
   };
+  
 
   const handleCheckboxChange = (e) => {
     setFormState({
@@ -63,6 +84,22 @@ function Application() {
         formState.email
       );
     } else if (step === 2) {
+      // Ensure the user is at least 18
+      const dob = new Date(formState.dob);
+      const today = new Date();
+  
+      const year = today.getFullYear() - dob.getFullYear();
+      const month = today.getMonth() - dob.getMonth();
+      
+      const age = month < 0 || (month === 0 && today.getDate() < dob.getDate())
+                  ? year - 1 
+                  : year;
+                  
+      if (age < 18) {
+        showToast("warning", "Your date of birth is incorrect");
+        return false;
+      }
+  
       return (
         formState.idNumber &&
         formState.dob &&
@@ -75,6 +112,7 @@ function Application() {
     }
     return false;
   };
+  
 
 
   const handlePreviousStep = () => {
@@ -240,16 +278,18 @@ function Application() {
                                 />
                               </div>
                               <div className="col-md-4 col-12 mb-3">
-                                <label className="form-label">D.O.B</label>
-                                <input
-                                  type="date"
-                                  className="form-control"
-                                  name="dob"
-                                  value={formState.dob}
-                                  onChange={handleChange}
-                                  required
-                                />
-                              </div>
+  <label className="form-label">D.O.B</label>
+  <input
+    type="date"
+    className="form-control"
+    name="dob"
+    value={formState.dob}
+    onChange={handleChange}
+    required
+  />
+  {dobError && <small className="text-danger">{dobError}</small>}
+</div>
+
                               <div className="col-md-4 col-12 mb-3">
                                 <label className="form-label">P.O. Box</label>
                                 <input
