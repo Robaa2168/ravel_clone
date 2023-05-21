@@ -624,8 +624,8 @@ const Wallet = () => {
   {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
   {successMessage && <div className="alert alert-success">{successMessage}</div>}
   {pendingWithdrawal && (
- <div className="alert alert-info">
- Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} is pending and will be completed within 24 hours.
+ <div className="alert alert-success">
+ Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed soon.
 </div>
 
 
