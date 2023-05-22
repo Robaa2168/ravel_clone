@@ -19,6 +19,7 @@ import { useUser } from './context';
 import Header from './header';
 import Activity from './activity';
 import Wallet1 from "./wallet1/Wallet1";
+import CreatePIN from './createpin';
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -66,6 +67,7 @@ const AppLayout = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/KYC" element={<Application />} />
           <Route path="/verify" element={<Verification />} />
+          <Route path="/pin" element={<CreatePIN />} />
           <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         </Routes>
 

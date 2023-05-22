@@ -63,7 +63,13 @@ function Login() {
             });
   
             localStorage.setItem("user", JSON.stringify(data));
-            navigate("/home");
+  
+            // Check if the user has filled in the PIN
+            if (!data.userInfo.pin) {
+              navigate("/pin");
+            } else {
+              navigate("/home");
+            }
           } else {
             showToast("warning", "Please complete the KYC process");
             navigate("/KYC", { state: { userId: data.userId } });
@@ -91,13 +97,14 @@ function Login() {
       if (error.response && error.response.data && error.response.data.message) {
         showToast("error", error.response.data.message);
       } else {
-        showToast("error", "Error on login check your Internet connection");
+        showToast("error", "Error on login, check your Internet connection");
         console.error("Error on login: ", error);
       }
     } finally {
       setLoading(false);
     }
   };
+  
   
   
   

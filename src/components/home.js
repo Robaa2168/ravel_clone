@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaCcApplePay, FaEllipsisV, FaFileInvoice, FaStore, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from "./context";
 import api from '../api';
 import './home.css';
@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [showMore, setShowMore] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const { user,login } = useUser();
+  const navigate = useNavigate();
 
   const paymentActivity = [
 
@@ -55,6 +56,13 @@ const Dashboard = () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
+
+  useEffect(() => {
+
+    if (user && !user.userInfo.pin) {
+      navigate("/pin");
+    }
+  }, [user]);
 
 
   const accounts = user?.accounts;

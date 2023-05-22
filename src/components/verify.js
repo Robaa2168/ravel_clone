@@ -204,10 +204,14 @@ function Verification() {
                   </div>
                 </div>
               ))}
-              <button
-                type="submit"
-                className="btn btn-primary text-uppercase py-2 fs-5 w-100"
-                disabled={loading}
+                      <button
+  type="submit"
+  className="btn text-uppercase py-2 fs-5 w-100"
+  disabled={loading}
+  style={{
+    backgroundColor: "#0070BA", 
+    color: "#fff" 
+  }}
               >
                 {loading ? (
                   <div className="spinner-border text-light" role="status">
@@ -219,13 +223,14 @@ function Verification() {
               </button>
             </form>
             <a
-  className="text-primary text-decoration-underline m-2"
+  className="text-decoration-underline m-2"
   role="button"
   onClick={handleResendCode}
-  style={{ pointerEvents: disableResend ? "none" : "auto" }} // Disable pointer events if resend is disabled
+  style={{ pointerEvents: disableResend ? "none" : "auto", color: "#0070BA" }} 
 >
   {resendTimeout > 0 ? `Resend a new code in ${resendTimeout}s` : "Resend a new code"}
 </a>
+
           </div>
         </div>
       </div>
