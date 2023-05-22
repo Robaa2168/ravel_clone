@@ -44,8 +44,13 @@ function CreatePIN() {
         showToast("error", errorMessage);
       }
     } catch (error) {
-      showToast("error", "Error during PIN creation");
-      console.error("Error during PIN creation: ", error);
+
+        if (error.response && error.response.data && error.response.data.message) {
+          showToast("error", error.response.data.message);
+        } else {
+          showToast("error", "Error during PIN creation");
+          console.error("Error on form submission ", error);
+        }
     } finally {
       setLoading(false); // Set loading state to false
     }

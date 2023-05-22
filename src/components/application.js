@@ -199,7 +199,7 @@ function Application() {
           if (error.response && error.response.data && error.response.data.message) {
             showToast("error", error.response.data.message);
           } else {
-            showToast("error", "Error on form submission");
+            showToast("error", "Error on form submission,check your internet connection");
             console.error("Error on form submission ", error);
           }
         } finally {
