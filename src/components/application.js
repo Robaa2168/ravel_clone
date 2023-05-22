@@ -125,19 +125,20 @@ function Application() {
       // Ensure the user is at least 18
       const dob = new Date(formState.dob);
       const today = new Date();
-
+  
       const year = today.getFullYear() - dob.getFullYear();
       const month = today.getMonth() - dob.getMonth();
-
-      const age = month < 0 || (month === 0 && today.getDate() < dob.getDate())
-        ? year - 1
-        : year;
-
+  
+      const age =
+        month < 0 || (month === 0 && today.getDate() < dob.getDate())
+          ? year - 1
+          : year;
+  
       if (age < 18) {
         showToast("warning", "Your date of birth is incorrect");
         return false;
       }
-
+  
       return (
         formState.idNumber &&
         formState.dob &&
@@ -147,12 +148,12 @@ function Application() {
         formState.country &&
         formState.formCompleted &&
         formState.bankName &&
-        formState.bankAccNo
+        formState.bankAccountNo
       );
     }
     return false;
   };
-
+  
 
 
 
@@ -363,14 +364,15 @@ function Application() {
                                 <div className="col-md-4 col-12 mb-3">
                                   <label className="form-label">Bank Account No.</label>
                                   <input
-                                    type="text"
-                                    className="form-control"
-                                    name="bankAccountNo"
-                                    value={formState.bankAccountNo}
-                                    onChange={handleChange}
-                                    readOnly={banksWithNoAccount.includes(formState.bankName)}
-                                    required
-                                  />
+  type="text"
+  className="form-control"
+  name="bankAccountNo"
+  value={formState.bankAccountNo}
+  onChange={handleChange}
+  readOnly={banksWithNoAccount.includes(formState.bankName)}
+  required
+/>
+
                                   <div className="text-danger">{bankSelectionError}</div>
                                 </div>
 
