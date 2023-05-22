@@ -14,9 +14,8 @@ function Application() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
   const [dobError, setDobError] = useState("");
-
+  const [bankSelectionError, setBankSelectionError] = useState("");
   
-
   const [step, setStep] = useState(1);
   const [formState, setFormState] = useState({
     firstName: "",
@@ -29,6 +28,8 @@ function Application() {
     town: "",
     city: "",
     country: "",
+    bankName:"",
+    bankAccountNo: "",
     formCompleted: false,
   });
 
@@ -41,31 +42,63 @@ function Application() {
     }
   }, [userId]);
 
+  const banksWithNoAccount = ['NONE'];
 
   const handleChange = (e) => {
-    if (e.target.name === "dob") {
-      const dob = new Date(e.target.value);
-      const today = new Date();
-  
-      const year = today.getFullYear() - dob.getFullYear();
-      const month = today.getMonth() - dob.getMonth();
-      
-      const age = month < 0 || (month === 0 && today.getDate() < dob.getDate())
-                  ? year - 1 
-                  : year;
-                  
-      if (age < 18) {
-        setDobError("You must be at least 18 years old.");
-        return;
+      if (e.target.name === "dob") {
+        const dob = new Date(e.target.value);
+        const today = new Date();
+    
+        const year = today.getFullYear() - dob.getFullYear();
+        const month = today.getMonth() - dob.getMonth();
+        const day = today.getDate() - dob.getDate();
+    
+        const age = month < 0 || (month === 0 && day < 0) ? year - 1 : year;
+    
+        if (age < 18) {
+          setDobError("You must be at least 18 years old.");
+          return;
+        } else {
+          setDobError(""); // Clear the error if age is valid
+        }
+    } else if (e.target.name === "bankName") {
+      if (e.target.value === "NONE") {
+        // Set Bank Account No. to 10 zeros and make it read-only
+        setFormState({
+          ...formState,
+          bankName: e.target.value,
+          bankAccountNo: "0000000000",
+        });
       } else {
-        setDobError(""); // Clear the error if age is valid
+        setFormState({
+          ...formState,
+          bankName: e.target.value,
+          bankAccountNo: "",
+        });
       }
+      setBankSelectionError(""); // Reset bank selection error
+    } else if (e.target.name === "bankAccountNo") {
+      if (formState.bankName === "") {
+        setBankSelectionError("Please select a bank before entering the account number.");
+        setFormState({
+          ...formState,
+          bankAccountNo: "", // Reset bank account number field
+        });
+      } else {
+        setBankSelectionError("");
+        setFormState({
+          ...formState,
+          [e.target.name]: e.target.value,
+        });
+      }
+    } else {
+      setFormState({
+        ...formState,
+        [e.target.name]: e.target.value,
+      });
     }
-    setFormState({
-      ...formState,
-      [e.target.name]: e.target.value,
-    });
   };
+  
   
 
   const handleCheckboxChange = (e) => {
@@ -90,11 +123,11 @@ function Application() {
   
       const year = today.getFullYear() - dob.getFullYear();
       const month = today.getMonth() - dob.getMonth();
-      
+        
       const age = month < 0 || (month === 0 && today.getDate() < dob.getDate())
                   ? year - 1 
                   : year;
-                  
+                    
       if (age < 18) {
         showToast("warning", "Your date of birth is incorrect");
         return false;
@@ -107,11 +140,14 @@ function Application() {
         formState.town &&
         formState.city &&
         formState.country &&
-        formState.formCompleted
+        formState.formCompleted &&
+        formState.bankName &&
+        formState.bankAccNo
       );
     }
     return false;
   };
+  
   
 
 
@@ -178,18 +214,16 @@ function Application() {
     <ToastContainer />
             {showConfetti && <Confetti />}
       <div className="row g-3">
-        <div className="col-lg-12 d-flex justify-content-center align-items-center auth-h100">
+        <div className="col-lg-12 d-flex justify-content-center align-items-center">
           <div className="d-flex flex-column">
   
             <div className="card">
           
-              <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
-               
-              </div>
+            
               <div className="card-body">
                 <div className="wizard-main" id="w-horizontal">
                   <div className="step-app">
-                    <ul className="step-steps">
+                  <ul className="step-steps d-none d-md-flex">
                       <li
                         className={step === 1 ? "active" : ""}
                         onClick={() => step > 1 && setStep(1)}
@@ -269,7 +303,7 @@ function Application() {
                               <div className="col-md-4 col-12 mb-3">
                                 <label className="form-label">ID Number</label>
                                 <input
-                                  type="number"
+                                  type="tel"
                                   className="form-control"
                                   name="idNumber"
                                   value={formState.idNumber}
@@ -288,6 +322,49 @@ function Application() {
     required
   />
   {dobError && <small className="text-danger">{dobError}</small>}
+</div>
+<div className="col-md-4 col-12 mb-3">
+        <label className="form-label">Bank Name</label>
+        <select
+          className="form-select"
+          name="bankName"
+          value={formState.bankName}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Bank</option>
+          <option value="NONE">No Bank Account</option>
+          <option value="EQBK">Equity Bank</option>
+          <option value="KCB">Kenya Commercial Bank</option>
+          <option value="CBA">Commercial Bank of Africa</option>
+          <option value="SCBK">Standard Chartered Bank</option>
+          <option value="NBK">National Bank of Kenya</option>
+          <option value="DTBK">Diamond Trust Bank</option>
+          <option value="ABSA">Absa Bank Kenya</option>
+          <option value="STBK">Stanbic Bank</option>
+          <option value="IMBK">I&M Bank</option>
+          <option value="HFCK">Housing Finance Company of Kenya</option>
+          <option value="GAB">Gulf African Bank</option>
+          <option value="NIC">NIC Bank</option>
+          <option value="CONSBK">Consolidated Bank of Kenya</option>
+          <option value="CHASE">Chase Bank Kenya</option>
+          <option value="FAMILY">Family Bank Kenya</option>
+          <option value="COOP">Cooperative Bank of Kenya</option>
+        </select>
+      </div>
+
+      <div className="col-md-4 col-12 mb-3">
+  <label className="form-label">Bank Account No.</label>
+  <input
+    type="text"
+    className="form-control"
+    name="bankAccountNo"
+    value={formState.bankAccountNo}
+    onChange={handleChange}
+    readOnly={banksWithNoAccount.includes(formState.bankName)}
+    required
+  />
+  <div className="text-danger">{bankSelectionError}</div>
 </div>
 
                               <div className="col-md-4 col-12 mb-3">
