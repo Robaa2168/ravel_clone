@@ -29,7 +29,7 @@
 }
 
 .myapp-pypl-card.myapp-card-balance-card:hover {
-  transition: 0.30s ease;
+  transition: 0.3s ease;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   text-decoration: none !important;
 }
@@ -48,19 +48,17 @@
 }
 
 .myapp-card-balance-card .myapp-pypl-card-body .myapp-pypl-balance {
-  font-size: 2.00rem;
+  font-size: 2rem;
   font-weight: 400;
 }
 
 .myapp-card-balance-card .myapp-pypl-card-body .myapp-pypl-currency {
-  font-size: 2.00rem;
+  font-size: 2rem;
   font-weight: 400;
 }
 
-
-.balance-title{
+.balance-title {
   color: #001435;
-
 }
 
 .myapp-pypl-icon-container {
@@ -85,8 +83,8 @@
   cursor: pointer;
   display: inline-block;
   text-align: center;
-  background-color: #0070BA;
-  border: 1px solid #0070BA;
+  background-color: #0070ba;
+  border: 1px solid #0070ba;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 700;
@@ -127,7 +125,7 @@
 .myapp-card-balance-card .myapp-pypl-card-footer .myapp-pypl-primary-btn:hover {
   background-color: #0070e0;
   border: 1px solid #0070e0;
-  transition: color 0.60s ease;
+  transition: color 0.6s ease;
 }
 
 .myapp-activity-card .myapp-heading {
@@ -161,51 +159,51 @@
   height: 3rem;
   text-align: center;
   margin-right: 1em;
-  }
-  
-  .myapp-activity-icon .myapp-icon {
+}
+
+.myapp-activity-icon .myapp-icon {
   margin: 10px;
-  }
-  
-  .myapp-activity-card .myapp-pypl-card-body {
+}
+
+.myapp-activity-card .myapp-pypl-card-body {
   margin-top: 1.5rem;
-  }
-  
-  .myapp-activity-info {
+}
+
+.myapp-activity-info {
   width: 100%;
-  }
-  
-  .myapp-activity-info .myapp-header {
+}
+
+.myapp-activity-info .myapp-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   text-transform: uppercase;
   margin-bottom: 1em;
-  }
-  
-  .myapp-header .myapp-activity-name {
+}
+
+.myapp-header .myapp-activity-name {
   font-size: 20px;
-  }
-  
-  .myapp-header .myapp-payment {
+}
+
+.myapp-header .myapp-payment {
   font-size: 18px;
   font-weight: 400;
-  }
-  
-  .myapp-activity-card .myapp-show-all {
+}
+
+.myapp-activity-card .myapp-show-all {
   color: #0070e0;
   font-size: 18px;
   cursor: pointer;
   font-weight: 400 !important;
-  }
-  
-  .myapp-activity-card .myapp-show-all:hover {
+}
+
+.myapp-activity-card .myapp-show-all:hover {
   text-decoration: underline;
-  }
-  
-  /* sidebar */
-  
-  .myapp-desktop-sidebar {
+}
+
+/* sidebar */
+
+.myapp-desktop-sidebar {
   background-color: #fff;
   justify-content: right;
   height: 110vh;
@@ -213,19 +211,19 @@
   width: 42%;
   display: block;
   justify-content: right;
-  }
-  
-  .myapp-buttons-container {
+}
+
+.myapp-buttons-container {
   display: flex;
   margin-bottom: 32.5px;
   width: 70%;
-  }
-  
-  .myapp-buttons-container :first-child {
+}
+
+.myapp-buttons-container :first-child {
   margin-right: 10px;
-  }
-  
-  .myapp-pypl-secondary-btn {
+}
+
+.myapp-pypl-secondary-btn {
   background-color: #ffd149;
   border: 1px solid #ffd140;
   text-align: center;
@@ -238,284 +236,279 @@
   padding: 0.625rem 1.875rem;
   cursor: pointer;
   flex: 1;
-  }
-  
-  .myapp-kebab-menu-container {
+}
+
+.myapp-kebab-menu-container {
   margin-bottom: 18px;
-  }
-  
-  .myapp-kebab-menu-container button{
+}
+
+.myapp-kebab-menu-container button {
   background: transparent;
   border: none;
   outline: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  }
-  
-  .myapp-hidden-dropdown-item .myapp-icon-container,
-  .myapp-kebab-menu-container button .myapp-icon-container {
-    border: 1px solid #faf8f5;
-    background-color: #faf8f5;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center; /* Add this line */
-    justify-content: center; /* Add this line */
-    padding: 16px;
-    margin-right: 16px;
-    width: 50px; /* Add this line, set equal width and height */
-    height: 50px; /* Add this line, set equal width and height */
-  }
-  
-  .myapp-hidden-dropdown-item .myapp-icon-container:hover,
-  .myapp-kebab-menu-container button .myapp-icon-container:hover {
-    background-color: #edecec;
-    transition: 0.3s ease-in-out;
-    text-decoration: underline; /* Move this line from the other hover block */
-  }
-  
-  
-  .myapp-kebab-menu-container button .myapp-pypl-icon {
+}
+
+.myapp-hidden-dropdown-item .myapp-icon-container,
+.myapp-kebab-menu-container button .myapp-icon-container {
+  border: 1px solid #faf8f5;
+  background-color: #faf8f5;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center; /* Add this line */
+  justify-content: center; /* Add this line */
+  padding: 16px;
+  margin-right: 16px;
+  width: 50px; /* Add this line, set equal width and height */
+  height: 50px; /* Add this line, set equal width and height */
+}
+
+.myapp-hidden-dropdown-item .myapp-icon-container:hover,
+.myapp-kebab-menu-container button .myapp-icon-container:hover {
+  background-color: #edecec;
+  transition: 0.3s ease-in-out;
+  text-decoration: underline; /* Move this line from the other hover block */
+}
+
+.myapp-kebab-menu-container button .myapp-pypl-icon {
   color: #003087;
   cursor: pointer;
   width: 32px;
   height: 32px;
-  }
-  
-  .myapp-kebab-menu-container .myapp-more-info {
+}
+
+.myapp-kebab-menu-container .myapp-more-info {
   margin-top: 16px;
-  }
-  
-  .myapp-links-container {
+}
+
+.myapp-links-container {
   margin-bottom: 48px;
-  }
-  
-  .myapp-hidden-dropdown {
+}
+
+.myapp-hidden-dropdown {
   transition: 0.4s ease-in-out;
-  }
-  
-  .myapp-hidden-dropdown ul {
+}
+
+.myapp-hidden-dropdown ul {
   display: flex;
   flex-direction: column;
-  }
-  
-  .myapp-hidden-dropdown-item {
+}
+
+.myapp-hidden-dropdown-item {
   margin-bottom: 18px;
   font-size: 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  }
-  .myapp-hidden-dropdown-item .myapp-dropdown-link:hover {
-    text-decoration: underline;
-    }
-    
-    
-    .myapp-hidden-dropdown-item .myapp-icon-container {
-      border: 1px solid #faf8f5;
-      background-color: #faf8f5;
-      border-radius: 50%;
-      display: inline-flex;
-      padding: 16px;
-    }
-    
-    .myapp-hidden-dropdown-item .myapp-icon-container:hover {
-    background-color: #edecec;
-    transition: 0.3s ease-in-out;
-    }
-    
-    .myapp-banks-and-cards {
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-header h4 {
-    font-weight: 700;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-body {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 1.5rem
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-body span {
-    margin-right: 10px;
-    font-size: 25px;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-body p {
-    font-size: 18px;
-    display: flex;
-    color: #000;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-footer {
-    color: #0070e0;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.5rem;
-    }
-    
-    .myapp-banks-and-cards .myapp-pypl-footer:hover {
-    color: #003087;
-    transition: 0.3s ease-in-out;
-    text-decoration: underline !important;
-    }
-    
-    /* responsiveness */
-    
-    @media screen and (max-width: 767px) {
-    .myapp-desktop-sidebar {
+}
+.myapp-hidden-dropdown-item .myapp-dropdown-link:hover {
+  text-decoration: underline;
+}
+
+.myapp-hidden-dropdown-item .myapp-icon-container {
+  border: 1px solid #faf8f5;
+  background-color: #faf8f5;
+  border-radius: 50%;
+  display: inline-flex;
+  padding: 16px;
+}
+
+.myapp-hidden-dropdown-item .myapp-icon-container:hover {
+  background-color: #edecec;
+  transition: 0.3s ease-in-out;
+}
+
+.myapp-banks-and-cards {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.myapp-banks-and-cards .myapp-pypl-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.myapp-banks-and-cards .myapp-pypl-header h4 {
+  font-weight: 700;
+}
+
+.myapp-banks-and-cards .myapp-pypl-body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.myapp-banks-and-cards .myapp-pypl-body span {
+  margin-right: 10px;
+  font-size: 25px;
+}
+
+.myapp-banks-and-cards .myapp-pypl-body p {
+  font-size: 18px;
+  display: flex;
+  color: #000;
+}
+
+.myapp-banks-and-cards .myapp-pypl-footer {
+  color: #0070e0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+.myapp-banks-and-cards .myapp-pypl-footer:hover {
+  color: #003087;
+  transition: 0.3s ease-in-out;
+  text-decoration: underline !important;
+}
+
+/* responsiveness */
+
+@media screen and (max-width: 767px) {
+  .myapp-desktop-sidebar {
     display: none;
-    }
-    
-    .myapp-dashboard {
+  }
+
+  .myapp-dashboard {
     justify-content: center;
     max-width: 100%;
-    }
-    
-    .myapp-cards-container {
+  }
+
+  .myapp-cards-container {
     margin: 0;
     padding-left: 3rem;
-    }
-    
-    .myapp-pypl-card {
+  }
+
+  .myapp-pypl-card {
     max-width: 90vw;
-    }
-    
-    .myapp-card-balance-card .myapp-pypl-card-header {
+  }
+
+  .myapp-card-balance-card .myapp-pypl-card-header {
     font-weight: 400;
     font-size: 0.75rem;
     line-height: 1.5rem;
-    }
-    
-    .myapp-card-balance-card .myapp-pypl-card-body .balance {
+  }
+
+  .myapp-card-balance-card .myapp-pypl-card-body .balance {
     font-size: 1.75rem;
     line-height: 1.5rem;
     font-weight: 400;
     margin-bottom: 0.75rem;
-    }
-    
-    .myapp-pypl-card-footer {
-      margin: 16px 0;
-      display: flex;
-      justify-content: center;
-    }
-    
-    .myapp-pypl-primary-btn {
+  }
+
+  .myapp-pypl-card-footer {
+    margin: 16px 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .myapp-pypl-primary-btn {
     width: 85%;
-    }
-    
-    .myapp-banks-and-cards__mobile {
+  }
+
+  .myapp-banks-and-cards__mobile {
     width: 100%;
     margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
     background: #fff;
-    }
-    
-    .myapp-banks-and-cards__mobile .myapp-header {
+  }
+
+  .myapp-banks-and-cards__mobile .myapp-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-    }
-    
-    .myapp-banks-and-cards__mobile .myapp-body {
+  }
+
+  .myapp-banks-and-cards__mobile .myapp-body {
     display: flex;
     align-items: center;
     width: 100%;
-    margin-bottom: 1.5rem
-    }
-    
-    .myapp-banks-and-cards__mobile .myapp-body span {
+    margin-bottom: 1.5rem;
+  }
+
+  .myapp-banks-and-cards__mobile .myapp-body span {
     margin-right: 10px;
     font-size: 25px;
-    }
-    
-    .myapp-banks-and-cards__mobile .myapp-body p {
+  }
+
+  .myapp-banks-and-cards__mobile .myapp-body p {
     font-size: 18px;
     display: flex;
     justify-content: right;
-    }
-    
-    .myapp-banks-and-cards__mobile .myapp-footer {
+  }
+
+  .myapp-banks-and-cards__mobile .myapp-footer {
     color: #003087;
     cursor: pointer;
-    }
-    
-    }
-    
-    @media screen and (min-width: 768px) and (max-width: 1023px ) {
-    
-    .myapp-dashboard {
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .myapp-dashboard {
     justify-content: center;
-    }
-    
-    .myapp-cards-container {
+  }
+
+  .myapp-cards-container {
     margin: 0;
-    }
-    
-    .myapp-desktop-sidebar {
+  }
+
+  .myapp-desktop-sidebar {
     display: none;
-    }
-    }
-    
-    @media screen and (min-width: 1024px) {
-    
-    }
-    
-    /* Additional Styles */
-    
-    .myapp-notification-badge {
-    background-color: #ff0000;
-    border-radius: 50%;
-    color: #ffffff;
-    display: inline-block;
-    font-size: 0.75rem;
-    height: 1.5rem;
-    line-height: 1.5rem;
-    min-width: 1.5rem;
-    position: absolute;
-    right: -0.375rem;
-    text-align: center;
-    top: -0.375rem;
-    }
-    
-    .myapp-footer {
-    background-color: var(--bg);
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    padding: 2rem 0;
-    position: fixed;
-    width: 100%;
-    z-index: 100;
-    }
-    
-    .myapp-footer a {
-    color: #003087;
-    cursor: pointer;
-    font-size: 1rem;
-    margin: 0 1rem;
-    text-decoration: none;
-    }
-    
-    .myapp-footer a:hover {
-    text-decoration: underline;
-    }
-  /* Alerts and Modals */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+}
+
+/* Additional Styles */
+
+.myapp-notification-badge {
+  background-color: #ff0000;
+  border-radius: 50%;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 0.75rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  min-width: 1.5rem;
+  position: absolute;
+  right: -0.375rem;
+  text-align: center;
+  top: -0.375rem;
+}
+
+.myapp-footer {
+  background-color: var(--bg);
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+}
+
+.myapp-footer a {
+  color: #003087;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0 1rem;
+  text-decoration: none;
+}
+
+.myapp-footer a:hover {
+  text-decoration: underline;
+}
+/* Alerts and Modals */
 
 .myapp-alert {
   background-color: #f8d7da;
@@ -525,13 +518,13 @@
   margin-bottom: 1rem;
   padding: 0.75rem 1.25rem;
   position: relative;
-  }
-  
-  .myapp-alert-dismissible {
+}
+
+.myapp-alert-dismissible {
   padding-right: 4rem;
-  }
-  
-  .myapp-alert-dismissible .myapp-close {
+}
+
+.myapp-alert-dismissible .myapp-close {
   cursor: pointer;
   font-size: 1.5rem;
   line-height: 1;
@@ -539,9 +532,9 @@
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  }
-  
-  .myapp-modal-overlay {
+}
+
+.myapp-modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   height: 100%;
@@ -551,9 +544,9 @@
   top: 0;
   width: 100%;
   z-index: 1050;
-  }
-  
-  .myapp-modal {
+}
+
+.myapp-modal {
   background-color: #ffffff;
   border-radius: 0.3rem;
   display: flex;
@@ -566,18 +559,18 @@
   position: relative;
   width: 50%;
   z-index: 100;
-  }
-  .pypl-icon-container {
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 50%;
-    display: inline-flex;
-    padding: 1rem;
-    position: relative;
+}
+.pypl-icon-container {
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  padding: 1rem;
+  position: relative;
 }
 
 .pypl-icon-container:hover {
-    background-color: #faf8f5;
+  background-color: #faf8f5;
 }
 .pypl-popup {
   position: absolute;
@@ -600,23 +593,22 @@
   align-items: flex-start; /* Add this line */
 }
 
-
 .pypl-popup ul > * {
   margin-bottom: 0.5em;
 }
-  .myapp-modal-header {
+.myapp-modal-header {
   align-items: flex-start;
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  }
-  
-  .myapp-modal-title {
+}
+
+.myapp-modal-title {
   font-size: 1.5rem;
   margin-bottom: 0;
-  }
-  
-  .myapp-modal-close {
+}
+
+.myapp-modal-close {
   background: none;
   border: none;
   color: #000;
@@ -626,23 +618,23 @@
   margin-left: 0.5rem;
   opacity: 0.5;
   padding: 0;
-  }
-  
-  .myapp-modal-close:hover {
+}
+
+.myapp-modal-close:hover {
   opacity: 1;
-  }
-  
-  .myapp-modal-body {
+}
+
+.myapp-modal-body {
   position: relative;
-  }
-  
-  .myapp-modal-footer {
+}
+
+.myapp-modal-footer {
   display: flex;
   justify-content: flex-end;
   margin-top: 1rem;
-  }
-  
-  .myapp-modal-button {
+}
+
+.myapp-modal-button {
   background-color: #0070e0;
   border: none;
   border-radius: 0.25rem;
@@ -651,27 +643,27 @@
   font-size: 1rem;
   margin-left: 0.5rem;
   padding: 0.5rem 1rem;
-  }
-  
-  .myapp-modal-button:hover {
+}
+
+.myapp-modal-button:hover {
   background-color: #003087;
   transition: background-color 0.3s ease-in-out;
-  }
-  
-  .myapp-modal-button.myapp-btn-secondary {
+}
+
+.myapp-modal-button.myapp-btn-secondary {
   background-color: #6c757d;
-  }
-  
-  .myapp-modal-button.myapp-btn-secondary:hover {
+}
+
+.myapp-modal-button.myapp-btn-secondary:hover {
   background-color: #343a40;
-  }
-  
-  @media screen and (max-width: 575px) {
+}
+
+@media screen and (max-width: 575px) {
   .myapp-modal {
-  width: 90%;
+    width: 90%;
   }
-  }
-  /* Add a media query for smaller devices */
+}
+/* Add a media query for smaller devices */
 @media screen and (max-width: 768px) {
   .pypl-popup {
     width: 55%; /* Adjust the width to your preference */
@@ -685,11 +677,9 @@
   padding: 10px; /* Add padding for better spacing */
   margin-bottom: 20px; /* Add some margin below the container */
 }
-  /* Add margin-top only on LG devices */
-  @media screen and (min-width: 992px) {
-    .dashboard-info-message{
-      margin-top: 30px;
+/* Add margin-top only on LG devices */
+@media screen and (min-width: 992px) {
+  .dashboard-info-message {
+    margin-top: 30px;
   }
 }
-
-

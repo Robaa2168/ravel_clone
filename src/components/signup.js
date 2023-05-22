@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
@@ -74,7 +74,7 @@ function Signup() {
       showToast("warning", "No internet connection");
       return;
     }
-  
+
     try {
       const response = await api.post(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`, formData);
       const data = response.data;
@@ -160,7 +160,7 @@ function Signup() {
                         <label className="form-label fs-6">Mobile *</label>
                         <div className="input-group mb-3">
                           <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-                      
+
                           <input type="text" className="form-control" value={phoneNumber} onChange={handleMobileInputChange} required />
                         </div>
                         <div className="mb-3">

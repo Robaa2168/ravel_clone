@@ -1,80 +1,79 @@
 .sidebar {
-    background-color: #12161c;
-    width: 240px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
+  background-color: #12161c;
+  width: 240px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.logo .logo-text {
+  font-size: 24px;
+  font-weight: 500;
+  color: #ffffff !important;
+  text-align: center !important;
+}
+
+.menu {
+  flex-grow: 1;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.menu-item-icon {
+  font-size: 20px;
+  margin-right: 16px;
+  position: absolute; /* Add this line */
+}
+
+.menu-item-text {
+  font-size: 18px;
+  padding-left: 36px; /* Add this line to move the text to the right */
+}
+
+.menu-item:hover {
+  background-color: #1f2735;
+}
+
+.menu-item.active {
+  background-color: #1f2735;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 250px; /* Increase the width of the sidebar */
+    overflow: hidden;
   }
-  
-  .logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-  
-  .logo .logo-text {
-    font-size: 24px;
-    font-weight: 500;
-    color: #ffffff !important;
-    text-align: center !important;
-  }
-  
-  .menu {
-    flex-grow: 1;
-  }
-  
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
+
   .menu-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    color: #ffffff;
-    text-decoration: none;
-    transition: background-color 0.2s;
+    justify-content: flex-start; /* Change this line to align icons left */
+    padding-left: 30px; /* Add this line to move the icon to the left */
   }
-  
-  .menu-item-icon {
-    font-size: 20px;
-    margin-right: 16px;
-    position: absolute; /* Add this line */
-  }
-  
-  .menu-item-text {
-    font-size: 18px;
-    padding-left: 36px; /* Add this line to move the text to the right */
-  }
-  
-  .menu-item:hover {
-    background-color: #1f2735;
-  }
-  
-  .menu-item.active {
-    background-color: #1f2735;
-  }
-  
-  /* Responsive styles */
-  @media screen and (max-width: 768px) {
-    .sidebar {
-      width: 250px; /* Increase the width of the sidebar */
-      overflow: hidden;
-    }
-  
-    .menu-item {
-      justify-content: flex-start; /* Change this line to align icons left */
-      padding-left: 30px; /* Add this line to move the icon to the left */
-    }
-  }
-  
-  /* Add this to the end of Sidebar.css */
+}
+
+/* Add this to the end of Sidebar.css */
 @media screen and (min-width: 992px) {
-    .main {
-      margin-left: 240px; /* Change this value based on the width of your sidebar */
-    }
+  .main {
+    margin-left: 240px; /* Change this value based on the width of your sidebar */
   }
-  
+}

@@ -84,7 +84,7 @@ const Wallet = () => {
         headers: { Authorization: `Bearer ${user.token}` }, // Pass the user token
         params: { userId: user?.primaryInfo?._id }, // Pass the userId in the params
       });
-  
+
       if (response.status === 200) {
         setPendingWithdrawal(response.data.withdrawal);
       }
@@ -92,11 +92,11 @@ const Wallet = () => {
       console.error("Error fetching pending withdrawal:", error);
     }
   };
-  
+
   useEffect(() => {
     fetchPendingWithdrawal();
   }, []);
-  
+
   const handleTransferTypeChange = (type) => {
     setTransferType(type);
   };
@@ -123,7 +123,7 @@ const Wallet = () => {
   const handleCurrencyChange = (e) => {
     setError("");
     setCurrency(e.target.value);
-   
+
   };
 
 
@@ -134,13 +134,13 @@ const Wallet = () => {
     setSuccessMessage('');
 
     if (!selectedCurrency) {
-    
+
       setWithdrawError("Please select a currency.");
       return;
     }
-  
+
     try {
-  
+
       const response = await api.post('/api/withdrawal', {
         amount: parseFloat(amountwithdrawal),
         currency: selectedCurrency,
@@ -148,7 +148,7 @@ const Wallet = () => {
       }, {
         headers: { Authorization: `Bearer ${user.token}` }, // Pass the user token
       });
-  
+
       if (response.status === 201) {
         const balanceResponse = await api.get('/api/getUserBalances', {
           headers: {
@@ -180,20 +180,20 @@ const Wallet = () => {
       setIsLoading(false);
     }
   };
-  
+
   const handleConvertSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setWithdrawError('');
     setSuccessMessage('');
-  
+
     // Check if fromCurrency and toCurrency are the same
     if (fromCurrency === toCurrency) {
       setWithdrawError("From currency and to currency cannot be the same.");
       setIsLoading(false);
       return;
     }
-  
+
     // Check if the amount is less than the minimum conversion amount
     if (parseFloat(amount) < 10) {
       setWithdrawError("Minimum conversion amount is 10.");
@@ -209,7 +209,7 @@ const Wallet = () => {
       }, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
-  
+
       if (response.status === 201) {
         const balanceResponse = await api.get('/api/getUserBalances', {
           headers: {
@@ -217,13 +217,13 @@ const Wallet = () => {
             'user-id': user?.primaryInfo?._id,
           },
         });
-  
+
         if (balanceResponse.status === 200) {
           // Update the local storage with the new balances
           const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
           console.log(updatedUser);
           localStorage.setItem("user", JSON.stringify(updatedUser));
-  
+
           // Update the context
           login(updatedUser);
         }
@@ -241,10 +241,10 @@ const Wallet = () => {
       setIsLoading(false);
     }
   };
-  
-  
 
-  
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -259,13 +259,13 @@ const Wallet = () => {
       return;
     }
     const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-   
+
 
     try {
       setIsLoading(true);
       const response = await api.post('/api/deposit', {
         phoneNumber: formattedPhoneNumber,
-        amount:amountdeposit,
+        amount: amountdeposit,
         currency: currency,
       });
 
@@ -306,9 +306,9 @@ const Wallet = () => {
               setShowConfetti2(true);
               setIsLoading(false);
               setIsPolling(false);
-              setShowSuccessCheckmark(true); 
+              setShowSuccessCheckmark(true);
               setSuccessMessage(null);
-           
+
               setTimeout(() => {
                 setShowConfetti2(false);
                 setShowSuccessCheckmark(false);
@@ -380,7 +380,7 @@ const Wallet = () => {
     setSelectedCurrency(cur);
     setError(null);
   };
-  
+
 
   const convertToUSD = (currency, amount) => {
     return amount * (conversionRates[currency] || 1);
@@ -400,14 +400,14 @@ const Wallet = () => {
   const fetchReceiverInfo = async (payID) => {
     try {
       const response = await api.post(`/api/check/${payID}`);
-  
+
       if (response.status !== 200) {
         const message = response.data?.message;
         throw new Error(`Error fetching receiver info: ${message || response.status}`);
       }
-  
+
       const receiverInfo = response.data;
-  
+
       setReceiverInfo(receiverInfo);
       setTransferError("");
       return receiverInfo;
@@ -443,13 +443,13 @@ const Wallet = () => {
 
   const handleConfirm = async (e) => {
     e.preventDefault();
-  
+
     // Validate form fields
     if (!payID || !amount || !fromCurrency) {
       setTransferError("Please complete all fields.");
       return;
     }
-  
+
     if (step === 1) {
       setIsLoading(true); // Set the loading state
       const receiverInfo = await fetchReceiverInfo(payID);
@@ -467,7 +467,7 @@ const Wallet = () => {
       }
     }
   };
-  
+
 
   async function handleTransferSubmit(e) {
     e.preventDefault();
@@ -564,7 +564,7 @@ const Wallet = () => {
       <div className="body d-flex py-3">
         <div className="container-xxl">
           <div className="row g-3 mb-3 row-deck">
-          <div className="col-xl-12 col-xxl-7 d-none d-sm-block">
+            <div className="col-xl-12 col-xxl-7 d-none d-sm-block">
               <div className="card">
                 <ToastContainer />
 
@@ -613,164 +613,164 @@ const Wallet = () => {
             </div>
             <div className="col-xl-12 col-xxl-5">
               <div className="card">
-              <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
+                <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
                   <h6 className=" fw-bold">  {withdrawConvert === 1 ? "Withdraw" : "Convert"}</h6>
                   <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                    <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Withdraw" role="tab"  onClick={() => handleWithdrawConvert(1)}>Withdraw</a></li>
-                    <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#convert" role="tab"  onClick={() => handleWithdrawConvert(2)}>Convert</a></li>
+                    <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Withdraw" role="tab" onClick={() => handleWithdrawConvert(1)}>Withdraw</a></li>
+                    <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#convert" role="tab" onClick={() => handleWithdrawConvert(2)}>Convert</a></li>
                   </ul>
                 </div>
                 <div className="card-body">
-  {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
-  {successMessage && <div className="alert alert-success">{successMessage}</div>}
-  {pendingWithdrawal && (
- <div className="alert alert-success">
- Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed soon.
-</div>
+                  {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
+                  {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                  {pendingWithdrawal && (
+                    <div className="alert alert-success">
+                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed soon.
+                    </div>
 
 
-  )}
-  {withdrawConvert === 1 ? (
-    <form onSubmit={handleWithdrawSubmit}>
-                    <div className="row g-3 mb-3">
-                      <div className="col-sm-12">
-                        <label className="form-label">Enter amount & currency</label>
-                        <div className="input-group">
-  <input type="tel" placeholder="Amount" 
-         value={amountwithdrawal}
-         onChange={handleWitAmountChange}
-         className="form-control" min="100" required/>
-  <button
-    className="btn btn-outline-secondary dropdown-toggle"
-    type="button"
-    data-bs-toggle="dropdown"
-    aria-expanded="false"
-  >
-    {selectedCurrency}
-  </button>
-  <ul className="dropdown-menu dropdown-menu-end">
-  {currencies.map((cur) => (
-    <li
-      key={cur}
-      className="dropdown-item"
-      onClick={() => handleCurrencySelect(cur)}
-    >
-      {cur}
-    </li>
-  ))}
-</ul>
-</div>
+                  )}
+                  {withdrawConvert === 1 ? (
+                    <form onSubmit={handleWithdrawSubmit}>
+                      <div className="row g-3 mb-3">
+                        <div className="col-sm-12">
+                          <label className="form-label">Enter amount & currency</label>
+                          <div className="input-group">
+                            <input type="tel" placeholder="Amount"
+                              value={amountwithdrawal}
+                              onChange={handleWitAmountChange}
+                              className="form-control" min="100" required />
+                            <button
+                              className="btn btn-outline-secondary dropdown-toggle"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {selectedCurrency}
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-end">
+                              {currencies.map((cur) => (
+                                <li
+                                  key={cur}
+                                  className="dropdown-item"
+                                  onClick={() => handleCurrencySelect(cur)}
+                                >
+                                  {cur}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
 
-                      </div>
-                      <div className="col-sm-12">
-                        <label className="form-label">Bank/Phone</label>
-                        {user && user.userInfo && (
-                          <select className="form-control">
-                            <option value={user.userInfo.phoneNumber}>{user.userInfo.phoneNumber}</option>
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">Bank/Phone</label>
+                          {user && user.userInfo && (
+                            <select className="form-control">
+                              <option value={user.userInfo.phoneNumber}>{user.userInfo.phoneNumber}</option>
+                            </select>
+                          )}
+                        </div>
+
+                        <div className="col-sm-12">
+                          <label className="form-label">Select Withdraw Network</label>
+                          <select className="form-select" aria-label="Default select example">
+                            <option selected> INT (Arrival time ≈ 2 mins)</option>
+
                           </select>
-                        )}
-                      </div>
-
-                      <div className="col-sm-12">
-                        <label className="form-label">Select Withdraw Network</label>
-                        <select className="form-select" aria-label="Default select example">
-                          <option selected> INT (Arrival time ≈ 2 mins)</option>
-
-                        </select>
-                      </div>
-                      <div className="col-sm-12">
-                        <div className="d-flex justify-content-between flex-wrap">
-                          <div>
-                            <div className="truncated">Balance</div>
-                            <div className="text-muted truncated">  {selectedAccount?.balance?.toFixed(2)} {selectedCurrency}</div>
-                          </div>
-                          <div>
-                            <div className="truncated">Minimum withdrawal</div>
-                            <div className="text-muted  truncated">10.00 USD</div>
+                        </div>
+                        <div className="col-sm-12">
+                          <div className="d-flex justify-content-between flex-wrap">
+                            <div>
+                              <div className="truncated">Balance</div>
+                              <div className="text-muted truncated">  {selectedAccount?.balance?.toFixed(2)} {selectedCurrency}</div>
+                            </div>
+                            <div>
+                              <div className="truncated">Minimum withdrawal</div>
+                              <div className="text-muted  truncated">10.00 USD</div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-sm-12">
-                        <div className="d-flex justify-content-between flex-wrap">
-                          <div>
-                            <div className="truncated">Network fee</div>
-                            <div className="text-muted truncated"> {networkFeeMin.toFixed(2)} ~ {networkFeeMax.toFixed(2)} {selectedCurrency}</div>
-                          </div>
-                          <div>
-                            <div className="truncated">24h remaining limit</div>
-                            <div className="text-muted  truncated"> 5000.00 USD</div>
+                        <div className="col-sm-12">
+                          <div className="d-flex justify-content-between flex-wrap">
+                            <div>
+                              <div className="truncated">Network fee</div>
+                              <div className="text-muted truncated"> {networkFeeMin.toFixed(2)} ~ {networkFeeMax.toFixed(2)} {selectedCurrency}</div>
+                            </div>
+                            <div>
+                              <div className="truncated">24h remaining limit</div>
+                              <div className="text-muted  truncated"> 5000.00 USD</div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="col-sm-12">
-                      <button
-  type="submit"
-  className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-  style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-  disabled={isLoading}
->
-  {isLoading ? 'Processing...' : 'Withdraw'}
-</button>
+                        <div className="col-sm-12">
+                          <button
+                            type="submit"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Processing...' : 'Withdraw'}
+                          </button>
 
-        </div>
-      </div>
-    </form>
-  ) : (
-    <form onSubmit={handleConvertSubmit}>
-      <div className="row g-3 mb-3">
-        <div className="col-sm-12">
-          <label className="form-label">From</label>
-          <select
-  className="form-select"
-  value={fromCurrency}
-  onChange={(e) => setFromCurrency(e.target.value)}
->
-  {currencies.map((cur) => (
-    <option key={cur} value={cur}>
-      {cur}
-    </option>
-  ))}
-</select>
-        </div>
-        <div className="col-sm-12">
-          <label className="form-label">To</label>
-          <select
-  className="form-select"
-  value={toCurrency}
-  onChange={(e) => setToCurrency(e.target.value)}
->
-  {currencies.map((cur) => (
-    <option key={cur} value={cur}>
-      {cur}
-    </option>
-  ))}
-</select>
-        </div>
-        <div className="col-sm-12">
-          <label className="form-label">Amount</label>
-          <input
-  type="tel"
-  placeholder="Amount"
-  className="form-control"
-  value={amount}
-  onChange={(e) => setAmount(e.target.value)}
-  required
-/>
-        </div>
-        <div className="col-sm-12">
-        <button
-          type="submit"
-          className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-          style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Processing...' : 'Convert'}
-        </button>
-        </div>
-      </div>
-    </form>
-  )}
-</div>
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleConvertSubmit}>
+                      <div className="row g-3 mb-3">
+                        <div className="col-sm-12">
+                          <label className="form-label">From</label>
+                          <select
+                            className="form-select"
+                            value={fromCurrency}
+                            onChange={(e) => setFromCurrency(e.target.value)}
+                          >
+                            {currencies.map((cur) => (
+                              <option key={cur} value={cur}>
+                                {cur}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">To</label>
+                          <select
+                            className="form-select"
+                            value={toCurrency}
+                            onChange={(e) => setToCurrency(e.target.value)}
+                          >
+                            {currencies.map((cur) => (
+                              <option key={cur} value={cur}>
+                                {cur}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">Amount</label>
+                          <input
+                            type="tel"
+                            placeholder="Amount"
+                            className="form-control"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="col-sm-12">
+                          <button
+                            type="submit"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Processing...' : 'Convert'}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -920,81 +920,81 @@ const Wallet = () => {
                       </form>
                     </div>
                     <div className="tab-pane fade show active" id="cash">
-      {error && <div className="alert alert-danger mt-3">{error}</div>}
-      {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
-      {showSuccessCheckmark ? (
-        <div className="text-center my-5">
-          {showConfetti2 && <Confetti />}
-          <BsCheckCircle size="7em" color="green" />
-          <p>Deposit to {currency || "USD"} completed successfully.</p>
-        </div>
-      ) : (
-        <>
-          <p>
-            Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
-          </p>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label className="form-label">Select Mode</label>
-              <select className="form-select">
-                <option selected>Mpesa</option>
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Currency to Deposit</label>
-              <select className="form-select" value={currency} onChange={handleCurrencyChange}>
-                {currencies.map((cur) => (
-                  <option key={cur} value={cur}>
-                    {cur}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Phone Number</label>
-              <div className="input-group">
-                <input
-                  type="tel"
-                  placeholder="e.g 254792340510"
-                  className="form-control"
-                  value={phoneNumber}
-                  onChange={handlePhoneNumberChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3">
-              <label className="form-label">Amount</label>
-              <div className="input-group">
-                <input
-                  type="tel"
-                  placeholder='e.g 1000'
-                  className="form-control"
-                  value={amountdeposit}
-                  onChange={handleAmountChange}
-                />
-              </div>
-            </div>
-            <div className="mb-3">
-              <button
-                type="submit"
-                className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-                style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-                disabled={isLoading}
-              >
-              
-                {isLoading ? (
-                  <>
-                    Processing  <i className="fas fa-spinner fa-spin"></i>
-                  </>
-                ) : (
-                  'Deposit'
-                )}
-              </button>
-            </div>
-          </form>
-        </>
-      )}
-    </div>
+                      {error && <div className="alert alert-danger mt-3">{error}</div>}
+                      {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
+                      {showSuccessCheckmark ? (
+                        <div className="text-center my-5">
+                          {showConfetti2 && <Confetti />}
+                          <BsCheckCircle size="7em" color="green" />
+                          <p>Deposit to {currency || "USD"} completed successfully.</p>
+                        </div>
+                      ) : (
+                        <>
+                          <p>
+                            Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
+                          </p>
+                          <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                              <label className="form-label">Select Mode</label>
+                              <select className="form-select">
+                                <option selected>Mpesa</option>
+                              </select>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">Currency to Deposit</label>
+                              <select className="form-select" value={currency} onChange={handleCurrencyChange}>
+                                {currencies.map((cur) => (
+                                  <option key={cur} value={cur}>
+                                    {cur}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">Phone Number</label>
+                              <div className="input-group">
+                                <input
+                                  type="tel"
+                                  placeholder="e.g 254792340510"
+                                  className="form-control"
+                                  value={phoneNumber}
+                                  onChange={handlePhoneNumberChange}
+                                />
+                              </div>
+                            </div>
+                            <div className="mb-3">
+                              <label className="form-label">Amount</label>
+                              <div className="input-group">
+                                <input
+                                  type="tel"
+                                  placeholder='e.g 1000'
+                                  className="form-control"
+                                  value={amountdeposit}
+                                  onChange={handleAmountChange}
+                                />
+                              </div>
+                            </div>
+                            <div className="mb-3">
+                              <button
+                                type="submit"
+                                className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                                style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                                disabled={isLoading}
+                              >
+
+                                {isLoading ? (
+                                  <>
+                                    Processing  <i className="fas fa-spinner fa-spin"></i>
+                                  </>
+                                ) : (
+                                  'Deposit'
+                                )}
+                              </button>
+                            </div>
+                          </form>
+                        </>
+                      )}
+                    </div>
 
 
 
@@ -1029,9 +1029,9 @@ const Wallet = () => {
                   </div>
                 </div>
                 <div className="card-body d-flex flex-column ">
-               
-  {transferError && <div className="alert alert-danger">{transferError}</div>}
-  {isTransactionSuccess ? (
+
+                  {transferError && <div className="alert alert-danger">{transferError}</div>}
+                  {isTransactionSuccess ? (
                     <div className="transaction-success" style={{ backgroundColor: "#f5f5f5", fontFamily: "Helvetica Neue,Helvetica,Arial,sans-serif", fontSize: "16px", border: "1px solid #e5e5e5", boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)", padding: "20px", margin: "20px auto", maxWidth: "500px" }}>
                       <div className="text-center">
                         <div className="mt-5 py-2 d-flex flex-column align-items-center justify-content-center">
@@ -1140,9 +1140,9 @@ const Wallet = () => {
                                   <button
                                     onClick={handleConfirm}
                                     className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-  style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-  disabled={isLoading}
->
+                                    style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                                    disabled={isLoading}
+                                  >
                                     {isLoading ? "Processing..." : "Transfer"}
                                   </button>
                                 </div>
@@ -1206,8 +1206,8 @@ const Wallet = () => {
                               <tr>
                                 <td>Total Transfer</td>
                                 <td>
-  {isNaN(parseFloat(amount)) ? '0' : parseFloat(amount).toFixed(2)} {fromCurrency}
-</td>
+                                  {isNaN(parseFloat(amount)) ? '0' : parseFloat(amount).toFixed(2)} {fromCurrency}
+                                </td>
 
                               </tr>
                               <tr>

@@ -34,11 +34,11 @@ const Header = () => {
     };
   }, []);
 
-    // Close the sidebar pop when the route changes
-    const location = useLocation();
-    useEffect(() => {
-      setToggle(false);
-    }, [location]);
+  // Close the sidebar pop when the route changes
+  const location = useLocation();
+  useEffect(() => {
+    setToggle(false);
+  }, [location]);
 
   function handleToggle() {
     setToggle(!toggle);
@@ -60,7 +60,7 @@ const Header = () => {
         )}
 
         <div className="dashboardheader">
-     
+
           <div className="navLinks">
             <Link to="/" className="navLink">
               Dashboard
@@ -71,11 +71,11 @@ const Header = () => {
             <Link to="/wallet" className="navLink">
               Wallet
             </Link>
-            
+
             <Link to="/activity" className="navLink">
               Activity
             </Link>
-      
+
           </div>
         </div>
         <div className="logOut">
@@ -83,13 +83,13 @@ const Header = () => {
           <Link to="" className="settings1">
             <RiSettings5Fill className="settings" />
           </Link>
-          <Link  onClick={handleLogout}  className="logout">LOG OUT</Link>
+          <Link onClick={handleLogout} className="logout">LOG OUT</Link>
         </div>
       </div>
-        {toggle ? (
+      {toggle ? (
         <div className="popUp" ref={popUpRef}>
           <div className="popUp1">
-            <Link  onClick={handleLogout}  className="popUp2">LOG OUT</Link>
+            <Link onClick={handleLogout} className="popUp2">LOG OUT</Link>
             <Link to="" className="popUp2">
               <RiSettings5Fill className="" />
             </Link>
@@ -113,7 +113,7 @@ const Header = () => {
             <Link to="/Activity" className="popLink">
               Activity
             </Link>
-       
+
           </div>
         </div>
       ) : (

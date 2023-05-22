@@ -35,9 +35,9 @@ function Verification() {
       handleVerificationSubmit();
     }
   }, [verificationCode]);
-  
 
-  
+
+
   const handleVerificationSubmit = async (event) => {
     if (event) event.preventDefault();
     if (!navigator.onLine) {
@@ -82,7 +82,7 @@ function Verification() {
 
   const handleResendCode = async (event) => {
     event.preventDefault();
-  
+
     if (resendTimeout > 0) {
       showToast("warning", "Please wait before resending the code.");
       return;
@@ -91,15 +91,15 @@ function Verification() {
       showToast("warning", "No internet connection");
       return;
     }
-  
+
     setDisableResend(true); // Disable the resend button
-  
+
     try {
       const response = await api.post("/api/verification", {
         [verificationType === "email" ? "email" : "phoneNumber"]: contact
       });
       const data = response.data;
-  
+
       if (response.status === 200) { // Check for success status code
         showToast("success", "Verification code has been resent");
         setResendTimeout(60);
@@ -196,22 +196,22 @@ function Verification() {
                           });
                         }
                       }}
-                      
-                      
-                      
+
+
+
                     />
 
                   </div>
                 </div>
               ))}
-                      <button
-  type="submit"
-  className="btn text-uppercase py-2 fs-5 w-100"
-  disabled={loading}
-  style={{
-    backgroundColor: "#0070BA", 
-    color: "#fff" 
-  }}
+              <button
+                type="submit"
+                className="btn text-uppercase py-2 fs-5 w-100"
+                disabled={loading}
+                style={{
+                  backgroundColor: "#0070BA",
+                  color: "#fff"
+                }}
               >
                 {loading ? (
                   <div className="spinner-border text-light" role="status">
@@ -223,13 +223,13 @@ function Verification() {
               </button>
             </form>
             <a
-  className="text-decoration-underline m-2"
-  role="button"
-  onClick={handleResendCode}
-  style={{ pointerEvents: disableResend ? "none" : "auto", color: "#0070BA" }} 
->
-  {resendTimeout > 0 ? `Resend a new code in ${resendTimeout}s` : "Resend a new code"}
-</a>
+              className="text-decoration-underline m-2"
+              role="button"
+              onClick={handleResendCode}
+              style={{ pointerEvents: disableResend ? "none" : "auto", color: "#0070BA" }}
+            >
+              {resendTimeout > 0 ? `Resend a new code in ${resendTimeout}s` : "Resend a new code"}
+            </a>
 
           </div>
         </div>

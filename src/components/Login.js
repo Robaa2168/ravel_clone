@@ -1,7 +1,7 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { showToast } from "../utils/showToast";
 import { useUser } from "./context";
 import api from '../api';
@@ -22,7 +22,7 @@ function Login() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login, logout } = useUser(); 
+  const { login, logout } = useUser();
 
   useEffect(() => {
     logout();
@@ -30,12 +30,12 @@ function Login() {
 
   const handleLogin = async (event, type) => {
     event.preventDefault();
-  
+
     if (!navigator.onLine) {
       showToast("warning", "No internet connection");
       return;
     }
-  
+
     const credentials =
       type === "email"
         ? { email, password }
@@ -44,7 +44,7 @@ function Login() {
     try {
       const response = await api.post("/api/login", credentials);
       const data = response.data;
-  
+
       if (response.status === 200) {
         logout();
         if (data.isVerified) {
@@ -61,9 +61,9 @@ function Login() {
               token: data.token,
               primaryInfo: data.primaryInfo,
             });
-  
+
             localStorage.setItem("user", JSON.stringify(data));
-  
+
             // Check if the user has filled in the PIN
             if (!data.userInfo.pin) {
               navigate("/pin");
@@ -104,10 +104,10 @@ function Login() {
       setLoading(false);
     }
   };
-  
-  
-  
-  
+
+
+
+
   return (
     <div className="body d-flex p-0 p-xl-5">
       <div className="container-xxl">
@@ -118,19 +118,19 @@ function Login() {
               <span className="text-muted">Welcome back! Log In with your Email, Phone number or QR code</span>
               <span className="text-muted">Don't have an account? <Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link> </span>
               <ul className="nav nav-pills mt-4" role="tablist">
-              <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Mobile" role="tab">Mobile</a></li>
-             
+                <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Mobile" role="tab">Mobile</a></li>
+
                 <li className="nav-item"><a className="nav-link " data-bs-toggle="tab" href="#Email" role="tab">Email</a></li>
               </ul>
               <div className="tab-content mt-4 mb-3">
                 <div className="tab-pane fade show active" id="Mobile">
                   <div className="card">
                     <div className="card-body p-4">
-                    <form onSubmit={(event) => handleLogin(event, "phone")}>
+                      <form onSubmit={(event) => handleLogin(event, "phone")}>
                         <label className="form-label fs-6">Mobile</label>
                         <div className="input-group mb-3">
                           <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-                      
+
                           <input
                             type="text"
                             className="form-control"
@@ -150,28 +150,28 @@ function Login() {
                           />
                         </div>
                         <button
-    type="submit"
-    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-    disabled={loading}
-  >
-    {loading ? (
-      <div className="spinner-border text-light" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    ) : (
-      "Log in"
-    )}
-  </button>
+                          type="submit"
+                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <div className="spinner-border text-light" role="status">
+                              <span className="visually-hidden">Loading...</span>
+                            </div>
+                          ) : (
+                            "Log in"
+                          )}
+                        </button>
 
-</form>
-                     
+                      </form>
+
                     </div>
                   </div>
                 </div>
                 <div className="tab-pane fade" id="Email">
                   <div className="card">
                     <div className="card-body p-4">
-                    <form onSubmit={(event) => handleLogin(event, "email")}>
+                      <form onSubmit={(event) => handleLogin(event, "email")}>
                         <div className="mb-3">
                           <label className="form-label fs-6">Email address</label>
                           <input
@@ -189,24 +189,24 @@ function Login() {
                             className="form-control"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            
+
                           />
                         </div>
                         <button
-    type="submit"
-    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-    disabled={loading}
-  >
-    {loading ? (
-      <div className="spinner-border text-light" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </div>
-    ) : (
-      "Log in"
-    )}
-  </button>
-</form>
-                     
+                          type="submit"
+                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+                          disabled={loading}
+                        >
+                          {loading ? (
+                            <div className="spinner-border text-light" role="status">
+                              <span className="visually-hidden">Loading...</span>
+                            </div>
+                          ) : (
+                            "Log in"
+                          )}
+                        </button>
+                      </form>
+
 
 
                     </div>
@@ -214,7 +214,7 @@ function Login() {
                 </div>
               </div>
               <Link to="/forgot" title="#" className="text-primary text-decoration-underline">Forgot password?</Link>
-<Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link></div>
+            </div>
           </div>
           <div className="col-lg-6 d-none d-lg-flex justify-content-center align-items-center auth-h100">
             <div className="qr-block text-center">

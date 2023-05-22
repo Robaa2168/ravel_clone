@@ -55,10 +55,10 @@ const SendMoney = () => {
                     ? contact
                     : contact.username.toLocaleLowerCase().includes(search)
                 }).map((contact) => (
-                  <li key={contact.id} onClick={() =>{
+                  <li key={contact.id} onClick={() => {
                     setReceipient(contact);
                     setSearch("");
-                  } } className="contact">{contact.username.length > 0 ? contact.username : contact.phone}</li>
+                  }} className="contact">{contact.username.length > 0 ? contact.username : contact.phone}</li>
                 ))
               }
             </div>}

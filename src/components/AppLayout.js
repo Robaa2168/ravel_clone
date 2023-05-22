@@ -39,7 +39,7 @@ const AppLayout = () => {
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
-  
+
   const handleLinkClick = () => {
     if (window.innerWidth <= 992) {
       setIsSidebarOpen(false);
@@ -48,12 +48,12 @@ const AppLayout = () => {
 
   return (
     <div id="cryptoon-layout" className="theme-tradewind">
-   {!excludedRoutes.includes(location.pathname) && (
-          <Header onToggleSidebar={toggleSidebar} />
-        )}
+      {!excludedRoutes.includes(location.pathname) && (
+        <Header onToggleSidebar={toggleSidebar} />
+      )}
 
       <div className="container ">
-         <Routes>
+        <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
           <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />

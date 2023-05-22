@@ -438,397 +438,398 @@ function Accounts() {
 
   return (
     <div className=" mt-4">
-    <div className="row">
-      <div className="col-xl-12">
-        <div className="card no-bg">
+      <div className="row">
+        <div className="col-xl-12">
+          <div className="card no-bg">
 
-          <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
-            <h6 className="mb-0 fw-bold">Currency List</h6>
-            <button className="btn btn-light-success"
-              data-bs-toggle="modal"
-              data-bs-target="#addCurrencyModal">+ Add New</button>
-          </div>
-          <div className="card-body">
-
-            <div className="table-responsive">
-              <table id="myProjectTable" className="priceTable table table-hover custom-table table-bordered align-middle mb-0">
-                <thead>
-                  <tr>
-                    <th>currency</th>
-                    <th>Action</th>
-                    <th className="d-none d-sm-block">Id</th>
-
-                    <th>state</th>
-                    <th className="d-none d-sm-block">channel</th>
-                    <th>limit</th>
-                  </tr>
-                </thead>
-                {loading ? (
-                    <div className="loader-wrapper">
-        <div className="loader">
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+            <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0 align-items-center">
+              <h6 className="mb-0 fw-bold">Currency List</h6>
+              <button className="btn btn-light-success"
+                data-bs-toggle="modal"
+                data-bs-target="#addCurrencyModal">+ Add New</button>
             </div>
-      ) : (
-                <tbody>
-                  {accounts.map(account => (
-                    <tr key={account.currency}>
-                      <td>
-                        <span className="text-uppercase fw-bold"> {account.currency} </span>
-                      </td>
-                      <td>
-                        {account.isActive ? (
-                          <span className="text-success">
-                            <i className="bi bi-check-circle-fill me-2"></i>
-                            Activated
-                          </span>
-                        ) : (
-                          <button
-                            type="submit"
-                            className="btn btn-light-success"
-                            data-bs-toggle="modal"
-                            data-bs-target="#icoModal"
-                            onClick={() => handleActivate(account.currency)}
-                          >
-                            Activate
-                          </button>
-                        )}
-                      </td>
-                      <td className="d-none d-sm-block">-</td>
-                      <td>{account.state}</td>
-                      <td className="d-none d-sm-block">{account.channel}</td>
-                      <td>${account.limit}</td>
+            <div className="card-body">
+
+              <div className="table-responsive">
+                <table id="myProjectTable" className="priceTable table table-hover custom-table table-bordered align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>currency</th>
+                      <th>Action</th>
+                      <th className="d-none d-sm-block">Id</th>
+
+                      <th>state</th>
+                      <th className="d-none d-sm-block">channel</th>
+                      <th>limit</th>
                     </tr>
-                  ))}
-                </tbody>
-
-)}
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div
-          className="modal fade"
-          id="addCurrencyModal"
-          tabIndex="-1"
-          aria-labelledby="addCurrencyModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <ToastContainer />
-              <div className="modal-header">
-                <h5 className="modal-title" id="addCurrencyModalLabel">
-                  Add New Currency
-                </h5>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleAddCurrency}>
-                  <div className="mb-3">
-                    <label htmlFor="country" className="form-label">
-                      Select Country
-                    </label>
-                    <Select
-                      options={countries}
-                      onChange={handleCountryChange}
-                      placeholder="Select a country"
-                      autoFocus
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="currency" className="form-label">
-                      Currency
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="currency"
-                      value={selectedCurrency || ''}
-                      readOnly
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
-                      Close
-                    </button>
-                    <button type="submit" className="btn btn-primary">
-                      Add Currency
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="modal fade" id="icoModal" tabIndex={-1} aria-hidden="true">
-          <div className="modal-dialog modal-fullscreen">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Account activation</h5>
-                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
-              </div>
-              <div className="modal-body custom_setting">
-                <ToastContainer />
-                <div>
-                  <img src="assets/images/coin/AE.png" alt="" className="img-fluid avatar mx-1" /><span className="text-uppercase fw-bold"> {currency} </span>
-                  <span className="text-muted d-block small px-2 my-2">{time.toLocaleTimeString()}</span>
-                </div>
-                <div className="row">
-                  <div className="col-lg-12 col-xl-8">
-                    <div className="row g-3">
-                      <div className="col-lg-6">
-                        <div className="table-responsive">
-                          <table className="table">
-                            <tbody>
-                              <tr>
-
-                                <td><span className="text-muted"> Limit</span></td>
-                                <td><strong>{activationDetails[currency]?.Limit}</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Cashback</span></td>
-                                <td><strong>{activationDetails[currency]?.bonus}</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Min deposit</span></td>
-                                <td><strong>{activationDetails[currency]?.minDeposit}</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Fundraising</span></td>
-                                <td><strong>NA</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Activation fee</span></td>
-                                <td><strong>{activationDetails[currency]?.fee}</strong></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                      <div className="col-lg-6">
-                        <div className="table-responsive">
-                          <table className="table">
-                            <tbody>
-                              <tr>
-                                <td><span className="text-muted">Expiration</span></td>
-                                <td><strong>NA</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Free Transfer</span></td>
-                                <td><strong>5</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">% of Total Supply</span></td>
-                                <td><strong>NA</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Accept</span></td>
-                                <td><strong>All</strong></td>
-                              </tr>
-                              <tr>
-                                <td><span className="text-muted">Access</span></td>
-                                <td><strong>All</strong></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                  </thead>
+                  {loading ? (
+                    <div className="loader-wrapper">
+                      <div className="loader">
+                        <div></div>
+                        <div></div>
+                        <div></div>
                       </div>
                     </div>
-                    {currency && (
-                      <>
-                        <h5>Activate {currency} Account</h5>
-
-
-
-                        <p>
-                          {activationDetails[currency]?.story}
-                        </p>
-                        <ul>
-                          {activationDetails[currency]?.features.map((feature) => (
-                            <li key={feature}>{feature}</li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div>
-                  <div className="col-lg-12 col-xl-4">
-                    <div className="card mb-3">
-                      <div className="card-body">
-                        {!showConfetti && (
-                          <>
-                            {isBalanceLow && (
-                              <div className="alert alert-warning">
-                                Your balance is low. Please credit your account before proceeding.
-                              </div>
-                            )}
-
-                            <div className="checkout-sidebar">
-                              <div className="checkout-sidebar-price-table mt-30">
-                                <h5 className="title fw-bold"> {currency} Pricing</h5>
-                                <div className="sub-total-price">
-                                  <div className="total-price">
-                                    <p className="value">Activation Price:</p>
-                                    <p className="price">{activationDetails[currency]?.fee}</p>
-                                  </div>
-                                  <div className="total-price shipping">
-                                    <p className="value">Conversion:</p>
-                                    <p className="price">KES 630</p>
-                                  </div>
-                                  <div className="total-price discount">
-                                    <p className="value">Acc Balance</p>
-                                    <p className="price">{balances[currency]?.toFixed(2)}</p>
-                                  </div>
-                                </div>
-                                <div className="total-payable">
-                                  <div className="payable-price">
-                                    <p className="value fw-bold">Total Payable:</p>
-                                    <p className="price fw-bold">
-                                      {activationDetails[currency]?.fee}≈KES 630
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="mb-3">
-                                  <button
-                                    type="submit"
-                                    className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
-                                    onClick={handleActivation}
-                                    disabled={processing}
-                                  >
-                                    {processing ? (
-                                      <>Processing... <i className="fas fa-spinner fa-spin"></i></>
-                                    ) : (
-                                      <>Activate {currency}</>
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        )}
-                        {showConfetti && ( // show the Confetti component when showConfetti is true
-                          <div className="d-flex justify-content-center flex-column align-items-center text-center">
-                            <CheckmarkAnimation />
-                            <Confetti />
-                            <h1 className="mt-4 text-center">Success!</h1>
-                            <p>Your Activation was successful.</p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="card mb-3">
-                      <div className="card-body">
-                        <Tabs defaultActiveKey="mpesa" id="payment-options" className="nav-pills m-1">
-                          <Tab eventKey="mpesa" title="M-pesa">
-                            {showConfetti2 ? (
-                              <div className="d-flex justify-content-center flex-column align-items-center text-center">
-                                <CheckmarkAnimation />
-                                <Confetti />
-                                <h1 className="mt-4 text-center">Success!</h1>
-                                <p>Your deposit was successful.</p>
-                              </div>
+                  ) : (
+                    <tbody>
+                      {accounts.map(account => (
+                        <tr key={account.currency}>
+                          <td>
+                            <span className="text-uppercase fw-bold"> {account.currency} </span>
+                          </td>
+                          <td>
+                            {account.isActive ? (
+                              <span className="text-success">
+                                <i className="bi bi-check-circle-fill me-2"></i>
+                                Activated
+                              </span>
                             ) : (
-                              <form className="mt-3" onSubmit={handleSubmit}>
-                                {error && <div className="alert alert-danger">{error}</div>}
-                                {successMessage && <div className="alert alert-success">{successMessage}</div>}
-                                {isPolling && (
-                                  <div>
-                                    <div className="alert alert-info mt-3">
-                                      Hang on tight, your transaction is being processed<span className="dots"></span>
+                              <button
+                                type="submit"
+                                className="btn btn-light-success"
+                                data-bs-toggle="modal"
+                                data-bs-target="#icoModal"
+                                onClick={() => handleActivate(account.currency)}
+                              >
+                                Activate
+                              </button>
+                            )}
+                          </td>
+                          <td className="d-none d-sm-block">-</td>
+                          <td>{account.state}</td>
+                          <td className="d-none d-sm-block">{account.channel}</td>
+                          <td>${account.limit}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+
+                  )}
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="modal fade"
+            id="addCurrencyModal"
+            tabIndex="-1"
+            aria-labelledby="addCurrencyModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog">
+              <div className="modal-content">
+                <ToastContainer />
+                <div className="modal-header">
+                  <h5 className="modal-title" id="addCurrencyModalLabel">
+                    Add New Currency
+                  </h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleAddCurrency}>
+                    <div className="mb-3">
+                      <label htmlFor="country" className="form-label">
+                        Select Country
+                      </label>
+                      <Select
+                        options={countries}
+                        onChange={handleCountryChange}
+                        placeholder="Select a country"
+                        autoFocus
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="currency" className="form-label">
+                        Currency
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="currency"
+                        value={selectedCurrency || ''}
+                        readOnly
+                      />
+                    </div>
+                    <div className="modal-footer">
+                      <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                      </button>
+                      <button type="submit" className="btn btn-primary">
+                        Add Currency
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal fade" id="icoModal" tabIndex={-1} aria-hidden="true">
+            <div className="modal-dialog modal-fullscreen">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Account activation</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+                </div>
+                <div className="modal-body custom_setting">
+                  <ToastContainer />
+                  <div>
+                    <img src="assets/images/coin/AE.png" alt="" className="img-fluid avatar mx-1" /><span className="text-uppercase fw-bold"> {currency} </span>
+                    <span className="text-muted d-block small px-2 my-2">{time.toLocaleTimeString()}</span>
+                  </div>
+                  <div className="row">
+                    <div className="col-lg-12 col-xl-8">
+                      <div className="row g-3">
+                        <div className="col-lg-6">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <tbody>
+                                <tr>
+
+                                  <td><span className="text-muted"> Limit</span></td>
+                                  <td><strong>{activationDetails[currency]?.Limit}</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Cashback</span></td>
+                                  <td><strong>{activationDetails[currency]?.bonus}</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Min deposit</span></td>
+                                  <td><strong>{activationDetails[currency]?.minDeposit}</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Fundraising</span></td>
+                                  <td><strong>NA</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Activation fee</span></td>
+                                  <td><strong>{activationDetails[currency]?.fee}</strong></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <tbody>
+                                <tr>
+                                  <td><span className="text-muted">Expiration</span></td>
+                                  <td><strong>NA</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Free Transfer</span></td>
+                                  <td><strong>5</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">% of Total Supply</span></td>
+                                  <td><strong>NA</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Accept</span></td>
+                                  <td><strong>All</strong></td>
+                                </tr>
+                                <tr>
+                                  <td><span className="text-muted">Access</span></td>
+                                  <td><strong>All</strong></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      {currency && (
+                        <>
+                          <h5>Activate {currency} Account</h5>
+
+
+
+                          <p>
+                            {activationDetails[currency]?.story}
+                          </p>
+                          <ul>
+                            {activationDetails[currency]?.features.map((feature) => (
+                              <li key={feature}>{feature}</li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
+                    </div>
+                    <div className="col-lg-12 col-xl-4">
+                      <div className="card mb-3">
+                        <div className="card-body">
+                          {!showConfetti && (
+                            <>
+                              {isBalanceLow && (
+                                <div className="alert alert-warning">
+                                  Your balance is low. Please credit your account before proceeding.
+                                </div>
+                              )}
+
+                              <div className="checkout-sidebar">
+                                <div className="checkout-sidebar-price-table mt-30">
+                                  <h5 className="title fw-bold"> {currency} Pricing</h5>
+                                  <div className="sub-total-price">
+                                    <div className="total-price">
+                                      <p className="value">Activation Price:</p>
+                                      <p className="price">{activationDetails[currency]?.fee}</p>
+                                    </div>
+                                    <div className="total-price shipping">
+                                      <p className="value">Conversion:</p>
+                                      <p className="price">KES 630</p>
+                                    </div>
+                                    <div className="total-price discount">
+                                      <p className="value">Acc Balance</p>
+                                      <p className="price">{balances[currency]?.toFixed(2)}</p>
                                     </div>
                                   </div>
-                                )}
+                                  <div className="total-payable">
+                                    <div className="payable-price">
+                                      <p className="value fw-bold">Total Payable:</p>
+                                      <p className="price fw-bold">
+                                        {activationDetails[currency]?.fee}≈KES 630
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="mb-3">
+                                    <button
+                                      type="submit"
+                                      className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+                                      onClick={handleActivation}
+                                      disabled={processing}
+                                    >
+                                      {processing ? (
+                                        <>Processing... <i className="fas fa-spinner fa-spin"></i></>
+                                      ) : (
+                                        <>Activate {currency}</>
+                                      )}
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          )}
+                          {showConfetti && ( // show the Confetti component when showConfetti is true
+                            <div className="d-flex justify-content-center flex-column align-items-center text-center">
+                              <CheckmarkAnimation />
+                              <Confetti />
+                              <h1 className="mt-4 text-center">Success!</h1>
+                              <p>Your Activation was successful.</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="card mb-3">
+                        <div className="card-body">
+                          <Tabs defaultActiveKey="mpesa" id="payment-options" className="nav-pills m-1">
+                            <Tab eventKey="mpesa" title="M-pesa">
+                              {showConfetti2 ? (
+                                <div className="d-flex justify-content-center flex-column align-items-center text-center">
+                                  <CheckmarkAnimation />
+                                  <Confetti />
+                                  <h1 className="mt-4 text-center">Success!</h1>
+                                  <p>Your deposit was successful.</p>
+                                </div>
+                              ) : (
+                                <form className="mt-3" onSubmit={handleSubmit}>
+                                  {error && <div className="alert alert-danger">{error}</div>}
+                                  {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                                  {isPolling && (
+                                    <div>
+                                      <div className="alert alert-info mt-3">
+                                        Hang on tight, your transaction is being processed<span className="dots"></span>
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="row g-3 align-items-center">
+                                    <div className="col-md-12">
+                                      <label className="form-label">Phone Number</label>
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        value={phoneNumber}
+                                        onChange={handlePhoneNumberChange}
+                                        required
+                                      />
+                                    </div>
+                                    <div className="col-md-12">
+                                      <label className="form-label">Amount</label>
+                                      <input type="text" className="form-control" value="630" readOnly />
+                                      <span>$1≈KES 126.01</span>
+                                    </div>
+                                  </div>
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary mt-4 text-uppercase"
+                                    disabled={isLoading}
+                                  >
+                                    {isLoading ? (
+                                      <span>
+                                        <i className="fa fa-spinner fa-spin" /> Processing...
+                                      </span>
+                                    ) : (
+                                      'Pay Now'
+                                    )}
+                                  </button>
+                                </form>
+                              )}
+                            </Tab>
+
+
+                            <Tab eventKey="card" title="Debit/Credit Card">
+                              <form className="mt-3">
                                 <div className="row g-3 align-items-center">
                                   <div className="col-md-12">
-                                    <label className="form-label">Phone Number</label>
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      value={phoneNumber}
-                                      onChange={handlePhoneNumberChange}
-                                      required
-                                    />
+                                    <label className="form-label">Enter Card Number</label>
+                                    <input type="text" className="form-control" required />
                                   </div>
-                                  <div className="col-md-12">
-                                    <label className="form-label">Amount</label>
-                                    <input type="text" className="form-control" value="630" readOnly />
-                                    <span>$1≈KES 126.01</span>
+                                  <div className="col-md-6">
+                                    <label className="form-label">Valid Date</label>
+                                    <input type="date" className="form-control w-100" required />
+                                  </div>
+                                  <div className="col-md-6">
+                                    <label className="form-label">CVV</label>
+                                    <input type="text" className="form-control" required />
                                   </div>
                                 </div>
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary mt-4 text-uppercase"
-                                  disabled={isLoading}
-                                >
-                                  {isLoading ? (
-                                    <span>
-                                      <i className="fa fa-spinner fa-spin" /> Processing...
-                                    </span>
-                                  ) : (
-                                    'Pay Now'
-                                  )}
+                                <button type="submit" className="btn btn-primary mt-4 text-uppercase">
+                                  Pay Now
                                 </button>
                               </form>
-                            )}
-                          </Tab>
-
-
-                          <Tab eventKey="card" title="Debit/Credit Card">
-                            <form className="mt-3">
-                              <div className="row g-3 align-items-center">
-                                <div className="col-md-12">
-                                  <label className="form-label">Enter Card Number</label>
-                                  <input type="text" className="form-control" required />
+                            </Tab>
+                            <Tab eventKey="netBanking" title="Net Banking">
+                              <form className="mt-3">
+                                <div className="row g-3 align-items-center">
+                                  <div className="col-md-12">
+                                    <label className="form-label">Enter Your Name</label>
+                                    <input type="text" className="form-control" required />
+                                  </div>
+                                  <div className="col-md-12">
+                                    <label className="form-label">Account Number</label>
+                                    <input type="text" className="form-control" required />
+                                  </div>
+                                  <div className="col-md-6">
+                                    <label className="form-label">Bank Name</label>
+                                    <input type="text" className="form-control" required />
+                                  </div>
+                                  <div className="col-md-6">
+                                    <label htmlFor="admittime1" className="form-label">IFC Code</label>
+                                    <input type="text" className="form-control" id="admittime1" required />
+                                  </div>
                                 </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">Valid Date</label>
-                                  <input type="date" className="form-control w-100" required />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">CVV</label>
-                                  <input type="text" className="form-control" required />
-                                </div>
-                              </div>
-                              <button type="submit" className="btn btn-primary mt-4 text-uppercase">
-                                Pay Now
-                              </button>
-                            </form>
-                          </Tab>
-                          <Tab eventKey="netBanking" title="Net Banking">
-                            <form className="mt-3">
-                              <div className="row g-3 align-items-center">
-                                <div className="col-md-12">
-                                  <label className="form-label">Enter Your Name</label>
-                                  <input type="text" className="form-control" required />
-                                </div>
-                                <div className="col-md-12">
-                                  <label className="form-label">Account Number</label>
-                                  <input type="text" className="form-control" required />
-                                </div>
-                                <div className="col-md-6">
-                                  <label className="form-label">Bank Name</label>
-                                  <input type="text" className="form-control" required />
-                                </div>
-                                <div className="col-md-6">
-                                  <label htmlFor="admittime1" className="form-label">IFC Code</label>
-                                  <input type="text" className="form-control" id="admittime1" required />
-                                </div>
-                              </div>
-                              <button type="submit" className="btn btn-primary mt-4 text-uppercase">
-                                Pay Now
-                              </button>
-                            </form>
-                          </Tab>
-                        </Tabs>
+                                <button type="submit" className="btn btn-primary mt-4 text-uppercase">
+                                  Pay Now
+                                </button>
+                              </form>
+                            </Tab>
+                          </Tabs>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -838,7 +839,6 @@ function Accounts() {
           </div>
         </div>
       </div>
-    </div>
     </div>
 
   );

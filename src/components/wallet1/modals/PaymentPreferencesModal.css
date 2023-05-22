@@ -17,7 +17,6 @@
   width: 80%;
   max-width: 600px;
   height: 100vh;
-
 }
 
 .closeContainerPayment {
@@ -70,7 +69,7 @@
 .paymentList1 {
   color: black;
   font-size: 13px;
-  list-style-type: '- ';
+  list-style-type: "- ";
   margin: 16px 0 16px 50px;
 }
 
@@ -78,7 +77,6 @@
 .usingPaypal {
   font-weight: 600;
   color: black;
-
 }
 
 .paymentOptions,

@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   const [showMore, setShowMore] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
-  const { user,login } = useUser();
+  const { user, login } = useUser();
   const navigate = useNavigate();
 
   const paymentActivity = [
@@ -68,11 +68,11 @@ const Dashboard = () => {
   const accounts = user?.accounts;
   let primaryAccount;
   let accountStatus = "";
-  
+
   for (let i = 0; i < accounts?.length; i++) {
     if (accounts[i].isPrimary) {
       primaryAccount = accounts[i];
-  
+
       if (accounts[i].isBanned) {
         accountStatus = "banned";
       } else if (accounts[i].isActive) {
@@ -80,7 +80,7 @@ const Dashboard = () => {
       } else {
         accountStatus = "inactive";
       }
-  
+
       break;
     }
   }
@@ -99,13 +99,13 @@ const Dashboard = () => {
       NGN: "₦",
       RWF: "FRw",
     };
-  
+
     return currencySymbols[currency] || currency;
   };
-  
+
 
   return (
-<main>
+    <main>
       {user?.primaryInfo?.isBanned ? (
         <div className="dashboard-info-message ">
           <p>
@@ -125,145 +125,145 @@ const Dashboard = () => {
         </div>
       )}
 
-<div className='myapp-dashboard'>
-  <section className='myapp-cards-container'>
-    <div className="myapp-pypl-card myapp-card-balance-card">
-      <div className="myapp-pypl-card-header">
-        <h3 className='balance-title'>Ravel balance</h3>
-        <div className="pypl-icon-container">
-          <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
-        </div>
-        {showPopup && <div className="pypl-popup">
-          <ul>
-            <Link to="/Currencies">Activate currencies</Link>
-            <Link to="/Currencies">Manage currencies</Link>
-            <Link to="/">Get help</Link>
-          </ul>
-        </div>}
-      </div>
-      <div className="myapp-pypl-card-body">
-        {primaryAccount && (
-          <h1 className={`myapp-pypl-balance ${primaryAccount.isHeld ? "text-danger" : ""}`}>
-            <span className="myapp-pypl-currency">{getCurrencySymbol(primaryAccount.currency)}</span> {primaryAccount.balance}
-          </h1>
-        )}
-
-        <span className='myapp-pypl-card-text'>Status:</span>
-        {accountStatus === "active" && (
-          <Link to="/Currencies">
-            <span className='myapp-status-pill myapp-status-active'>Active</span>
-          </Link>
-        )}
-        {accountStatus === "inactive" && (
-          <Link to="/Currencies">
-            <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
-          </Link>
-        )}
-        {accountStatus === "banned" && (
-          <Link to="/Currencies">
-            <span className='myapp-status-pill myapp-status-banned'>Banned</span>
-          </Link>
-        )}
-
-        <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
-      </div>
-      <div className="myapp-pypl-card-footer">
-        <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
-      </div>
-    </div>
-
-
-
-        <div className="myapp-pypl-card myapp-activity-card">
-          <div className="myapp-pypl-card-header">
-            <h5 className='myapp-activity-heading'>Recent Activity</h5>
-            <div className="myapp-pypl-card-body">
-              {paymentActivity.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
-              <div className='myapp-acitvity-cards'>
-                {
-                  paymentActivity.map((activity, index) => (
-                    <div key={activity.id} className="myapp-activity">
-                      <div className='myapp-activity-icon'>
-                        <FaStore className='myapp-icon' />
-                      </div>
-                      <div className='myapp-activity-info'>
-                        <div className="myapp-header">
-                          <span className="myapp-activity-name">{activity.name}</span>
-                          <span className='myapp-payment'>-${activity.amount}</span>
-                        </div>
-                        <div className="myapp-date">
-                          <span>{activity.date} . {activity.type}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                }
+      <div className='myapp-dashboard'>
+        <section className='myapp-cards-container'>
+          <div className="myapp-pypl-card myapp-card-balance-card">
+            <div className="myapp-pypl-card-header">
+              <h3 className='balance-title'>Ravel balance</h3>
+              <div className="pypl-icon-container">
+                <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
               </div>
+              {showPopup && <div className="pypl-popup">
+                <ul>
+                  <Link to="/Currencies">Activate currencies</Link>
+                  <Link to="/Currencies">Manage currencies</Link>
+                  <Link to="/">Get help</Link>
+                </ul>
+              </div>}
+            </div>
+            <div className="myapp-pypl-card-body">
+              {primaryAccount && (
+                <h1 className={`myapp-pypl-balance ${primaryAccount.isHeld ? "text-danger" : ""}`}>
+                  <span className="myapp-pypl-currency">{getCurrencySymbol(primaryAccount.currency)}</span> {primaryAccount.balance}
+                </h1>
+              )}
+
+              <span className='myapp-pypl-card-text'>Status:</span>
+              {accountStatus === "active" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-active'>Active</span>
+                </Link>
+              )}
+              {accountStatus === "inactive" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
+                </Link>
+              )}
+              {accountStatus === "banned" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-banned'>Banned</span>
+                </Link>
+              )}
+
+              <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
             </div>
             <div className="myapp-pypl-card-footer">
-              <Link to="/activity" className='myapp-show-all'>Show all</Link>
+              <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className='myapp-desktop-sidebar'>
-        <div className="myapp-links-container">
-          <div className="myapp-buttons-container">
-            <Link to="/wallet" className="myapp-pypl-secondary-btn">Send</Link>
-            <Link to="/wallet" className="myapp-pypl-secondary-btn">Request</Link>
-          </div>
-          <ul className='myapp-kebab-menu-container'>
-            <li>
-              <button>
-                <span className='myapp-icon-container'>
-                  {showMore
-                    ? <FaTimes className='myapp-pypl-icon' onClick={() => setShowMore(false)} />
-                    : <FaEllipsisV className='myapp-pypl-icon' onClick={() => setShowMore(true)} />
+
+
+          <div className="myapp-pypl-card myapp-activity-card">
+            <div className="myapp-pypl-card-header">
+              <h5 className='myapp-activity-heading'>Recent Activity</h5>
+              <div className="myapp-pypl-card-body">
+                {paymentActivity.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
+                <div className='myapp-acitvity-cards'>
+                  {
+                    paymentActivity.map((activity, index) => (
+                      <div key={activity.id} className="myapp-activity">
+                        <div className='myapp-activity-icon'>
+                          <FaStore className='myapp-icon' />
+                        </div>
+                        <div className='myapp-activity-info'>
+                          <div className="myapp-header">
+                            <span className="myapp-activity-name">{activity.name}</span>
+                            <span className='myapp-payment'>-${activity.amount}</span>
+                          </div>
+                          <div className="myapp-date">
+                            <span>{activity.date} . {activity.type}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))
                   }
-                </span>
-                <span className='myapp-more-info'>{showMore ? "Close" : "More"}</span>
-              </button>
-            </li>
-          </ul>
+                </div>
+              </div>
+              <div className="myapp-pypl-card-footer">
+                <Link to="/activity" className='myapp-show-all'>Show all</Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          {showMore && <div className="myapp-hidden-dropdown">
-            <ul>
-              <li className='myapp-hidden-dropdown-item'>
-                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
-                <span className='myapp-dropdown-link'>Create an invoice</span>
-              </li>
-              <li className='myapp-hidden-dropdown-item'>
-                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
-                <span className='myapp-dropdown-link'>Create an estimate</span>
-              </li>
-              <li className='myapp-hidden-dropdown-item'>
-                <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
-                <span className='myapp-dropdown-link'>Go to Resolution Center</span>
+        <section className='myapp-desktop-sidebar'>
+          <div className="myapp-links-container">
+            <div className="myapp-buttons-container">
+              <Link to="/wallet" className="myapp-pypl-secondary-btn">Send</Link>
+              <Link to="/wallet" className="myapp-pypl-secondary-btn">Request</Link>
+            </div>
+            <ul className='myapp-kebab-menu-container'>
+              <li>
+                <button>
+                  <span className='myapp-icon-container'>
+                    {showMore
+                      ? <FaTimes className='myapp-pypl-icon' onClick={() => setShowMore(false)} />
+                      : <FaEllipsisV className='myapp-pypl-icon' onClick={() => setShowMore(true)} />
+                    }
+                  </span>
+                  <span className='myapp-more-info'>{showMore ? "Close" : "More"}</span>
+                </button>
               </li>
             </ul>
-          </div>}
-        </div>
 
-        <div className="myapp-banks-and-cards">
-          <div className="myapp-pypl-header">
-            <h4>Banks and cards</h4>
-            <span>
-              <FaEllipsisV />
-            </span>
+            {showMore && <div className="myapp-hidden-dropdown">
+              <ul>
+                <li className='myapp-hidden-dropdown-item'>
+                  <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                  <span className='myapp-dropdown-link'>Create an invoice</span>
+                </li>
+                <li className='myapp-hidden-dropdown-item'>
+                  <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                  <span className='myapp-dropdown-link'>Create an estimate</span>
+                </li>
+                <li className='myapp-hidden-dropdown-item'>
+                  <div className="myapp-icon-container"><span><FaFileInvoice /></span></div>
+                  <span className='myapp-dropdown-link'>Go to Resolution Center</span>
+                </li>
+              </ul>
+            </div>}
           </div>
-          <div className="myapp-pypl-body">
-            <span>
-              <FaCcApplePay />
-            </span>
-            <p>Shop and send payments more securely. Link your credit card now</p>
-          </div>
-          <Link to="/" className='myapp-pypl-footer'>
-            Link a Card or Bank
-          </Link>
-        </div>
 
-      </section>
+          <div className="myapp-banks-and-cards">
+            <div className="myapp-pypl-header">
+              <h4>Banks and cards</h4>
+              <span>
+                <FaEllipsisV />
+              </span>
+            </div>
+            <div className="myapp-pypl-body">
+              <span>
+                <FaCcApplePay />
+              </span>
+              <p>Shop and send payments more securely. Link your credit card now</p>
+            </div>
+            <Link to="/" className='myapp-pypl-footer'>
+              Link a Card or Bank
+            </Link>
+          </div>
+
+        </section>
       </div>
     </main>
   );

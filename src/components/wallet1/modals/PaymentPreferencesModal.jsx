@@ -15,7 +15,7 @@ function PaymentPreferencesModal({ isVisible, onClose }) {
             &times;
           </button>
         </div>
-  
+
         <div className="modalContentPaymentDiv">
           <p className="payingOnline">Preferred when paying online</p>
           <p className="settingPreferred">

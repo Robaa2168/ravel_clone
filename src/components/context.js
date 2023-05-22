@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
-      console.log("Token before validation:", parsedUser.token); 
+      console.log("Token before validation:", parsedUser.token);
       if (isTokenValid(parsedUser.token)) {
         return parsedUser;
       } else {

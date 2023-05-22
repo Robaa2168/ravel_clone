@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100%;
 }
@@ -8,7 +9,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   text-align: center;
-  background-color: #0070BA;
+  background-color: #0070ba;
   padding: 20px 20%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: fixed; /* Changed to 'fixed' */
@@ -17,12 +18,12 @@ html, body {
   width: 100%; /* Added */
   z-index: 9999 !important;
 }
-.header-container{
+.header-container {
   margin-bottom: 2em;
 }
 
 .sideMenu {
-  color: #FFFFFF;
+  color: #ffffff;
   display: none;
   font-size: 20px;
   z-index: 9999 !important;
@@ -43,24 +44,24 @@ html, body {
 
 .navLink {
   margin: 0 10px;
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-size: 14px;
   font-weight: bold;
   padding: 10px 15px;
-  border: 1px solid #0070BA;
+  border: 1px solid #0070ba;
   border-radius: 24px;
 }
 
 .navLink:hover {
   color: #a1c7f1;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   border-radius: 24px;
   text-decoration: none;
 }
 
 .settings {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 20px;
   cursor: pointer;
   margin: auto 10px;
@@ -74,7 +75,7 @@ html, body {
 }
 
 .logout {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   cursor: pointer;
   text-decoration: none;
@@ -86,7 +87,7 @@ html, body {
   padding: 4% 0;
   height: 100%;
   width: 60%;
-  background-color: #0070BA;
+  background-color: #0070ba;
   top: 0;
   position: absolute;
   z-index: 9998; /* Added */
@@ -100,14 +101,14 @@ html, body {
 }
 
 .popUpP {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 20px;
   text-align: center;
   margin-top: 20px;
 }
 
 .popUp2 {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -117,23 +118,22 @@ html, body {
 }
 
 .popLink {
-  color: #FFFFFF;
+  color: #ffffff;
   text-decoration: none;
   font-size: 20px;
   padding: 10px 6%;
-  border-top: 1px solid #0070BA;
-  border-bottom: 1px solid #0070BA;
+  border-top: 1px solid #0070ba;
+  border-bottom: 1px solid #0070ba;
 }
 
 .popLink:hover {
   color: #a1c7f1;
-  border-top: 1px solid #FFFFFF;
-  border-bottom: 1px solid #FFFFFF;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
   text-decoration: none;
 }
 
 @media (max-width: 768px) {
-
   .navbar {
     padding: 3%;
     overflow-x: hidden;
@@ -150,29 +150,29 @@ html, body {
   }
 
   #logo1 {
-  display: block;
-  }
-  
-  .settings1,
-  .logout {
-  display: none;
-  }
-  }
-  
-  @media (min-width: 769px) {
-  .navbar {
-  justify-content: center;
-  z-index: 9999 !important;
-  }
-  
-  .dashboard {
-  margin-right: auto;
-  margin-left: auto;
-  }
+    display: block;
   }
 
-  /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
+  .settings1,
+  .logout {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .navbar {
+    justify-content: center;
+    z-index: 9999 !important;
+  }
+
+  .dashboard {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
   .navbar {
     padding: 3%;
     overflow-x: hidden;
@@ -192,7 +192,7 @@ html, body {
   #logo1 {
     display: block;
   }
-  
+
   .settings1,
   .logout {
     display: block; /* Modified */

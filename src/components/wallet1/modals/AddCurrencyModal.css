@@ -64,7 +64,7 @@
   padding: 10px 0;
 }
 
-input[type=radio] {
+input[type="radio"] {
   width: 23px;
   height: 23px;
   margin-right: 20px;
@@ -112,14 +112,14 @@ input[type=radio] {
   border-radius: 30px;
   cursor: pointer;
   border: 1px solid#0070BA !important;
-  background-color: #0070BA !important;
+  background-color: #0070ba !important;
   color: white;
   font-weight: 500;
   box-sizing: border-box;
 }
 
 .btnAddCurrency:hover {
-  background-color: #0070BA !important;
+  background-color: #0070ba !important;
   text-decoration: none;
 }
 

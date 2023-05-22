@@ -49,7 +49,7 @@
 
 .linkCardIcon {
   margin: auto;
-  color: #0070BA;
+  color: #0070ba;
 }
 
 .linkCardP {
@@ -58,7 +58,7 @@
 }
 
 .paypalBal {
-  border: 2px solid #0070BA;
+  border: 2px solid #0070ba;
   border-radius: 7px;
   display: flex;
   padding: 15px;
@@ -79,7 +79,7 @@
 
 .paypalBalCardP {
   font-size: 16px;
-  color: #0070BA;
+  color: #0070ba;
   font-weight: 600;
   margin: 0;
 }
@@ -94,7 +94,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center; 
+  align-items: center;
   text-align: center;
 }
 
@@ -104,7 +104,6 @@
   }
 }
 
-
 .walletContainerDiv2Img {
   width: 80px;
   border: 1px solid rgb(196, 191, 191);
@@ -112,7 +111,6 @@
   padding: 4px 24px;
   background-color: rgb(241, 235, 235);
 }
-
 
 .walletContainerDiv2BalP {
   color: black;
@@ -146,12 +144,11 @@
   padding: 8px;
   border-radius: 30px;
   cursor: pointer;
-  border: 1px solid #0070BA;
-  background-color: #0070BA;
+  border: 1px solid #0070ba;
+  background-color: #0070ba;
   color: white;
   font-weight: 500;
   align-items: center;
-
 }
 
 .walletContainingCurrency {
@@ -165,7 +162,6 @@
 .walletContainingCurrencyDiv {
   display: flex;
   align-items: center;
-
 }
 
 .walletContainingCurrencyDiv1 {
@@ -183,15 +179,14 @@
 .walletContainingCurrencyP1,
 .walletContainingCurrencyBal {
   font-size: 12px;
-
 }
 
 .walletContainingCurrencyP1 {
-  border: 1px solid #0070BA;
+  border: 1px solid #0070ba;
   height: 18px;
   padding: 0 2px;
   border-radius: 3px;
-  color: #0070BA;
+  color: #0070ba;
 }
 
 .walletContainingCurrencyP2 {
@@ -211,8 +206,6 @@
   margin: auto 0 auto 5px;
   cursor: pointer;
 }
-
-
 
 .popupMenu {
   position: absolute;
@@ -238,13 +231,9 @@
   font-weight: 500;
 }
 
-
-
-
-
 .walletContainerDiv2Btn:hover {
-  border: 1px solid #0070BA;
-  background-color: #0070BA;
+  border: 1px solid #0070ba;
+  background-color: #0070ba;
 }
 
 .addCurrency {
@@ -255,14 +244,13 @@
 
 .addCurrencyLink1,
 .addCurrencyLink2 {
-  color:#0070BA;
+  color: #0070ba;
   text-decoration: none;
   cursor: pointer;
   font-weight: 600;
-
 }
 
-.addCurrencyLink2{
+.addCurrencyLink2 {
   margin-left: 3em;
 }
 
@@ -282,7 +270,7 @@
 }
 
 .setPreferred {
-  color:#0070BA;
+  color: #0070ba;
   text-decoration: none;
   cursor: pointer;
   font-size: 16px;
@@ -302,7 +290,7 @@
 }
 
 .preferredAbout {
-  color: #0070BA;
+  color: #0070ba;
   text-decoration: none;
   cursor: pointer;
   font-weight: 600;
@@ -315,22 +303,22 @@
 
 .preferredAbout:focus,
 .setPreferred:focus {
-  border: 2px solid #0070BA;
+  border: 2px solid #0070ba;
   border-radius: 5px;
   padding: 3px;
 }
 .primarystatus,
 .activestatus,
 .inactivestatus {
-  border: 1px solid #0070BA;
+  border: 1px solid #0070ba;
   height: px;
   padding: 0 2px;
   border-radius: 3px;
-  color: #0070BA;
+  color: #0070ba;
 }
-.primarystatus{
-  color:  #0070BA;
-  border: 1px solid  #0070BA;
+.primarystatus {
+  color: #0070ba;
+  border: 1px solid #0070ba;
 }
 
 .activestatus {
@@ -344,7 +332,6 @@
 }
 
 @media (max-width: 768px) {
-
   .walletMain {
     padding: 10px;
   }
@@ -365,7 +352,6 @@
   .walletContainerDiv2 {
     width: 100%;
   }
-  
 }
 .walletContainingCurrencyImg {
   width: 30px; /* Set the width of the image */
@@ -384,4 +370,3 @@
     text-align: center;
   }
 }
-

@@ -30,7 +30,7 @@ function ActivateCurrencyModal({ isVisible, onClose, activeCurrency }) {
       ZMW: 'https://cdn.britannica.com/31/4231-004-F1DBFAE7/Flag-Zambia.jpg'
       // Add more currency codes and their respective flag image URLs here
     };
-  
+
     return flagImages[currencyCode] || ''; // Return an empty string if the currency code is not found
   }
 
@@ -81,7 +81,7 @@ function ActivateCurrencyModal({ isVisible, onClose, activeCurrency }) {
     <div className="modalMakePrimary">
       <div className="modal-contentMakePrimary">
         <div className="closeContainerMakePrimary">
-        <button className="closeMakePrimary" onClick={handleClose}>
+          <button className="closeMakePrimary" onClick={handleClose}>
             <BiArrowBack />
           </button>
           <button className="closeMakePrimary" onClick={handleClose}>
@@ -89,22 +89,22 @@ function ActivateCurrencyModal({ isVisible, onClose, activeCurrency }) {
           </button>
         </div>
         <div className="modalContentMakePrimaryDiv">
-  <div className="currency">
-    <img src={getFlagImageUrl(currencyCode)} alt={currencyCode} className="currencyImg" />
-    <p className="currencyP">{currencyCode}</p>
-  </div>
-  <p className="makePrimaryPa">Activate {currencyCode} currency</p>
-  <p className="makePrimaryPa2">
-    To activate {currencyCode} currency, a fee of $5 will be charged. Please note
-     that the funds used to pay this fee must be in the same currency as the one being activated.
-  </p>
-  {error && <div className="activationError">{error}</div>}
-  <button className="btnMakePrimary" onClick={handleActivation} disabled={processing}>
-    <span className="btnTMakePrimary">
-      {processing ? 'Processing...' : `Activate ${currencyCode} Currency`}
-      {processing && <i className="fas fa-spinner fa-spin"></i>}
-    </span>
-  </button>
+          <div className="currency">
+            <img src={getFlagImageUrl(currencyCode)} alt={currencyCode} className="currencyImg" />
+            <p className="currencyP">{currencyCode}</p>
+          </div>
+          <p className="makePrimaryPa">Activate {currencyCode} currency</p>
+          <p className="makePrimaryPa2">
+            To activate {currencyCode} currency, a fee of $5 will be charged. Please note
+            that the funds used to pay this fee must be in the same currency as the one being activated.
+          </p>
+          {error && <div className="activationError">{error}</div>}
+          <button className="btnMakePrimary" onClick={handleActivation} disabled={processing}>
+            <span className="btnTMakePrimary">
+              {processing ? 'Processing...' : `Activate ${currencyCode} Currency`}
+              {processing && <i className="fas fa-spinner fa-spin"></i>}
+            </span>
+          </button>
 
 
 

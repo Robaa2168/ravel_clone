@@ -23,7 +23,7 @@ function CloseCurrencyModal({ isVisible, onClose, activeCurrency, onCloseCurrenc
       ZMW: 'https://cdn.britannica.com/31/4231-004-F1DBFAE7/Flag-Zambia.jpg'
       // Add more currency codes and their respective flag image URLs here
     };
-  
+
     return flagImages[currencyCode] || ''; // Return an empty string if the currency code is not found
   }
 
@@ -49,7 +49,7 @@ function CloseCurrencyModal({ isVisible, onClose, activeCurrency, onCloseCurrenc
           <button className="closeMakePrimary" onClick={onClose}>
             <BiArrowBack />
           </button>
-        
+
           <button className="closeMakePrimary" onClick={onClose}>
             &times;
           </button>

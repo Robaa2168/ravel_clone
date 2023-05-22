@@ -3,23 +3,21 @@
   word-wrap: break-word;
 }
 
-
 .settings,
 .settings div {
   max-width: 100%;
   word-wrap: break-word;
 }
 
-
 @keyframes dots {
   0% {
-    content: '.';
+    content: ".";
   }
   33% {
-    content: '..';
+    content: "..";
   }
   67% {
-    content: '...';
+    content: "...";
   }
 }
 
@@ -29,7 +27,6 @@
   align-items: center;
   height: 100%;
 }
-
 
 .has-error .form-control {
   border-color: #dc3545;
@@ -56,7 +53,6 @@
   padding-bottom: 60px;
   padding-top: 60px;
 }
-
 
 .dashboard-footer {
   display: none;
@@ -86,8 +82,6 @@
   }
 }
 
-
-
 .loader-wrapper {
   position: absolute;
   top: 0;
@@ -107,7 +101,7 @@
 .loader div {
   width: 3px;
   height: 24px;
-  background-color: #32CD32;
+  background-color: #32cd32;
   margin: 0 3px;
   animation: scaleUpDown 1s infinite ease-in-out;
 }
@@ -121,7 +115,8 @@
 }
 
 @keyframes scaleUpDown {
-  0%, 100% {
+  0%,
+  100% {
     transform: scaleY(1);
   }
   50% {

@@ -28,7 +28,7 @@ function getFlagImageUrl(currencyCode) {
   return flagImages[currencyCode] || ''; // Return an empty string if the currency code is not found
 }
 
-function AddCurrencyModal({ isVisible, onClose}) {
+function AddCurrencyModal({ isVisible, onClose }) {
   const [processing, setProcessing] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState(null);
   const { user, login } = useUser();
@@ -78,7 +78,7 @@ function AddCurrencyModal({ isVisible, onClose}) {
           onClose(); // Close the modal on success
         }
       } else {
-        
+
         setErrors({ addCurrencyValue: "An error occurred while adding the currency." });
       }
     } catch (error) {
@@ -113,7 +113,7 @@ function AddCurrencyModal({ isVisible, onClose}) {
             when you send or request payments.
           </p>
 
-          
+
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -139,9 +139,9 @@ function AddCurrencyModal({ isVisible, onClose}) {
                       {country.name}
                     </label>
                   ))}
-             
+
                 </div>
-              
+
                 {errors.addCurrencyValue && touched.addCurrencyValue ? (
                   <div className="errorAddCurrency">
                     <IoWarningSharp className="errIcon" />

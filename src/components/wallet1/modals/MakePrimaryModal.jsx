@@ -23,7 +23,7 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
       ZMW: 'https://cdn.britannica.com/31/4231-004-F1DBFAE7/Flag-Zambia.jpg'
       // Add more currency codes and their respective flag image URLs here
     };
-  
+
     return flagImages[currencyCode] || ''; // Return an empty string if the currency code is not found
   }
 
@@ -50,7 +50,7 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
           <button className="closeMakePrimary" onClick={onClose}>
             <BiArrowBack />
           </button>
-       
+
           <button className="closeMakePrimary" onClick={onClose}>
             &times;
           </button>
@@ -58,7 +58,7 @@ function MakePrimaryModal({ isVisible, onClose, activeCurrency, onMakePrimary })
 
         <div className="modalContentMakePrimaryDiv">
           <div className="euro">
-          <img src={getFlagImageUrl(currencyCode)} alt={currencyCode} className="currencyImg" />
+            <img src={getFlagImageUrl(currencyCode)} alt={currencyCode} className="currencyImg" />
             <p className="euroP"> {currencyCode} </p>
           </div>
           <p className="makePrimarytitle">Make {currencyCode} your primary currency</p>

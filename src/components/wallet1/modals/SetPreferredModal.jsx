@@ -26,7 +26,7 @@ function SetPreferredModal({ isVisible, onClose }) {
             &times;
           </button>
         </div>
-      
+
         <div className="modalContentChooseDiv">
           <p className="choosePreference">Preferred when paying online</p>
           <p className="goodsAndServices">

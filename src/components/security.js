@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { useUser } from "./context"; 
+import { useUser } from "./context";
 import { Spinner } from "react-bootstrap"; // import Spinner component
-import { useNavigate,Link  } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const userContext = useUser();
@@ -28,8 +28,8 @@ const Header = () => {
 
   const { user } = userContext;
   return (
-<div>
-    <div className="body d-flex py-3">
+    <div>
+      <div className="body d-flex py-3">
         <div className="container-xxl">
           <div className="row align-item-center mb-3">
             <div className="col-xl-6">
@@ -47,7 +47,7 @@ const Header = () => {
                             <span className="fw-bold">settings Key</span>
                             <span className="text-muted small">Protect your account with a settings key.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -69,7 +69,7 @@ const Header = () => {
                             <span className="fw-bold">Google Authenticator (Recommended)</span>
                             <span className="text-muted small">Protect your account and transactions.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -91,7 +91,7 @@ const Header = () => {
                             <span className="fw-bold">Phone Number Verification</span>
                             <span className="text-muted small">Protect your account and transactions.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -114,7 +114,7 @@ const Header = () => {
                             <span className="fw-bold">Email Address Verification</span>
                             <span className="text-muted small">Protect your account and transactions.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -131,8 +131,8 @@ const Header = () => {
                 </div>
               </div>
             </div>
-          
-        
+
+
             <div className="col-xl-6">
               <div className="card">
                 <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center ">
@@ -148,7 +148,7 @@ const Header = () => {
                             <span className="fw-bold">Login Password</span>
                             <span className="text-muted small">Login password is used to log in to your account.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <button type="button" className="btn flex-fill btn-light-success py-2 fs-6 text-uppercase px-3 mt-2 mt-lg-0 float-lg-end" data-bs-toggle="modal" data-bs-target="#ChangeModal">Change</button>
@@ -164,7 +164,7 @@ const Header = () => {
                             <span className="fw-bold">Withdrawal Whitelist</span>
                             <span className="text-muted small">whitelisted withdrawal addresses.</span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -186,7 +186,7 @@ const Header = () => {
                             <span className="fw-bold">Anti-Phishing Code</span>
                             <span className="text-muted small">Protect your account from phishing attempts </span>
                           </div>
-                        </div>   
+                        </div>
                       </div>
                       <div className="col-lg-4 col-xl-4">
                         <div className="d-flex align-items-center">
@@ -204,92 +204,92 @@ const Header = () => {
             </div>
           </div> {/* Row end  */}
         </div>
-        </div>
-   
+      </div>
 
-       <div className="body d-flex py-3">
-       <div className="container-xxl">
-         <div className="row mb-3">
-           <div className="col-xl-12">
-             <div className="card">
-               <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center ">
-                 <h6 className="mb-0 fw-bold">Verification</h6>
-               </div>
-               <div className="card-body">
-                 <div className="row g-3">
-                   <div className="col-xl-3">
-                     <div className="d-flex flex-column">
-                       <h6 className="mb-3">Not Verified</h6>
-                       <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Personal information</span>
-                       <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Government-issued ID</span>
-                       <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Facial recognition</span>
-                     </div>
-                   </div>
-                   <div className="col-xl-9">
-                     <h6 className="mb-3">Current Features</h6>
-                     <div className="row g-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3">
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted"> Deposit &amp; Withdrawal Limits</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Transfer Limit</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
-                       
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Receive Limits</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Other Features</span>
-                             <span className="fw-bold">LPD/OTC/RavelMobile card</span>
-                           </div>
-                         </div>
-                       </div>
-                       
-                   
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Paypal Deposit</span>
-                             <span className="fw-bold">$1K Daily</span>
-                           </div>
-                         </div>
-                       </div>
-                       <div className="col">
-                         <div className="d-flex flex-column">
-                           <div className="d-flex flex-column">
-                             <span className="text-muted">Bank Withdraw</span>
-                             <span className="fw-bold">$5K Daily</span>
-                           </div>
-                         </div>
-                       </div>
-                       
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-     <div>
+
+      <div className="body d-flex py-3">
+        <div className="container-xxl">
+          <div className="row mb-3">
+            <div className="col-xl-12">
+              <div className="card">
+                <div className="card-header py-3 d-flex justify-content-between bg-transparent align-items-center ">
+                  <h6 className="mb-0 fw-bold">Verification</h6>
+                </div>
+                <div className="card-body">
+                  <div className="row g-3">
+                    <div className="col-xl-3">
+                      <div className="d-flex flex-column">
+                        <h6 className="mb-3">Not Verified</h6>
+                        <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Personal information</span>
+                        <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Government-issued ID</span>
+                        <span className="text-muted my-1"><i className="icofont-close-circled fs-5 text-danger px-2" />Facial recognition</span>
+                      </div>
+                    </div>
+                    <div className="col-xl-9">
+                      <h6 className="mb-3">Current Features</h6>
+                      <div className="row g-3 row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3">
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted"> Deposit &amp; Withdrawal Limits</span>
+                              <span className="fw-bold">$5K Daily</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted">Transfer Limit</span>
+                              <span className="fw-bold">$5K Daily</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted">Receive Limits</span>
+                              <span className="fw-bold">$5K Daily</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted">Other Features</span>
+                              <span className="fw-bold">LPD/OTC/RavelMobile card</span>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted">Paypal Deposit</span>
+                              <span className="fw-bold">$1K Daily</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="d-flex flex-column">
+                            <div className="d-flex flex-column">
+                              <span className="text-muted">Bank Withdraw</span>
+                              <span className="fw-bold">$5K Daily</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
         {/* Modal Enable*/}
         <div className="modal fade" id="EnableModal" tabIndex={-1} aria-hidden="true">
           <div className="modal-dialog">
@@ -375,7 +375,7 @@ const Header = () => {
           </div>
         </div>
       </div>
-     </div>
+    </div>
   );
 };
 

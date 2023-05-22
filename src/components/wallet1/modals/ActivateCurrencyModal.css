@@ -36,7 +36,7 @@
 }
 
 .closeMakePrimary:hover {
-  color: #0070BA;
+  color: #0070ba;
 }
 
 .makePrimaryImg {
@@ -60,8 +60,6 @@
   margin: 0 auto;
   display: block;
 }
-
-
 
 .currencyP {
   text-align: center;
@@ -88,15 +86,15 @@
   padding: 8px;
   border-radius: 30px;
   cursor: pointer;
-  border: 1px solid #0070BA !important;
-  background-color: #0070BA !important;
+  border: 1px solid #0070ba !important;
+  background-color: #0070ba !important;
   color: white;
   font-weight: 500;
   box-sizing: border-box;
 }
 
 .btnMakePrimary:hover {
-  background-color: #0070BA;
+  background-color: #0070ba;
   text-decoration: none !important;
 }
 

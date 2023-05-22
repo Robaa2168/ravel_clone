@@ -213,8 +213,8 @@ function Wallet1() {
 
           <div className="paypalBal">
             <img
-               src={getFlagImageUrl(primaryAccount?.currency)}
-               alt={primaryAccount?.currency}
+              src={getFlagImageUrl(primaryAccount?.currency)}
+              alt={primaryAccount?.currency}
               className="walletContainingCurrencyImg"
             />
             <div className="paypalBalCard">
@@ -227,9 +227,9 @@ function Wallet1() {
         <div className="walletContainerDiv2">
 
           <div className="hide-lg">
-          <img
-               src={getFlagImageUrl(primaryAccount?.currency)}
-               alt={primaryAccount?.currency}
+            <img
+              src={getFlagImageUrl(primaryAccount?.currency)}
+              alt={primaryAccount?.currency}
               className="walletContainingCurrencyImg"
             />
             <p className="walletContainerDiv2BalP">Primary balance</p>
@@ -293,12 +293,12 @@ function Wallet1() {
                         Activate currency
                       </Link>
                       <Link className="popupLink"
-                           onClick={() => {
-                            setActiveCurrency(account);
-                            toggleModal5();
-                          }}
-                       
-                       >
+                        onClick={() => {
+                          setActiveCurrency(account);
+                          toggleModal5();
+                        }}
+
+                      >
                         Close currency
                       </Link>
                     </div>
