@@ -75,9 +75,7 @@ const Header = () => {
             <Link to="/activity" className="navLink">
               Activity
             </Link>
-            <Link to="/ticket" className="navLink">
-              Help
-            </Link>
+      
           </div>
         </div>
         <div className="logOut">
@@ -115,9 +113,7 @@ const Header = () => {
             <Link to="/Activity" className="popLink">
               Activity
             </Link>
-            <Link to="/ticket" className="popLink">
-              Help
-            </Link>
+       
           </div>
         </div>
       ) : (
