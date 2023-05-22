@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import api from '../api';
@@ -43,24 +43,28 @@ function Application() {
   }, [userId]);
 
   const banksWithNoAccount = ['NONE'];
-
   const handleChange = (e) => {
     if (e.target.name === "dob") {
       const dob = new Date(e.target.value);
       const today = new Date();
-
+  
       const year = today.getFullYear() - dob.getFullYear();
       const month = today.getMonth() - dob.getMonth();
       const day = today.getDate() - dob.getDate();
-
+  
       const age = month < 0 || (month === 0 && day < 0) ? year - 1 : year;
-
+  
       if (age < 18) {
         setDobError("You must be at least 18 years old.");
-        return;
       } else {
         setDobError(""); // Clear the error if age is valid
+        setFormState({
+          ...formState,
+          [e.target.name]: e.target.value,
+        });
       }
+  
+     
     } else if (e.target.name === "bankName") {
       if (e.target.value === "NONE") {
         // Set Bank Account No. to 10 zeros and make it read-only
@@ -98,16 +102,17 @@ function Application() {
       });
     }
   };
-
-
-
+  
   const handleCheckboxChange = (e) => {
     setFormState({
       ...formState,
       formCompleted: e.target.checked,
     });
   };
+  
 
+
+  
   const canProceedToNextStep = () => {
     if (step === 1) {
       return (
