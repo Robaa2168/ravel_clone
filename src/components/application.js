@@ -271,16 +271,18 @@ function Application() {
                                 />
                               </div>
                               <div className="col-md-6 col-12 mb-3">
-                                <label className="form-label">Phone Number</label>
-                                <input
-                                  type="number"
-                                  className="form-control"
-                                  name="phoneNumber"
-                                  value={formState.phoneNumber}
-                                  onChange={handleChange}
-                                  required
-                                />
-                              </div>
+  <label className="form-label">Phone Number</label>
+  <input
+    type="number"
+    className="form-control"
+    name="phoneNumber"
+    value={formState.phoneNumber}
+    onChange={handleChange}
+    required
+  />
+  <small className="text-muted">The phone number should match the registered name, otherwise withdrawals will be declined.</small>
+</div>
+
                               <div className="col-md-6 col-12 mb-3">
                                 <label className="form-label">Email</label>
                                 <input
