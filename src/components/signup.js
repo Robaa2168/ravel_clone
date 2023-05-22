@@ -159,8 +159,8 @@ function Signup() {
                       <form onSubmit={handleSubmit}>
                         <label className="form-label fs-6">Mobile *</label>
                         <div className="input-group mb-3">
-                          <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-                        
+                          <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
+                      
                           <input type="text" className="form-control" value={phoneNumber} onChange={handleMobileInputChange} required />
                         </div>
                         <div className="mb-3">
