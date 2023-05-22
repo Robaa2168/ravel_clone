@@ -703,13 +703,15 @@ const Wallet = () => {
                         </div>
                       </div>
                       <div className="col-sm-12">
-        <button
-          type="submit"
-          className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Processing...' : 'Withdraw'}
-        </button>
+                      <button
+  type="submit"
+  className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+  style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+  disabled={isLoading}
+>
+  {isLoading ? 'Processing...' : 'Withdraw'}
+</button>
+
         </div>
       </div>
     </form>
@@ -758,7 +760,8 @@ const Wallet = () => {
         <div className="col-sm-12">
         <button
           type="submit"
-          className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+          className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+          style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
           disabled={isLoading}
         >
           {isLoading ? 'Processing...' : 'Convert'}
@@ -908,7 +911,11 @@ const Wallet = () => {
                           </div>
                         </div>
                         <div className="mb-3">
-                          <button type="submit" className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5">Confirm</button>
+                          <button type="submit"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                            disabled={isLoading}
+                          >Confirm</button>
                         </div>
                       </form>
                     </div>
@@ -970,9 +977,11 @@ const Wallet = () => {
             <div className="mb-3">
               <button
                 type="submit"
-                className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+                className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
                 disabled={isLoading}
               >
+              
                 {isLoading ? (
                   <>
                     Processing  <i className="fas fa-spinner fa-spin"></i>
@@ -1130,10 +1139,11 @@ const Wallet = () => {
                                 <div className="col-sm-12">
                                   <button
                                     onClick={handleConfirm}
-                                    className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
-                                    disabled={isLoading}
-                                  >
-                                    {isLoading ? "Processing..." : "Confirm"}
+                                    className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+  style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+  disabled={isLoading}
+>
+                                    {isLoading ? "Processing..." : "Transfer"}
                                   </button>
                                 </div>
                               </div>
@@ -1177,10 +1187,11 @@ const Wallet = () => {
                                 <div className="col-sm-12 mt-3">
                                   <button
                                     onClick={handleConfirm}
-                                    className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+                                    className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                                    style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
                                     disabled={isLoading}
                                   >
-                                    {isLoading ? "Processing..." : "Confirm"}
+                                    {isLoading ? "Processing..." : "Request"}
                                   </button>
                                 </div>
                               </form>
@@ -1214,7 +1225,8 @@ const Wallet = () => {
                         <div className="d-flex justify-content-center">
                           <button
                             onClick={handleConfirm}
-                            className="btn flex-fill btn-light-warning py-2 fs-5 text-uppercase px-5"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
                             disabled={isLoading}
                           >
                             {isLoading ? (
