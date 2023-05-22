@@ -116,6 +116,7 @@ function Login() {
             <div className="d-flex flex-column">
               <ToastContainer />
               <span className="text-muted">Welcome back! Log In with your Email, Phone number or QR code</span>
+              <span className="text-muted">Don't have an account? <Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link> </span>
               <ul className="nav nav-pills mt-4" role="tablist">
               <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Mobile" role="tab">Mobile</a></li>
              

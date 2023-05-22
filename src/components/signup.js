@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState} from "react";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from 'react-router-dom';
 import { showToast } from '../utils/showToast';
@@ -142,7 +142,7 @@ function Signup() {
         <div className="row g-3">
           <div className="col-lg-6 d-flex justify-content-center align-items-center auth-h100">
             <div className="d-flex flex-column">
-              <span className="text-muted">Register with your email or mobile</span>
+              <span className="text-muted">Register with your email address or mobile number</span>
               <ul className="nav nav-pills mt-4" role="tablist">
 
                 <li className="nav-item">
@@ -160,9 +160,7 @@ function Signup() {
                         <label className="form-label fs-6">Mobile *</label>
                         <div className="input-group mb-3">
                           <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-                          <ul className="dropdown-menu">
-                            <li><a className="dropdown-item">+254 Kenya</a></li>
-                          </ul>
+                        
                           <input type="text" className="form-control" value={phoneNumber} onChange={handleMobileInputChange} required />
                         </div>
                         <div className="mb-3">
@@ -263,7 +261,7 @@ function Signup() {
                   </div>
                 </div>
               </div>
-              <Link to="/login" title="#">Already registered? <span className="text-secondary text-decoration-underline">Log In</span></Link>
+              <Link to="/login" title="#">Already have an account? <span className="text-primary text-decoration-underline">Log In</span></Link>
             </div>
           </div>
 
