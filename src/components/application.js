@@ -164,22 +164,22 @@ function Application() {
   };
 
   const handleNextStep = async () => {
-    if (canProceedToNextStep()) {
+    if (canProceedToNextStep() && !loading) {
       if (step === 2) {
         if (!navigator.onLine) {
           showToast("warning", "No internet connection");
           return;
         }
-
+  
         setLoading(true);
         try {
           const response = await api.post("/api/KYC", {
             userId,
-            ...formState
+            ...formState,
           });
-
+  
           const data = response.data;
-
+  
           if (response.status === 200 || response.status === 201) {
             setFormSubmitted(true);
             showToast("success", "Form submitted successfully.");
@@ -210,7 +210,6 @@ function Application() {
       }
     }
   };
-
 
 
 
@@ -459,14 +458,14 @@ function Application() {
                           Prev
                         </button>
                         {step < 3 && (
-                          <button
-                            onClick={handleNextStep}
-                            className="btn btn-primary step-btn"
-                            disabled={!canProceedToNextStep()}
-                          >
-                            Next
-                          </button>
-                        )}
+  <button
+    onClick={handleNextStep}
+    className="btn btn-primary step-btn"
+    disabled={!canProceedToNextStep() || loading}
+  >
+    Next
+  </button>
+)}
                         {step === 3 && (
                           <button
                             data-step-action="finish"
