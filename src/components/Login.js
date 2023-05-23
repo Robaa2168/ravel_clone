@@ -18,8 +18,7 @@ const formatPhoneNumber = (phoneNumber) => {
 
 function Login() {
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, logout } = useUser();
@@ -28,7 +27,7 @@ function Login() {
     logout();
   }, [logout]);
 
-  const handleLogin = async (event, type) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     if (!navigator.onLine) {
@@ -36,10 +35,16 @@ function Login() {
       return;
     }
 
-    const credentials =
-      type === "email"
-        ? { email, password }
-        : { phoneNumber: formatPhoneNumber(phoneNumber), password };
+    let type = "email";
+    let credentials = {};
+    
+    if (identifier.includes("@")) {
+      credentials = { email: identifier, password };
+    } else {
+      type = "phone";
+      credentials = { phoneNumber: formatPhoneNumber(identifier), password };
+    }
+
     setLoading(true);
     try {
       const response = await api.post("/api/login", credentials);
@@ -79,7 +84,7 @@ function Login() {
           navigate("/verify", {
             state: {
               mode: type,
-              contact: type === "email" ? email : formatPhoneNumber(phoneNumber),
+              contact: identifier,
               userId: data.userId,
             },
           });
@@ -109,124 +114,62 @@ function Login() {
 
 
   return (
-    <div className="body d-flex p-0 p-xl-5">
-      <div className="container-xxl">
-        <div className="row g-3">
-          <div className="col-lg-6 d-flex justify-content-center align-items-center auth-h100">
-            <div className="d-flex flex-column">
-              <ToastContainer />
-              <span className="text-muted">Welcome back! Log In with your Email, Phone number or QR code</span>
-              <span className="text-muted">Don't have an account? <Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link> </span>
-              <ul className="nav nav-pills mt-4" role="tablist">
-                <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Mobile" role="tab">Mobile</a></li>
+    <div className="body d-flex p-0 ">
+        <div className="container-xxl">
+            <div className="row g-3 justify-content-center">
+                <div className="col-lg-4 mx-auto offset-lg-4 d-flex justify-content-center align-items-center auth-h100">
+                    <div className="d-flex flex-column">
+                        <ToastContainer />
+                        <span className="text-muted">Welcome back! Log In with your Email or Phone number</span>
+                        <span className="text-muted">Don't have an account? <Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link> </span>
 
-                <li className="nav-item"><a className="nav-link " data-bs-toggle="tab" href="#Email" role="tab">Email</a></li>
-              </ul>
-              <div className="tab-content mt-4 mb-3">
-                <div className="tab-pane fade show active" id="Mobile">
-                  <div className="card">
-                    <div className="card-body p-4">
-                      <form onSubmit={(event) => handleLogin(event, "phone")}>
-                        <label className="form-label fs-6">Mobile</label>
-                        <div className="input-group mb-3">
-                          <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            value={phoneNumber}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label fs-6">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <div className="spinner-border text-light" role="status">
-                              <span className="visually-hidden">Loading...</span>
+                        <div className="card mt-4">
+                            <div className="card-body ">
+                                <form onSubmit={(event) => handleLogin(event)}>
+                                    <div className="mb-3">
+                                        <label className="form-label fs-6">Email or Phone number</label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={identifier}
+                                            onChange={(e) => setIdentifier(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label className="form-label fs-6">Password</label>
+                                        <input
+                                            type="password"
+                                            className="form-control"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <div className="spinner-border text-light" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        ) : (
+                                            "Log in"
+                                        )}
+                                    </button>
+                                </form>
                             </div>
-                          ) : (
-                            "Log in"
-                          )}
-                        </button>
-
-                      </form>
-
-                    </div>
-                  </div>
-                </div>
-                <div className="tab-pane fade" id="Email">
-                  <div className="card">
-                    <div className="card-body p-4">
-                      <form onSubmit={(event) => handleLogin(event, "email")}>
-                        <div className="mb-3">
-                          <label className="form-label fs-6">Email address</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                          />
                         </div>
-                        <div className="mb-3">
-                          <label className="form-label fs-6">Password</label>
-                          <input
-                            type="password"
-                            className="form-control"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
 
-                          />
-                        </div>
-                        <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <div className="spinner-border text-light" role="status">
-                              <span className="visually-hidden">Loading...</span>
-                            </div>
-                          ) : (
-                            "Log in"
-                          )}
-                        </button>
-                      </form>
-
-
-
+                        <Link to="/forgot" title="#" className="text-primary text-decoration-underline mt-4">Forgot password?</Link>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <Link to="/forgot" title="#" className="text-primary text-decoration-underline">Forgot password?</Link>
-            </div>
-          </div>
-          <div className="col-lg-6 d-none d-lg-flex justify-content-center align-items-center auth-h100">
-            <div className="qr-block text-center">
-              <img src="../assets/images/qr-code.png" alt="#" className="img-fluid my-4" />
-              <h4>Log in with QR code</h4>
-              <p>Scan this code to log in instantly.</p>
-            </div>
-          </div>
-        </div> {/* End Row */}
-      </div>
+            </div> {/* End Row */}
+        </div>
     </div>
-  );
-}
+);
+ }
 
 export default Login;
