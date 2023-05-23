@@ -1,275 +1,173 @@
 import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from 'react-router-dom';
-import { showToast } from '../utils/showToast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api from '../api';
 import '../App.css';
+import { showToast } from "../utils/showToast";
 
+const formatPhoneNumber = (phoneNumber) => {
+  if (phoneNumber.startsWith("254")) {
+    return phoneNumber;
+  } else if (phoneNumber.startsWith("0")) {
+    return `254${phoneNumber.slice(1)}`;
+  } else if (phoneNumber.startsWith("7") || phoneNumber.startsWith("1")) {
+    return `254${phoneNumber}`;
+  }
+};
 
 function Signup() {
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState("Mobile");
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [referralId, setReferralId] = useState("");
-  const [phoneNumber, setMobile] = useState("");
-  const [showReferralField, setShowReferralField] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showReferralField, setShowReferralField] = useState(false);
+  const navigate = useNavigate();
 
-  const formatPhoneNumber = (phoneNumber) => {
-    if (phoneNumber.startsWith('254')) {
-      return phoneNumber;
-    } else if (phoneNumber.startsWith('0')) {
-      return `254${phoneNumber.slice(1)}`;
-    } else if (phoneNumber.startsWith('7') || phoneNumber.startsWith('1')) {
-      return `254${phoneNumber}`;
-    }
-  };
-
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-
-
-  const handleConfirmPasswordInputChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
-  };
-
-  const handleEmailInputChange = (event) => {
-    setEmail(event.target.value);
+  const handleIdentifierInputChange = (event) => {
+    setIdentifier(event.target.value);
   };
 
   const handlePasswordInputChange = (event) => {
     setPassword(event.target.value);
   };
 
-  const handleReferralIdInputChange = (event) => {
-    setReferralId(event.target.value);
+  const handleConfirmPasswordInputChange = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
-  const handleMobileInputChange = (event) => {
-    setMobile(event.target.value);
-  };
-  const navigate = useNavigate();
-
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
-    const formData = activeTab === "Email"
-      ? { email, password, referralId }
-      : { phoneNumber: formattedPhoneNumber, password, referralId };
-    setLoading(true);
-    if (!navigator.onLine) {
-      showToast("warning", "No internet connection");
-      return;
-    }
-
-    try {
-      const response = await api.post(`/api/signup${activeTab === "Email" ? "" : "WithMobile"}`, formData);
-      const data = response.data;
-
-      if (response.status === 200) { // Check for success status code
-        showToast('success', "User registered successfully. Sending verification code...");
-
-        const verificationType = activeTab.toLowerCase();
-        const contact = activeTab === "Email" ? email : formattedPhoneNumber;
-        try {
-          const resendResponse = await api.post("/api/verification", {
-            [verificationType]: contact
-          });
-          const resendData = resendResponse.data;
-          if (resendResponse.status === 200) { // Check for success status code
-            showToast('success', "Verification code sent successfully!");
-          } else {
-            // Handle error response from server
-            const errorMessage = resendData.message || "Error sending verification code";
-            showToast('error', errorMessage);
-          }
-        } catch (error) {
-          showToast('error', "Error sending verification code.");
-        }
-
-        navigate("/verify", {
-          state: {
-            mode: activeTab.toLowerCase(),
-            contact: activeTab === "Email" ? email : formattedPhoneNumber,
-          },
-        });
-      } else {
-        // Handle error response from server
-        const errorMessage = data.message || "Registration failed";
-        if (response.status === 400 && data.errors) {
-          const errorFields = Object.keys(data.errors).join(", ");
-          showToast('error', `${errorMessage}: ${errorFields}`);
-        } else {
-          showToast('error', errorMessage);
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
-        showToast("error", error.response.data.message);
-      } else {
-        showToast("error", "Error on Registration");
-        console.error("Error on Registration: ", error);
-      }
-    }
-    finally {
-      setLoading(false); // Set loading state to false
-    }
+  const handleReferralIdInputChange = (e) => {
+    setReferralId(e.target.value);
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleReferralClick = () => {
     setShowReferralField(!showReferralField);
   };
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    if (!navigator.onLine) {
+      showToast("warning", "No internet connection");
+      return;
+    }
+
+    let isEmail = identifier.includes("@");
+    let formattedIdentifier = identifier;
+
+    if (!isEmail) {
+      formattedIdentifier = formatPhoneNumber(identifier);
+    }
+
+    const formData = isEmail
+      ? { email: identifier, password, referralId }
+      : { phoneNumber: formattedIdentifier, password, referralId };
+
+    try {
+      const response = await api.post("/api/signup", formData);
+
+      if (response.status === 200) {
+        showToast('success', "User registered successfully. Sending verification code...");
+
+        const verificationType = isEmail ? "email" : "phoneNumber";
+        const contact = formattedIdentifier;
+
+        const resendResponse = await api.post("/api/verification", {
+          [verificationType]: contact
+        });
+
+        if (resendResponse.status === 200) {
+          showToast('success', "Verification code sent successfully!");
+        } else {
+          const errorMessage = resendResponse.data.message || "Error sending verification code";
+          showToast('error', errorMessage);
+        }
+
+        navigate("/verify", {
+          state: {
+            mode: verificationType,
+            contact: contact,
+          },
+        });
+
+      } else {
+        const errorMessage = response.data.message || "Registration failed";
+        showToast('error', errorMessage);
+      }
+
+    }
+  catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      showToast("error", error.response.data.message);
+    } else {
+      showToast("error", "Error on Registration check your Internet");
+      console.error("Error on login: ", error);
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
-    <div className="body d-flex p-0 p-xl-5">
-      <ToastContainer />
+    <div className="body d-flex p-0">
       <div className="container-xxl">
-        <div className="row g-3">
-          <div className="col-lg-6 d-flex justify-content-center align-items-center auth-h100">
+        <div className="row g-3 justify-content-center">
+          <div className="col-lg-4 mx-auto offset-lg-4 d-flex justify-content-center align-items-center auth-h100">
             <div className="d-flex flex-column">
-              <span className="text-muted">Register with your email address or mobile number</span>
-              <ul className="nav nav-pills mt-4" role="tablist">
-
-                <li className="nav-item">
-                  <button className={`nav-link ${activeTab === "Mobile" ? "active" : ""}`} onClick={() => handleTabChange("Mobile")} type="button">Mobile</button>
-                </li>
-                <li className="nav-item">
-                  <button className={`nav-link ${activeTab === "Email" ? "active" : ""}`} onClick={() => handleTabChange("Email")} type="button">Email</button>
-                </li>
-              </ul>
-              <div className="tab-content mt-4 mb-3">
-                <div className={`tab-pane fade show ${activeTab === "Mobile" ? "active" : ""}`} id="Mobile">
-                  <div className="card">
-                    <div className="card-body p-4">
-                      <form onSubmit={handleSubmit}>
-                        <label className="form-label fs-6">Mobile *</label>
-                        <div className="input-group mb-3">
-                          <button className="btn btn-outline-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">+254</button>
-
-                          <input type="text" className="form-control" value={phoneNumber} onChange={handleMobileInputChange} required />
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label fs-6 d-block">Password *</label>
-                          <div className="input-group mb-3">
-                            <input type={showPassword ? 'text' : 'password'} className="form-control" value={password} onChange={handlePasswordInputChange} required />
-                            <button type="button" className="btn btn-outline-secondary" onClick={toggleShowPassword}>
-                              <i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-                            </button>
-                          </div>
-                        </div>
-                        <div className={`mb-3 ${password !== confirmPassword && confirmPassword !== '' ? 'has-error' : ''}`}>
-                          <label className="form-label fs-6">Confirm Password *</label>
-                          <input type="password" className="form-control" value={confirmPassword} onChange={handleConfirmPasswordInputChange} required />
-                          {password !== confirmPassword && confirmPassword !== '' && (
-                            <div className="invalid-feedback">Passwords do not match.</div>
-                          )}
-                        </div>
-                        {showReferralField && (
-                          <div className="mb-3">
-                            <label className="form-label fs-6">Referral ID</label>
-                            <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
-                          </div>
-                        )}
-
-                        <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <div className="spinner-border text-light" role="status">
-                              <span className="visually-hidden">Loading...</span>
-                            </div>
-                          ) : (
-                            "Create Account"
-                          )}
+              <ToastContainer />
+              <span className="text-muted">Register with your Email address or Mobile number</span>
+              <span className="text-muted">Already have an account? <Link to="/login" title="#" className="text-primary text-decoration-underline">Log In</Link></span>
+              <div className="card mt-4">
+                <div className="card-body">
+                  <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                      <label className="form-label fs-6">Email or Mobile number *</label>
+                      <input type="text" className="form-control" value={identifier} onChange={handleIdentifierInputChange} required />
+                    </div>
+                    <div className="mb-3">
+                      <label className="form-label fs-6 d-block">Password *</label>
+                      <div className="input-group mb-3">
+                        <input type={showPassword ? 'text' : 'password'} className="form-control" value={password} onChange={handlePasswordInputChange} required />
+                        <button className="btn btn-outline-secondary" type="button" onClick={toggleShowPassword}>
+                          {showPassword ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
                         </button>
-
-
-                      </form>
-                      <div className="mt-2">
-                        <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>
                       </div>
                     </div>
-                  </div>
-                </div>
-                <div className={`tab-pane fade show ${activeTab === "Email" ? "active" : ""}`} id="Email">
-                  <div className="card">
-                    <div className="card-body p-4">
-                      <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                          <label className="form-label fs-6">Email address *</label>
-                          <input type="email" className="form-control" value={email} onChange={handleEmailInputChange} required />
-                        </div>
-                        <div className="mb-3">
-                          <label className="form-label fs-6 d-block">Password *</label>
-                          <div className="input-group mb-3">
-                            <input type={showPassword ? 'text' : 'password'} className="form-control" value={password} onChange={handlePasswordInputChange} required />
-                            <button type="button" className="btn btn-outline-secondary" onClick={toggleShowPassword}>
-                              <i className={`fas fa-eye${showPassword ? '-slash' : ''}`}></i>
-                            </button>
-                          </div>
-                        </div>
-                        <div className={`mb-3 ${password !== confirmPassword && confirmPassword !== '' ? 'has-error' : ''}`}>
-                          <label className="form-label fs-6">Confirm Password *</label>
-                          <input type="password" className="form-control" value={confirmPassword} onChange={handleConfirmPasswordInputChange} required />
-                          {password !== confirmPassword && confirmPassword !== '' && (
-                            <div className="invalid-feedback">Passwords do not match.</div>
-                          )}
-                        </div>
-                        {showReferralField && (
-                          <div className="mb-3">
-                            <label className="form-label fs-6">Referral ID</label>
-                            <input type="text" className="form-control" value={referralId} onChange={handleReferralIdInputChange} />
-                          </div>
-                        )}
 
-                        <button
-                          type="submit"
-                          className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                          disabled={loading}
-                        >
-                          {loading ? (
-                            <div className="spinner-border text-light" role="status">
-                              <span className="visually-hidden">Loading...</span>
-                            </div>
-                          ) : (
-                            "Create Account"
-                          )}
-                        </button>
-
-                      </form>
-                      <div className="mt-2">
-                        <button className="btn btn-link p-0" onClick={handleReferralClick}>Have a referral code?</button>
-                      </div>
+                    <div className={`mb-3 ${password !== confirmPassword && confirmPassword !== '' ? 'has-error' : ''}`}>
+                      <label className="form-label fs-6">Confirm Password *</label>
+                      <input type="password" className="form-control" value={confirmPassword} onChange={handleConfirmPasswordInputChange} required />
+                      {password !== confirmPassword && confirmPassword !== '' && (
+                        <div className="invalid-feedback">Passwords do not match.</div>
+                      )}
                     </div>
-                  </div>
+                    <div className="mb-3">
+                      <button type="button" className="btn btn-link p-0 m-0" onClick={handleReferralClick}>
+                        {showReferralField ? 'Hide Referral' : 'Have a Referral?'}
+                      </button>
+                      {showReferralField && (
+                        <input type="text" className="form-control mt-2" value={referralId} onChange={handleReferralIdInputChange} placeholder="Referral ID" />
+                      )}
+                    </div>
+                    <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2" disabled={loading}>
+                      {loading ? (
+                        <div className="spinner-border text-light" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Create Account"
+                      )}
+                    </button>
+                  </form>
                 </div>
               </div>
-              <Link to="/login" title="#">Already have an account? <span className="text-primary text-decoration-underline">Log In</span></Link>
-            </div>
-          </div>
-
-          <div className="col-lg-6 d-none d-lg-flex justify-content-center align-items-center auth-h100">
-            <div className="qr-block text-center">
-              <img src="../assets/images/qr-code.png" alt="#" className="img-fluid my-4" />
-              <h4>Log in with QR code</h4>
-              <p>Scan this code to log in instantly.</p>
             </div>
           </div>
         </div>
@@ -279,4 +177,3 @@ function Signup() {
 }
 
 export default Signup;
-
