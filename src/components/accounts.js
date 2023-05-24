@@ -11,11 +11,14 @@ import api from '../api';
 
 
 const formatPhoneNumber = (phoneNumber) => {
-  if (phoneNumber.startsWith('254')) {
+  if (phoneNumber.startsWith("+")) {
+    return phoneNumber.slice(1);
+  }
+  else if (phoneNumber.startsWith("254")) {
     return phoneNumber;
-  } else if (phoneNumber.startsWith('0')) {
+  } else if (phoneNumber.startsWith("0")) {
     return `254${phoneNumber.slice(1)}`;
-  } else if (phoneNumber.startsWith('7') || phoneNumber.startsWith('1')) {
+  } else if (phoneNumber.startsWith("7") || phoneNumber.startsWith("1")) {
     return `254${phoneNumber}`;
   }
 };

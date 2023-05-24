@@ -71,7 +71,9 @@ const Header = () => {
             <Link to="/wallet" className="navLink">
               Wallet
             </Link>
-
+            <Link to="/Currencies" className="navLink">
+              Currencies
+            </Link>
             <Link to="/activity" className="navLink">
               Activity
             </Link>
