@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./UpdateBalanceModal.css";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +8,18 @@ function UpdateBalanceModal({ isVisible, onClose, onUpdateBalance }) {
   const [mpesaReceiptNumber, setMpesaReceiptNumber] = useState("");
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    if (!isVisible) {
+      setError(null);
+    }
+  }, [isVisible]);
+
   const navigate = useNavigate();
 
   if (!isVisible) {
     return null;
   }
+    
 
   async function handleUpdateBalance() {
     if (!mpesaReceiptNumber.trim()) {
@@ -49,11 +56,17 @@ function UpdateBalanceModal({ isVisible, onClose, onUpdateBalance }) {
         </div>
 
         <div className="modalContentMakePrimaryDiv">
-          <p className="makePrimaryPa">Update Balance</p>
-          {error && <p className="error">{error}</p>}
-          <p className="makePrimaryPa2">
-            Please input your Mpesa Receipt Code:
-          </p>
+    <p className="makePrimaryPa">Update Balance</p>
+    {error && 
+    <div style={{backgroundColor: '#ffcccb', padding: '6px', borderRadius: '5px', marginBottom: '3px'}}>
+        <p style={{color: '#a00', fontWeight: 'bold'}}>Error!</p>
+        <p style={{marginTop: '0'}}>{error}</p>
+    </div>
+    }
+    <p className="makePrimaryPa2">
+        Please input your Mpesa Receipt Code:
+    </p>
+
           <div className="input-group mb-3">
             <input
               type="text"
