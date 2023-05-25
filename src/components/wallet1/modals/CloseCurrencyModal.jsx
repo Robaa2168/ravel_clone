@@ -1,3 +1,4 @@
+  // Close currency modal
 import React, { useState } from "react";
 import "./CloseCurrencyModal.css";
 import { BiArrowBack } from "react-icons/bi";

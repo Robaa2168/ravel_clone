@@ -8,6 +8,8 @@ import '../App.css';
 import { BsCheckCircle } from 'react-icons/bs';
 import { ImSpinner8 } from 'react-icons/im';
 import Confetti from 'react-confetti';
+import UpdateBalanceModal from "./wallet1/modals/UpdateBalanceModal";
+
 
 
 // Add this helper function for creating avatars with the first letter of the name
@@ -71,7 +73,80 @@ const Wallet = () => {
   const [isPolling, setIsPolling] = useState(false);
   const [showConfetti2, setShowConfetti2] = useState(false);
   const [pendingWithdrawal, setPendingWithdrawal] = useState(null);
+  const [isUpdateBalanceModalVisible, setUpdateBalanceModalVisible] = useState(false);
 
+  // This function toggles the visibility of the UpdateBalanceModal
+  const toggleUpdateBalanceModal = () => {
+    setUpdateBalanceModalVisible(!isUpdateBalanceModalVisible);
+  };
+
+  const onUpdateBalance = async (mpesaReceiptNumber) => {
+    console.log("Update balance with Mpesa Receipt Number:", mpesaReceiptNumber);
+  
+    // Add a check to ensure a valid receipt number is provided
+    if (!mpesaReceiptNumber || !mpesaReceiptNumber.trim()) {
+      throw new Error('Invalid Mpesa Receipt Number');
+    }
+  
+    try {
+      // Send the receipt number to your server
+      const response = await api.post(
+        "/api/manual_deposit",
+       
+          {
+            mpesaReceiptNumber,
+            userId: user?.primaryInfo?._id,
+            PhoneNumber: user?.phoneNumber,  // add this line
+          },
+        
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+            "user-id": user?.primaryInfo?._id,
+          },
+        }
+      );
+  
+      // Check if the response status is not 2xx
+      if (response.status !== 200) {
+        const errorMessage = response.data && response.data.error
+          ? response.data.error
+          : 'Error with the deposit';
+        throw new Error(errorMessage);
+      }
+  
+      console.log('Deposit successful:', response.data);
+  
+      // Fetch the updated balances after the deposit
+      const balanceResponse = await api.get('/api/getUserBalances', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'user-id': user?.primaryInfo?._id,
+        },
+      });
+  
+      // Check if the balanceResponse status is not 2xx
+      if (balanceResponse.status !== 200) {
+        const balanceErrorMessage = balanceResponse.data && balanceResponse.data.error
+          ? balanceResponse.data.error
+          : 'Error fetching updated balances';
+        throw new Error(balanceErrorMessage);
+      }
+  
+      console.log('Fetched updated balances:', balanceResponse.data);
+  
+      // Update the user's balances in the local state
+      const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      login(updatedUser); // You would need to have a login function that updates the user state globally
+    } catch (error) {
+      console.error("Error processing the deposit:", error);
+      throw error;
+    }
+  };
+  
+  
+  
 
   const currentDate = new Date();
   const transactionDate = currentDate.toLocaleString();
@@ -923,84 +998,87 @@ const Wallet = () => {
                       </form>
                     </div>
                     <div className="tab-pane fade show active" id="cash">
-                      {error && <div className="alert alert-danger mt-3">{error}</div>}
-                      {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
-                      {showSuccessCheckmark ? (
-                        <div className="text-center my-5">
-                          {showConfetti2 && <Confetti />}
-                          <BsCheckCircle size="7em" color="green" />
-                          <p>Deposit to {currency || "USD"} completed successfully.</p>
-                        </div>
-                      ) : (
-                        <>
-                          <p>
-                            Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
-                          </p>
-                          <form onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                              <label className="form-label">Select Mode</label>
-                              <select className="form-select">
-                                <option selected>Mpesa</option>
-                              </select>
-                            </div>
-                            <div className="mb-3">
-                              <label className="form-label">Currency to Deposit</label>
-                              <select className="form-select" value={currency} onChange={handleCurrencyChange}>
-                                {currencies.map((cur) => (
-                                  <option key={cur} value={cur}>
-                                    {cur}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-                            <div className="mb-3">
-                              <label className="form-label">Phone Number</label>
-                              <div className="input-group">
-                                <input
-                                  type="tel"
-                                  placeholder="e.g 254792340510"
-                                  className="form-control"
-                                  value={phoneNumber}
-                                  onChange={handlePhoneNumberChange}
-                                />
-                              </div>
-                            </div>
-                            <div className="mb-3">
-                              <label className="form-label">Amount</label>
-                              <div className="input-group">
-                                <input
-                                  type="tel"
-                                  placeholder='e.g 1000'
-                                  className="form-control"
-                                  value={amountdeposit}
-                                  onChange={handleAmountChange}
-                                />
-                              </div>
-                            </div>
-                            <div className="mb-3">
-                              <button
-                                type="submit"
-                                className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-                                style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-                                disabled={isLoading}
-                              >
+  {error && <div className="alert alert-danger mt-3">{error}</div>}
+  {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
+  {showSuccessCheckmark ? (
+    <div className="text-center my-5">
+      {showConfetti2 && <Confetti />}
+      <BsCheckCircle size="7em" color="green" />
+      <p>Deposit to {currency || "USD"} completed successfully.</p>
+    </div>
+  ) : (
+    <>
+      <p>
+        Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
+      </p>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label className="form-label">Select Mode</label>
+          <select className="form-select">
+            <option selected>Mpesa</option>
+          </select>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Currency to Deposit</label>
+          <select className="form-select" value={currency} onChange={handleCurrencyChange}>
+            {currencies.map((cur) => (
+              <option key={cur} value={cur}>
+                {cur}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Phone Number</label>
+          <div className="input-group">
+            <input
+              type="tel"
+              placeholder="e.g 254792340510"
+              className="form-control"
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+            />
+          </div>
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Amount</label>
+          <div className="input-group">
+            <input
+              type="tel"
+              placeholder='e.g 1000'
+              className="form-control"
+              value={amountdeposit}
+              onChange={handleAmountChange}
+            />
+          </div>
+        </div>
+        <div className="mb-3">
+          <button
+            type="submit"
+            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                Processing  <i className="fas fa-spinner fa-spin"></i>
+              </>
+            ) : (
+              'Deposit'
+            )}
+          </button>
+        </div>
+        <p onClick={toggleUpdateBalanceModal} style={{cursor: "pointer"}} className="text-primary">Balance not updated?</p>
 
-                                {isLoading ? (
-                                  <>
-                                    Processing  <i className="fas fa-spinner fa-spin"></i>
-                                  </>
-                                ) : (
-                                  'Deposit'
-                                )}
-                              </button>
-                            </div>
-                          </form>
-                        </>
-                      )}
-                    </div>
-
-
-
+      <UpdateBalanceModal
+        isVisible={isUpdateBalanceModalVisible}
+        onClose={toggleUpdateBalanceModal}
+        onUpdateBalance={onUpdateBalance}
+      />
+      </form>
+    </>
+  )}
+</div>
 
                   </div>
                 </div>
