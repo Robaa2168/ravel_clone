@@ -1107,22 +1107,22 @@ const Wallet = () => {
                     {transferType === 1 ? "Transfer" : "Request"}
                   </h6>
                   <div>
-                    <button
-                      className={`btn btn-light ${transferType === 1 ? "active" : ""}`}
-                      style={{ marginRight: "10px" }}
-                      onClick={() => handleTransferTypeChange(1)}
-                    >
-                      Transfer
-                    </button>
-                    <button
-                      className={`btn btn-light ${transferType === 2 ? "active" : ""}`}
-                      style={{ marginRight: "10px" }}
-                      onClick={() => handleTransferTypeChange(2)}
-                    >
-                      Request
-                    </button>
+    <button
+        className={`btn ${transferType === 1 ? "btn-primary" : "btn-light"}`}
+        style={{ marginRight: "10px", backgroundColor: transferType === 1 ? "#0070ba" : "inherit"}}
+        onClick={() => handleTransferTypeChange(1)}
+    >
+        Transfer
+    </button>
+    <button
+        className={`btn ${transferType === 2 ? "btn-primary" : "btn-light"}`}
+        style={{ marginRight: "10px", backgroundColor: transferType === 2 ? "#0070ba" : "inherit"}}
+        onClick={() => handleTransferTypeChange(2)}
+    >
+        Request
+    </button>
+</div>
 
-                  </div>
                 </div>
                 <div className="card-body d-flex flex-column ">
 
