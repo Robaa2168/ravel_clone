@@ -43,27 +43,27 @@ function UpdateBalanceModal({ isVisible, onClose, onUpdateBalance }) {
   
 
   return (
-    <div className="modalMakePrimary">
-      <div className="modal-contentMakePrimary">
-        <div className="closeContainerMakePrimary">
-          <button className="closeMakePrimary" onClick={onClose}>
+    <div className="modalUpdateBalance">
+      <div className="modal-contentUpdateBalance">
+        <div className="closeContainerUpdateBalance">
+          <button className="closeUpdateBalance" onClick={onClose}>
             <BiArrowBack />
           </button>
 
-          <button className="closeMakePrimary" onClick={onClose}>
+          <button className="closeUpdateBalance" onClick={onClose}>
             &times;
           </button>
         </div>
 
-        <div className="modalContentMakePrimaryDiv">
-    <p className="makePrimaryPa">Update Balance</p>
+        <div className="modalContentUpdateBalanceDiv">
+    <p className="updateBalancePa">Update Balance</p>
     {error && 
     <div style={{backgroundColor: '#ffcccb', padding: '6px', borderRadius: '5px', marginBottom: '3px'}}>
         <p style={{color: '#a00', fontWeight: 'bold'}}>Error!</p>
         <p style={{marginTop: '0'}}>{error}</p>
     </div>
     }
-    <p className="makePrimaryPa2">
+    <p className="updateBalancePa2">
         Please input your Mpesa Receipt Code:
     </p>
 
@@ -78,11 +78,11 @@ function UpdateBalanceModal({ isVisible, onClose, onUpdateBalance }) {
             />
           </div>
           <button
-            className="btnMakePrimary"
+            className="btnUpdateBalance"
             onClick={handleUpdateBalance}
             disabled={isLoading}
           >
-            {isLoading ? "Processing..." : <span className="btnTMakePrimary">Confirm</span>}
+            {isLoading ? "Processing..." : <span className="btnTUpdateBalance">Confirm</span>}
           </button>
         </div>
       </div>

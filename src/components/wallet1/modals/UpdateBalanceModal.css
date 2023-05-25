@@ -1,4 +1,4 @@
-.modalMakePrimary {
+.modalUpdateBalance {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,10 +8,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 10000 !important;
   }
   
-  .modal-contentMakePrimary {
+  .modal-contentUpdateBalance {
     background-color: white;
     padding: 20px;
   
@@ -20,14 +20,14 @@
     height: 100vh;
   }
   
-  .closeContainerMakePrimary {
+  .closeContainerUpdateBalance {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
   }
   
-  .closeMakePrimary {
+  .closeUpdateBalance{
     font-size: 25px;
     color: #777272;
     cursor: pointer;
@@ -35,84 +35,59 @@
     background-color: white;
   }
   
-  .closeMakePrimary:hover {
-    color: blue;
+  .closeUpdateBalance:hover {
+    color: #0070ba;
   }
   
-  .makePrimaryImg {
-    height: 30px;
-  }
-  
-  .currencyImg {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto;
-    display: block;
-  }
-  
-  .modalContentMakePrimaryDiv {
-    width: 60%;
-    margin: auto;
-  }
-  
-  .euro {
-    margin: 20px 0;
-  }
-  
-  .euroImg {
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    width: 100px;
-  }
-  
-  .euroP {
-    text-align: center;
-  }
-  
-  .makePrimarytitle {
+  .updateBalancePa{
     font-size: 25px;
-    font-weight: 400;
-    color: black;
-    margin: 10px 0;
+  font-weight: 400;
+  color: black;
+  margin: 10px 0;
+  text-align: center;
+  line-height: 1.2;
+  text-decoration: none;
+}
+  .updateBalancePa2{
     text-align: center;
-    line-height: 1.2;
-    text-decoration: none;
+  }
+  .modalContentUpdateBalanceDiv {
+    width: 100%;
+    margin: auto;
+    padding: 20px; /* add some padding to create a gap between the content and the modal edges */
   }
   
-  .makePrimaryparagrapgh {
-    font-size: 13px;
-    text-align: center;
-    margin: 20px 0;
-  }
   
-  .btnMakePrimary {
+  .btnUpdateBalance {
     width: 100%;
     padding: 8px;
     border-radius: 30px;
     cursor: pointer;
-    border: 1px solid rgb(7, 7, 145);
-    background-color: rgb(7, 7, 145);
+    border: 1px solid #0070ba;
+    background-color: #0070ba;
     color: white;
     font-weight: 500;
     box-sizing: border-box;
   }
   
-  .btnMakePrimary:hover {
-    background-color: rgb(11, 11, 107);
+  .btnUpdateBalance:hover {
+    background-color: #0070ba;
     text-decoration: underline;
   }
   
   @media (max-width: 641px) {
-    .modal-contentMakePrimary {
+    .modal-contentUpdateBalance {
       width: 100%;
     }
   
-    .modalContentMakePrimary {
+    .modalContentUpdateBalanceDiv {
       width: 90%;
       padding: 10px;
     }
   }
   
+  @media (max-width: 768px) { /* adjust the breakpoint as per your target devices */
+    .modalContentUpdateBalanceDiv {
+      padding: 10px; /* adjust the padding for smaller devices */
+    }
+  }
