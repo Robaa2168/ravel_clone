@@ -54,6 +54,7 @@
     white-space: nowrap;
     margin-top: 0; /* Remove top margin on smaller devices */
     padding: 10px 0; /* Adjust padding for smaller devices */
+    margin-bottom: 1em;
   }
 
   .scrollContainer {
@@ -61,7 +62,7 @@
   }
 
   .account {
-    font-size: 14px; /* Adjust font size for smaller devices */
+    font-size: 16px; /* Adjust font size for smaller devices */
     padding: 8px 10px; /* Adjust padding for smaller devices */
   }
 }
