@@ -11,6 +11,29 @@ const Dashboard = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { user, login } = useUser();
   const navigate = useNavigate();
+  const [transactions, setTransactions] = useState([]);
+
+const fetchTransactions = async () => {
+  try {
+    const transactionResponse = await api.get('/api/transactions', {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+        'user-id': user?.primaryInfo?._id,
+      },
+    });
+
+    if (transactionResponse.status === 200) {
+      setTransactions(transactionResponse.data);
+    }
+  } catch (error) {
+    console.error('Failed to fetch transactions:', error);
+  }
+};
+
+useEffect(() => {
+  fetchTransactions();
+}, []);
+
 
   const paymentActivity = [
 
@@ -178,26 +201,44 @@ const Dashboard = () => {
             <div className="myapp-pypl-card-header">
               <h5 className='myapp-activity-heading'>Recent Activity</h5>
               <div className="myapp-pypl-card-body">
-                {paymentActivity.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
+                {transactions.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
                 <div className='myapp-acitvity-cards'>
-                  {
-                    paymentActivity.map((activity, index) => (
-                      <div key={activity.id} className="myapp-activity">
-                        <div className='myapp-activity-icon'>
-                          <FaStore className='myapp-icon' />
-                        </div>
-                        <div className='myapp-activity-info'>
-                          <div className="myapp-header">
-                            <span className="myapp-activity-name">{activity.name}</span>
-                            <span className='myapp-payment'>-${activity.amount}</span>
-                          </div>
-                          <div className="myapp-date">
-                            <span>{activity.date} . {activity.type}</span>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  }
+                {
+  transactions.map((transaction, index) => (
+    
+    <div key={transaction._id} className="myapp-activity">
+      <div className='myapp-activity-icon1'>
+        <FaStore className='myapp-icon' />
+      </div>
+      <div className='myapp-activity-info'>
+        <div className="myapp-header">
+          <span className="myapp-activity-name">
+          <span className="myapp-activity-name">
+  {transaction.sender === user?.primaryInfo?._id
+    ? transaction.receiverFirstName
+    : transaction.senderFirstName
+  }
+</span>
+
+          </span>
+          <span className='myapp-payment'>
+            {/* Show whether the transaction was incoming or outgoing */}
+            {transaction.sender === user?.primaryInfo?._id
+              ? `-$${transaction.amount}`
+              : `+$${transaction.amount}`
+            }
+          </span>
+        </div>
+        <div className="myapp-date">
+          <span>
+            {/* Format the date to a readable format */}
+            {new Date(transaction.createdAt).toLocaleDateString()} . {transaction.status}
+          </span>
+        </div>
+      </div>
+    </div>
+  ))
+}
                 </div>
               </div>
               <div className="myapp-pypl-card-footer">
