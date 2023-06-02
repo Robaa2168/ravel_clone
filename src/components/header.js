@@ -82,7 +82,7 @@ const Header = () => {
         </div>
         <div className="logOut">
           <IoNotifications className="settings" />
-          <Link to="" className="settings1">
+          <Link to="/settings" className="settings1">
             <RiSettings5Fill className="settings" />
           </Link>
           <Link onClick={handleLogout} className="logout">LOG OUT</Link>
@@ -92,7 +92,7 @@ const Header = () => {
         <div className="popUp" ref={popUpRef}>
           <div className="popUp1">
             <Link onClick={handleLogout} className="popUp2">LOG OUT</Link>
-            <Link to="" className="popUp2">
+            <Link to="/settings" className="popUp2">
               <RiSettings5Fill className="" />
             </Link>
           </div>

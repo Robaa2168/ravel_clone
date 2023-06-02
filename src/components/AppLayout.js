@@ -3,13 +3,11 @@ import { useLocation, Route, Routes } from 'react-router-dom';
 import Sidebar from './sidebar';
 import Home from './home';
 import Footer from './footer';
-import Security from './security';
 import Loan from './cryptoloan';
 import Repay from './repay';
 import Ticket from './ticket';
 import Wallet from './wallet';
 import Login from './Login';
-import Sample from './sample';
 import Signup from './signup';
 import Application from './application';
 import Verification from './verify';
@@ -19,6 +17,7 @@ import { useUser } from './context';
 import Header from './header';
 import Activity from './activity';
 import Wallet1 from "./wallet1/Wallet1";
+import Settings from "./settings/Settings";
 import CreatePIN from './createpin';
 
 const AppLayout = () => {
@@ -55,7 +54,6 @@ const AppLayout = () => {
       <div className="container ">
         <Routes>
           <Route path="*" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/settings" element={<ProtectedRoute><Security /></ProtectedRoute>} />
           <Route path="/loan" element={<ProtectedRoute><Loan /></ProtectedRoute>} />
           <Route path="/repay" element={<ProtectedRoute><Repay /></ProtectedRoute>} />
           <Route path="/ticket" element={<ProtectedRoute><Ticket /></ProtectedRoute>} />
@@ -63,11 +61,11 @@ const AppLayout = () => {
           <Route path="/Activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
           <Route path="/Currencies" element={<ProtectedRoute><Wallet1 /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
-          <Route path="/sample" element={<Sample />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/KYC" element={<Application />} />
+          <Route path="/settings" element={<Settings />} />
           <Route path="/verify" element={<Verification />} />
-          <Route path="/pin" element={<CreatePIN />} />
+          <Route path="/pin" element={<ProtectedRoute><CreatePIN /></ProtectedRoute>} />
           <Route path="/accounts" element={<ProtectedRoute><Accounts /></ProtectedRoute>} />
         </Routes>
 
