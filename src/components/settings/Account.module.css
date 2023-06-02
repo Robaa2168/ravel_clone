@@ -21,7 +21,7 @@
 .joined {
   border-bottom: 1px solid #e0e0e0;
   padding: 10px 20px;
-  background-color: rgb(14, 14, 141);
+  background-color: #0070ba;
   border-radius: 5px 5px 0 0;
 }
 
@@ -103,7 +103,7 @@
 }
 
 .select-option-checkmark {
-  color: blue;
+  color: #0070ba;
 }
 
 .nationality,
@@ -198,7 +198,7 @@
 
 .primaryEmailP {
   margin: 0;
-  color: rgb(23, 23, 211);
+  color: #0070ba;
   font-weight: 600;
   background-color: rgb(209, 209, 236);
   width: 70px;
@@ -254,7 +254,7 @@
   margin-top: auto;
   margin-bottom: auto;
   text-decoration: none;
-  color: rgb(23, 23, 211);
+  color: #0070ba;
   font-weight: 600;
   font-size: 0.9rem;
 }
