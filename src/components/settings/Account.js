@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Account.css";
+import styles from "./Account.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle, faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import Select, { components } from "react-select";
@@ -29,9 +29,9 @@ const DropdownIndicator = (props) => {
 
 const SingleValue = ({ children, label, ...props }) => (
   <components.SingleValue {...props}>
-    <div className="select-label-container">
-      <span className="select-label">{label}</span>
-      <span className="select-selected-value">{children}</span>
+    <div className={styles.selectLabelContainer}>
+      <span className={styles.selectLabel}>{label}</span>
+      <span className={styles.selectSelectedValue}>{children}</span>
     </div>
   </components.SingleValue>
 );
@@ -53,9 +53,9 @@ const Option = (props) => {
   const { children, isSelected, ...rest } = props;
   return (
     <components.Option {...rest}>
-      <div className="select-option-content">
+      <div className={styles.selectOptionContent}>
         {children}
-        {isSelected && <IoCheckmark className="select-option-checkmark" />}
+        {isSelected && <IoCheckmark className={styles.selectOptionCheckmark} />}
       </div>
     </components.Option>
   );
@@ -77,25 +77,25 @@ function Account() {
   };
 
   return (
-    <div className="main">
-      <div className="profile">
-        <div className="profileDetails">
-          <div className="joined">
-            <div className="dateJoined">
-              <p className="dateJoined1">Profile</p>
-              <p className="dateJoined2">Joined in 2019</p>
+    <div className={styles.main}>
+      <div className={styles.profile}>
+        <div className={styles.profileDetails}>
+          <div className={styles.joined}>
+            <div className={styles.dateJoined}>
+              <p className={styles.dateJoined1}>Profile</p>
+              <p className={styles.dateJoined2}>Joined in 2019</p>
             </div>
-            <p className="userImage">Image</p>
+            <p className={styles.userImage}>Image</p>
           </div>
 
-          <div className="profileName">
-            <p className="addEmail1">Stanley Mayore</p>
-            <Link className="changeName addEmail2">Change name</Link>
+          <div className={styles.profileName}>
+            <p className={styles.addEmail1}>Stanley Mayore</p>
+            <Link className={`${styles.changeName} ${styles.addEmail2}`}>Change name</Link>
           </div>
         </div>
 
-        <div className="profileId">
-          <p className="options">Account Options</p>
+        <div className={styles.profileId}>
+          <p className={styles.options}>Account Options</p>
           <Select
             defaultValue={languageOptions[0]}
             options={languageOptions}
@@ -107,7 +107,7 @@ function Account() {
               Option,
             }}
             onChange={handleChange}
-            className="selectOptions"
+            className={styles.selectOptions}
             styles={customStyles}
           />
           <Select
@@ -121,100 +121,100 @@ function Account() {
               Option,
             }}
             onChange={handleChange}
-            className="selectOptions"
+            className={styles.selectOptions}
             styles={customStyles}
           />
-          <div className="nationality">
-            <p className="kenyan">Nationality</p>
-            <p className="kenyan1">Kenya</p>
+          <div className={styles.nationality}>
+            <p className={styles.kenyan}>Nationality</p>
+            <p className={styles.kenyan1}>Kenya</p>
           </div>
 
-          <div className="merchant">
-            <p className="kenyan">Merchant ID</p>
-            <p className="kenyan1">LV3C2EXEWPYCJ</p>
+          <div className={styles.merchant}>
+            <p className={styles.kenyan}>Merchant ID</p>
+            <p className={styles.kenyan1}>LV3C2EXEWPYCJ</p>
           </div>
 
-          <div className="national">
-            <p className="kenyan">National ID</p>
-            <div className="idNumber">
-              <p className="kenyan1">3....21</p>
-              <Link className="edit">Edit</Link>
+          <div className={styles.national}>
+            <p className={styles.kenyan}>National ID</p>
+            <div className={styles.idNumber}>
+              <p className={styles.kenyan1}>3....21</p>
+              <Link className={styles.edit}>Edit</Link>
             </div>
           </div>
 
-          <Link className="passport">Add Passport</Link>
+          <Link className={styles.passport}>Add Passport</Link>
 
-          <div className="features">
-            <FontAwesomeIcon icon={faShieldAlt} className="icon" />
-            <div className="business">
-              <p className="unlock">
+          <div className={styles.features}>
+            <FontAwesomeIcon icon={faShieldAlt} className={styles.icon} />
+            <div className={styles.business}>
+              <p className={styles.unlock}>
                 Unlock new features like express checkout
               </p>
-              <Link className="upgrade">Upgrade to a Business acount</Link>
+              <Link className={styles.upgrade}>Upgrade to a Business account</Link>
             </div>
           </div>
 
-          <div className="closeAccount">
-            <FontAwesomeIcon icon={faUserCircle} className="icon" />
-            <p className="close">Close your account</p>
+          <div className={styles.closeAccount}>
+            <FontAwesomeIcon icon={faUserCircle} className={styles.icon} />
+            <p className={styles.close}>Close your account</p>
           </div>
         </div>
       </div>
 
-      <div className="address">
-        <div className="addressEmail">
-          <div className="addEmail">
-            <p className="addEmail1">Email</p>
-            <Link className="addEmail2">Add</Link>
+      <div className={styles.address}>
+        <div className={styles.addressEmail}>
+          <div className={styles.addEmail}>
+            <p className={styles.addEmail1}>Email</p>
+            <Link className={styles.addEmail2}>Add</Link>
           </div>
 
-          <div className="primaryEmail">
-            <p className="primaryEmailP">Primary</p>
-            <div className="changeEmail">
-              <p className="changeEmailP">stan@gmail.com</p>
-              <Link className="changeEmailL">Change</Link>
+          <div className={styles.primaryEmail}>
+            <p className={styles.primaryEmailP}>Primary</p>
+            <div className={styles.changeEmail}>
+              <p className={styles.changeEmailP}>stan@gmail.com</p>
+              <Link className={styles.changeEmailL}>Change</Link>
             </div>
           </div>
 
-          <p className="emailDesc">
+          <p className={styles.emailDesc}>
             To update an email address, you must have at least two email
             addresses on file.
           </p>
         </div>
 
-        <div className="addressNumber">
-          <div className="addPhoneNumbers">
-            <p className="addEmail1">Phone Numbers</p>
-            <Link className="addEmail2">Add</Link>
+        <div className={styles.addressNumber}>
+          <div className={styles.addPhoneNumbers}>
+            <p className={styles.addEmail1}>Phone Numbers</p>
+            <Link className={styles.addEmail2}>Add</Link>
           </div>
 
-          <div className="mobile">
-            <div className="mobilePrimary">
-              <p className="mobileNumber">Mobile</p>
-              <p className="primaryEmailP">Primary</p>
+          <div className={styles.mobile}>
+            <div className={styles.mobilePrimary}>
+              <p className={styles.mobileNumber}>Mobile</p>
+              <p className={styles.primaryEmailP}>Primary</p>
             </div>
-            <div className="phoneNumber">
-              <p className="myNumber">07*****434</p>
-              <Link className="addEmail2">Change</Link>
+            <div className={styles.phoneNumber}>
+              <p className={styles.myNumber}>07*****434</p>
+              <Link className={styles.addEmail2}>Change</Link>
             </div>
           </div>
         </div>
 
-        <div className="addressAddress">
-          <div className="addAddress">
-            <p className="addEmail1">Addresses</p>
-            <Link className="addEmail2">Add</Link>
+        <div className={styles.addressAddress}>
+          <div className={styles.addAddress}>
+            <p className={styles.addEmail1}>Addresses</p>
+            <Link className={styles.addEmail2}>Add</Link>
           </div>
-          <div className="primaryAddress">
-            <p className="primaryEmailP">Primary</p>
-            <div className="place">
-              <div className="address1">
+          <div className={styles.primaryAddress}>
+            <p className={styles.primaryEmailP}>Primary</p>
+            <div className={styles.place}>
+              <div className={styles.address1}>
                 <p>209</p>
                 <p>209</p>
                 <p>Keroka</p>
                 <p>Nyamira County 40202</p>
               </div>
-              <Link className="addEmail2">Edit</Link>
+              <Link className={styles.addEmail2}>Edit</Link>
             </div>
           </div>
         </div>

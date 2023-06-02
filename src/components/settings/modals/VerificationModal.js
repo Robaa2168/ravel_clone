@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import "./VerificationModal.css";
+import styles from "./VerificationModal.module.css";
 
 const initialValues = {
   verificationMethod: "",
@@ -17,29 +17,29 @@ function VerificationModal({ isVisible, onClose }) {
   }
 
   return (
-    <div className="modal1">
-      <div className="modal-content1">
-        <div className="closeContainer1">
-          <button className="close1" onClick={onClose}>
+    <div className={styles.modal1}>
+      <div className={styles["modal-content1"]}>
+        <div className={styles.closeContainer1}>
+          <button className={styles.close1} onClick={onClose}>
             &times;
           </button>
         </div>
-        <div className="password1">
-          <p className="passwordHeader1">
+        <div className={styles.password1}>
+          <p className={styles.passwordHeader1}>
             Protect your account with 2-step verification
           </p>
-          <p className="addition">
+          <p className={styles.addition}>
             Each time you log in, you'll use a one-time code in addition to your
             password. Choose how you'll get your code.
           </p>
-          <p className="app">Need an authenticator app?</p>
+          <p className={styles.app}>Need an authenticator app?</p>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
           >
             {({ errors, touched }) => (
               <Form>
-                <div className="radio-options">
+                <div className={styles["radio-options"]}>
                   <label>
                     <Field type="radio" name="verificationMethod" value="app" />
                     Use an authenticator app
@@ -49,17 +49,16 @@ function VerificationModal({ isVisible, onClose }) {
                     Use a security key
                   </label>
                   {errors.verificationMethod && touched.verificationMethod ? (
-                    <div className="error">{errors.verificationMethod}</div>
+                    <div className={styles.error}>{errors.verificationMethod}</div>
                   ) : null}
                 </div>
-                <button type="submit" className="btn1">
-                  <span className="btnT1">Set It Up</span>
+                <button type="submit" className={styles.btn1}>
+                  <span className={styles.btnT1}>Set It Up</span>
                 </button>
               </Form>
             )}
           </Formik>
         </div>
-    
       </div>
     </div>
   );

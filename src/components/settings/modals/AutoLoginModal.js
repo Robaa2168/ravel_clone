@@ -1,5 +1,5 @@
 import React from "react";
-import "./AutoLoginModal.css";
+import styles from "./AutoLoginModal.module.css";
 
 function AutoLoginModal({ isVisible, onClose }) {
   if (!isVisible) {
@@ -7,23 +7,22 @@ function AutoLoginModal({ isVisible, onClose }) {
   }
 
   return (
-    <div className="modal2">
-      <div className="modal-content2">
-        <div className="closeContainer2">
-          <button className="close2" onClick={onClose}>
-            &times;
+    <div className={styles.modal2}>
+      <div className={styles.modalContent2}>
+        <div className={styles.closeContainer2}>
+          <button className={styles.close2} onClick={onClose}>
+            ×
           </button>
         </div>
-        <div className="password2">
-          <p className="passwordHeader2">
+        <div className={styles.password2}>
+          <p className={styles.passwordHeader2}>
             Manage auto login, including OneTouch™
           </p>
-          <p className="addition1">Auto login is turned off for all devices</p>
-          <button type="submit" className="btn2">
-            <span className="btnT2">Enable</span>
+          <p className={styles.addition1}>Auto login is turned off for all devices</p>
+          <button type="submit" className={styles.btn2}>
+            <span className={styles.btnT2}>Enable</span>
           </button>
         </div>
-    
       </div>
     </div>
   );

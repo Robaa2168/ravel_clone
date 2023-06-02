@@ -1,8 +1,8 @@
 import React from "react";
 import SettingsHeader from "./SettingsHeader";
 import { Route, Routes } from "react-router-dom";
-// import Account from "./Account";
 import Security from "./Security";
+import Account from "./Account";
 
 function Settings() {
   return (
@@ -10,6 +10,7 @@ function Settings() {
       <SettingsHeader />
       <Routes>
         <Route path="/" element={<Security />} />
+        <Route path="/profile" element={<Account />} />
       </Routes>
     </div>
   );
