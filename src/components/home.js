@@ -13,26 +13,26 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
 
-const fetchTransactions = async () => {
-  try {
-    const transactionResponse = await api.get('/api/transactions', {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        'user-id': user?.primaryInfo?._id,
-      },
-    });
+  const fetchTransactions = async () => {
+    try {
+      const transactionResponse = await api.get('/api/transactions', {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'user-id': user?.primaryInfo?._id,
+        },
+      });
 
-    if (transactionResponse.status === 200) {
-      setTransactions(transactionResponse.data);
+      if (transactionResponse.status === 200) {
+        setTransactions(transactionResponse.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch transactions:', error);
     }
-  } catch (error) {
-    console.error('Failed to fetch transactions:', error);
-  }
-};
+  };
 
-useEffect(() => {
-  fetchTransactions();
-}, []);
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
 
 
   const paymentActivity = [
@@ -203,42 +203,59 @@ useEffect(() => {
               <div className="myapp-pypl-card-body">
                 {transactions.length === 0 && <p>See when money comes in, and when it goes out. You’ll find your recent Ravel activity here.</p>}
                 <div className='myapp-acitvity-cards'>
-                {
-  transactions.map((transaction, index) => (
-    
-    <div key={transaction._id} className="myapp-activity">
-      <div className='myapp-activity-icon1'>
-        <FaStore className='myapp-icon' />
-      </div>
-      <div className='myapp-activity-info'>
-        <div className="myapp-header">
-          <span className="myapp-activity-name">
-          <span className="myapp-activity-name">
-  {transaction.sender === user?.primaryInfo?._id
-    ? transaction.receiverFirstName
-    : transaction.senderFirstName
-  }
-</span>
+                  {
+                    transactions.map((transaction, index) => (
 
-          </span>
-          <span className='myapp-payment'>
-            {/* Show whether the transaction was incoming or outgoing */}
-            {transaction.sender === user?.primaryInfo?._id
-              ? `-$${transaction.amount}`
-              : `+$${transaction.amount}`
-            }
-          </span>
-        </div>
-        <div className="myapp-date">
-          <span>
-            {/* Format the date to a readable format */}
-            {new Date(transaction.createdAt).toLocaleDateString()} . {transaction.status}
-          </span>
-        </div>
-      </div>
-    </div>
-  ))
-}
+                      <div key={transaction._id} className="myapp-activity">
+                        <div className='myapp-activity-icon1'>
+                          <div className='myapp-icon-letter'>
+                            {transaction.sender === user?.primaryInfo?._id
+                              ? transaction.receiverFirstName[0].toUpperCase()
+                              : transaction.senderFirstName[0].toUpperCase()
+                            }
+                          </div>
+                        </div>
+
+                        <div className='myapp-activity-info'>
+                          <div className="myapp-header">
+                            <span className="myapp-activity-name">
+                              <span className="myapp-activity-name">
+                                {transaction.sender === user?.primaryInfo?._id
+                                  ? transaction.receiverFirstName
+                                  : transaction.senderFirstName
+                                }
+                              </span>
+
+                            </span>
+                            <span
+                              className={
+                                transaction.sender === user?.primaryInfo?._id
+                                  ? 'myapp-payment'
+                                  : 'myapp-payment incoming-payment'
+                              }
+                            >
+                              {/* Show whether the transaction was incoming or outgoing */}
+                              {transaction.sender === user?.primaryInfo?._id
+                                ? `-$${transaction.amount}`
+                                : `+$${transaction.amount}`
+                              }
+                            </span>
+                          </div>
+                          <div className="myapp-date">
+                            <span>
+                              {/* Format the date to a readable format */}
+                              {new Date(transaction.createdAt).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                              })} . {transaction.status}
+
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  }
                 </div>
               </div>
               <div className="myapp-pypl-card-footer">
