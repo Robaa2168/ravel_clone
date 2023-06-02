@@ -59,9 +59,7 @@ function VerificationModal({ isVisible, onClose }) {
             )}
           </Formik>
         </div>
-        <div className="logoContainer1">
-          <img src="/paypal123.png" alt="logo" className="logo" />
-        </div>
+    
       </div>
     </div>
   );

@@ -23,9 +23,7 @@ function AutoLoginModal({ isVisible, onClose }) {
             <span className="btnT2">Enable</span>
           </button>
         </div>
-        <div className="logoContainer2">
-          <img src="/paypal123.png" alt="logo" className="logo" />
-        </div>
+    
       </div>
     </div>
   );

@@ -116,9 +116,7 @@ function PasswordModal({ isVisible, onClose }) {
             )}
           </Formik>
         </div>
-        <div className="logoContainer">
-          <img src="/paypal123.png" alt="logo" className="logo" />
-        </div>
+    
       </div>
     </div>
   );
