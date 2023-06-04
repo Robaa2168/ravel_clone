@@ -6,6 +6,7 @@ import { faUserCircle, faShieldAlt } from "@fortawesome/free-solid-svg-icons";
 import Select, { components } from "react-select";
 import { MdExpandLess, MdExpandMore } from "react-icons/md";
 import { IoCheckmark } from "react-icons/io5";
+import { useUser } from "../context";
 
 const DropdownIndicator = (props) => {
   const iconStyle = {
@@ -62,6 +63,7 @@ const Option = (props) => {
 };
 
 function Account() {
+  const { user, logout } = useUser();
   const languageOptions = [
     { value: "English", label: "English" },
     { value: "Francais", label: "Francais" },
@@ -83,13 +85,18 @@ function Account() {
           <div className={styles.joined}>
             <div className={styles.dateJoined}>
               <p className={styles.dateJoined1}>Profile</p>
-              <p className={styles.dateJoined2}>Joined in 2019</p>
+              <p className={styles.dateJoined2}>Joined {""}
+              {new Date(user?.userInfo?.createdAt).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                              })}</p>
             </div>
-            <p className={styles.userImage}>Image</p>
+            <p className={styles.userImage}>{user?.userInfo?.firstName[0].toUpperCase()}</p>
           </div>
 
           <div className={styles.profileName}>
-            <p className={styles.addEmail1}>Stanley Mayore</p>
+            <p className={styles.addEmail1}> {user?.userInfo?.firstName} {user?.userInfo?.lastName}</p>
             <Link className={`${styles.changeName} ${styles.addEmail2}`}>Change name</Link>
           </div>
         </div>
@@ -137,7 +144,7 @@ function Account() {
           <div className={styles.national}>
             <p className={styles.kenyan}>National ID</p>
             <div className={styles.idNumber}>
-              <p className={styles.kenyan1}>3....21</p>
+              <p className={styles.kenyan1}>{user?.userInfo?.idNumber}</p>
               <Link className={styles.edit}>Edit</Link>
             </div>
           </div>
@@ -171,7 +178,7 @@ function Account() {
           <div className={styles.primaryEmail}>
             <p className={styles.primaryEmailP}>Primary</p>
             <div className={styles.changeEmail}>
-              <p className={styles.changeEmailP}>stan@gmail.com</p>
+              <p className={styles.changeEmailP}>{user?.userInfo?.email}</p>
               <Link className={styles.changeEmailL}>Change</Link>
             </div>
           </div>
@@ -194,7 +201,7 @@ function Account() {
               <p className={styles.primaryEmailP}>Primary</p>
             </div>
             <div className={styles.phoneNumber}>
-              <p className={styles.myNumber}>07*****434</p>
+              <p className={styles.myNumber}>{user?.userInfo?.phoneNumber}</p>
               <Link className={styles.addEmail2}>Change</Link>
             </div>
           </div>
@@ -209,10 +216,10 @@ function Account() {
             <p className={styles.primaryEmailP}>Primary</p>
             <div className={styles.place}>
               <div className={styles.address1}>
-                <p>209</p>
-                <p>209</p>
-                <p>Keroka</p>
-                <p>Nyamira County 40202</p>
+                <p>{user?.userInfo?.poBox}</p>
+                <p>{user?.userInfo?.town}</p>
+                <p>{user?.userInfo?.city}</p>
+                <p>{user?.userInfo?.Country}</p>
               </div>
               <Link className={styles.addEmail2}>Edit</Link>
             </div>
