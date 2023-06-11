@@ -704,9 +704,9 @@ const Wallet = () => {
                   {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
                   {successMessage && <div className="alert alert-success">{successMessage}</div>}
                   {pendingWithdrawal && (
-                    <div className="alert alert-success">
-                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed soon.
-                    </div>
+                  <div className="alert alert-info">
+                  Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
+                  </div>
 
 
                   )}
@@ -1021,15 +1021,20 @@ const Wallet = () => {
           </select>
         </div>
         <div className="mb-3">
-          <label className="form-label">Currency to Deposit</label>
-          <select className="form-select" value={currency} onChange={handleCurrencyChange}>
-            {currencies.map((cur) => (
-              <option key={cur} value={cur}>
-                {cur}
-              </option>
-            ))}
-          </select>
-        </div>
+  <label className="form-label">Currency to Deposit</label>
+  <select className="form-select" onChange={handleCurrencyChange} required>
+    <option value="">Select a currency</option>
+    {currencies.map((cur) => (
+      <option key={cur} value={cur}>
+        {cur}
+      </option>
+    ))}
+  </select>
+  <small className="form-text text-muted">
+    Please note, the currency you select here is where your funds will be deposited. If you intend to use this money for currency activation, ensure you select the appropriate currency.
+  </small>
+</div>
+
         <div className="mb-3">
           <label className="form-label">Phone Number</label>
           <div className="input-group">
