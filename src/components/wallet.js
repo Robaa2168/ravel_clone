@@ -63,7 +63,7 @@ const Wallet = () => {
   const [amount, setAmount] = useState('');
   const [amountdeposit, setAmountdeposit] = useState('');
   const [amountwithdrawal, setamountwithdrawal] = useState('');
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('');
   const [error, setError] = useState(null);
   const [withdrawerror, setWithdrawError] = useState(null);
   const [transferError, setTransferError] = useState(null);
@@ -74,33 +74,34 @@ const Wallet = () => {
   const [showConfetti2, setShowConfetti2] = useState(false);
   const [pendingWithdrawal, setPendingWithdrawal] = useState(null);
   const [isUpdateBalanceModalVisible, setUpdateBalanceModalVisible] = useState(false);
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
   // This function toggles the visibility of the UpdateBalanceModal
   const toggleUpdateBalanceModal = () => {
     setError(null);
     setUpdateBalanceModalVisible(!isUpdateBalanceModalVisible);
-    
+
   };
 
   const onUpdateBalance = async (mpesaReceiptNumber) => {
     console.log("Update balance with Mpesa Receipt Number:", mpesaReceiptNumber);
-  
+
     // Add a check to ensure a valid receipt number is provided
     if (!mpesaReceiptNumber || !mpesaReceiptNumber.trim()) {
       throw new Error('Invalid Mpesa Receipt Number');
     }
-  
+
     try {
       // Send the receipt number to your server
       const response = await api.post(
         "/api/manual_deposit",
-       
-          {
-            mpesaReceiptNumber,
-            userId: user?.primaryInfo?._id,
-            PhoneNumber: user?.phoneNumber,  // add this line
-          },
-        
+
+        {
+          mpesaReceiptNumber,
+          userId: user?.primaryInfo?._id,
+          PhoneNumber: user?.phoneNumber,  // add this line
+        },
+
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -108,7 +109,7 @@ const Wallet = () => {
           },
         }
       );
-  
+
       // Check if the response status is not 2xx
       if (response.status !== 200) {
         const errorMessage = response.data && response.data.error
@@ -116,9 +117,9 @@ const Wallet = () => {
           : 'Error with the deposit';
         throw new Error(errorMessage);
       }
-  
+
       console.log('Deposit successful:', response.data);
-  
+
       // Fetch the updated balances after the deposit
       const balanceResponse = await api.get('/api/getUserBalances', {
         headers: {
@@ -126,7 +127,7 @@ const Wallet = () => {
           'user-id': user?.primaryInfo?._id,
         },
       });
-  
+
       // Check if the balanceResponse status is not 2xx
       if (balanceResponse.status !== 200) {
         const balanceErrorMessage = balanceResponse.data && balanceResponse.data.error
@@ -134,9 +135,9 @@ const Wallet = () => {
           : 'Error fetching updated balances';
         throw new Error(balanceErrorMessage);
       }
-  
+
       console.log('Fetched updated balances:', balanceResponse.data);
-  
+
       // Update the user's balances in the local state
       const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
       localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -146,17 +147,30 @@ const Wallet = () => {
       throw error;
     }
   };
-  
-  
-  
+
+
+
+
+  useEffect(() => {
+    if(amountdeposit && currency) {
+        // Convert the input amount to USD first
+        const amountInUSD = amountdeposit * conversionRates['KES'];
+        // Then convert the USD amount to the desired currency
+        const convertedAmount = amountInUSD / conversionRates[currency];
+
+        setConvertedAmount(convertedAmount.toFixed(2));
+    } else {
+        setConvertedAmount(''); // Clear the converted amount if input amount is falsy or currency is not selected
+    }
+  }, [amountdeposit, currency]);
+
+
+
 
   const currentDate = new Date();
   const transactionDate = currentDate.toLocaleString();
-  // Adjust these values as needed
-  const minimumWithdrawal = 10;
   const networkFeeMin = 0.00000;
   const networkFeeMax = 0.00000;
-  const dailyLimit = 5000;
 
   const fetchPendingWithdrawal = async () => {
     try {
@@ -195,17 +209,18 @@ const Wallet = () => {
     setAmountdeposit(value);
   };
 
-  const handleWitAmountChange = (e) => {
-    const value = e.target.value.replace(/[^\d]/g, ''); // Allow only digits
-    setamountwithdrawal(value);
-  };
-
   const handleCurrencyChange = (e) => {
     setError("");
     setCurrency(e.target.value);
 
   };
 
+
+
+  const handleWitAmountChange = (e) => {
+    const value = e.target.value.replace(/[^\d]/g, ''); // Allow only digits
+    setamountwithdrawal(value);
+  };
 
   const handleWithdrawSubmit = async (e) => {
     e.preventDefault();
@@ -439,7 +454,7 @@ const Wallet = () => {
     GBP: 1.24180,
     CAD: 1.351745,
     AUD: 1.30172, // Australian Dollar
-    KES: 1 / 131.08,
+    KES: 1 / 126,
     ZAR: 1 / 14.87, // South Africa
     UGX: 1 / 3725, // Uganda
     ZMW: 1 / 19.98, // Zambia
@@ -704,9 +719,9 @@ const Wallet = () => {
                   {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
                   {successMessage && <div className="alert alert-success">{successMessage}</div>}
                   {pendingWithdrawal && (
-                  <div className="alert alert-info">
-                  Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
-                  </div>
+                    <div className="alert alert-info">
+                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
+                    </div>
 
 
                   )}
@@ -1000,105 +1015,119 @@ const Wallet = () => {
                       </form>
                     </div>
                     <div className="tab-pane fade show active" id="cash">
-  {error && <div className="alert alert-danger mt-3">{error}</div>}
-  {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
-  {showSuccessCheckmark ? (
-    <div className="text-center my-5">
-      {showConfetti2 && <Confetti />}
-      <BsCheckCircle size="7em" color="green" />
-      <p>Deposit to {currency || "USD"} completed successfully.</p>
+                      {error && <div className="alert alert-danger mt-3">{error}</div>}
+                      {successMessage && <div className="alert alert-success mt-3">{successMessage}</div>}
+                      {showSuccessCheckmark ? (
+                        <div className="text-center my-5">
+                          {showConfetti2 && <Confetti />}
+                          <BsCheckCircle size="7em" color="green" />
+                          <p>Deposit to {currency || "USD"} completed successfully.</p>
+                        </div>
+                      ) : (
+                        <>
+                          <p>
+                            Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
+                          </p>
+                          <form onSubmit={handleSubmit}>
+                            <div className="mb-3">
+                              <label className="form-label">Select Mode</label>
+                              <select className="form-select">
+                                <option selected>Mpesa</option>
+                              </select>
+                            </div>
+                            <div className="mb-3">
+        <label className="form-label">Currency to Deposit</label>
+        <select className="form-select" onChange={handleCurrencyChange} required>
+            <option value="">Select a currency</option>
+            {currencies.map((cur) => (
+                <option key={cur} value={cur}>
+                    {cur}
+                </option>
+            ))}
+        </select>
+        <small className="form-text text-muted">
+            Please note, the currency you select here is where your funds will be deposited. If you intend to use this money for currency activation, ensure you select the appropriate currency.
+        </small>
     </div>
-  ) : (
-    <>
-      <p>
-        Deposit Amount from your bank account or Mobile Money and receive funds in <span className="text-primary">{currency}</span>
-      </p>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">Select Mode</label>
-          <select className="form-select">
-            <option selected>Mpesa</option>
-          </select>
-        </div>
-        <div className="mb-3">
-  <label className="form-label">Currency to Deposit</label>
-  <select className="form-select" onChange={handleCurrencyChange} required>
-    <option value="">Select a currency</option>
-    {currencies.map((cur) => (
-      <option key={cur} value={cur}>
-        {cur}
-      </option>
-    ))}
-  </select>
-  <small className="form-text text-muted">
-    Please note, the currency you select here is where your funds will be deposited. If you intend to use this money for currency activation, ensure you select the appropriate currency.
-  </small>
-</div>
 
-        <div className="mb-3">
-          <label className="form-label">Phone Number</label>
-          <div className="input-group">
+                            <div className="mb-3">
+                              <label className="form-label">Phone Number</label>
+                              <div className="input-group">
+                                <input
+                                  type="tel"
+                                  placeholder="e.g 254792340510"
+                                  className="form-control"
+                                  value={phoneNumber}
+                                  onChange={handlePhoneNumberChange}
+                                />
+                              </div>
+                            </div>
+                            <div className="mb-3">
+        <label className="form-label">Amount</label>
+        <div className="input-group">
             <input
-              type="tel"
-              placeholder="e.g 254792340510"
-              className="form-control"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
+                type="tel"
+                placeholder='e.g 1000'
+                className="form-control"
+                value={amountdeposit}
+                onChange={handleAmountChange}
+                disabled={!currency} // This line disables the input until a currency is selected
             />
-          </div>
         </div>
-        <div className="mb-3">
-          <label className="form-label">Amount</label>
-          <div className="input-group">
-            <input
-              type="tel"
-              placeholder='e.g 1000'
-              className="form-control"
-              value={amountdeposit}
-              onChange={handleAmountChange}
-            />
-          </div>
-        </div>
-        <div className="mb-3">
-          <button
-            type="submit"
-            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                Processing  <i className="fas fa-spinner fa-spin"></i>
-              </>
-            ) : (
-              'Deposit'
-            )}
-          </button>
-        </div>
-        <p onClick={toggleUpdateBalanceModal} style={{cursor: "pointer"}} className="text-primary">
-  Balance not updated<svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    height="16" 
-    viewBox="0 0 24 24" 
-    width="16"
-    style={{marginLeft: "3px", marginBottom: "3px"}}
-  >
-    <path d="M0 0h24v24H0V0z" fill="none"/>
-    <path fill="currentColor" d="M11 17h2v-2h-2v2zm1-16C6.48 1 2 5.48 2 11s4.48 10 10 10 10-4.48 10-10S17.52 1 12 1zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
-  </svg>
-</p>
+        {!currency && <small className="form-text text-danger">Please select a currency first</small>}
+    </div>
+                            <div className="mb-3">
+                              <label className="form-label">Amount to be deposited in selected currency</label>
+                              <div className="input-group">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  value={convertedAmount}
+                                  readOnly
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                            <div className="mb-3">
+                              <button
+                                type="submit"
+                                className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                                style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                                disabled={isLoading}
+                              >
+                                {isLoading ? (
+                                  <>
+                                    Processing  <i className="fas fa-spinner fa-spin"></i>
+                                  </>
+                                ) : (
+                                  'Deposit'
+                                )}
+                              </button>
+                            </div>
+                            <p onClick={toggleUpdateBalanceModal} style={{ cursor: "pointer" }} className="text-primary">
+                              Balance not updated<svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                width="16"
+                                style={{ marginLeft: "3px", marginBottom: "3px" }}
+                              >
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path fill="currentColor" d="M11 17h2v-2h-2v2zm1-16C6.48 1 2 5.48 2 11s4.48 10 10 10 10-4.48 10-10S17.52 1 12 1zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z" />
+                              </svg>
+                            </p>
 
 
 
-      <UpdateBalanceModal
-        isVisible={isUpdateBalanceModalVisible}
-        onClose={toggleUpdateBalanceModal}
-        onUpdateBalance={onUpdateBalance}
-      />
-      </form>
-    </>
-  )}
-</div>
+                            <UpdateBalanceModal
+                              isVisible={isUpdateBalanceModalVisible}
+                              onClose={toggleUpdateBalanceModal}
+                              onUpdateBalance={onUpdateBalance}
+                            />
+                          </form>
+                        </>
+                      )}
+                    </div>
 
                   </div>
                 </div>
@@ -1112,21 +1141,21 @@ const Wallet = () => {
                     {transferType === 1 ? "Transfer" : "Request"}
                   </h6>
                   <div>
-    <button
-        className={`btn ${transferType === 1 ? "btn-primary" : "btn-light"}`}
-        style={{ marginRight: "10px", backgroundColor: transferType === 1 ? "#0070ba" : "inherit"}}
-        onClick={() => handleTransferTypeChange(1)}
-    >
-        Transfer
-    </button>
-    <button
-        className={`btn ${transferType === 2 ? "btn-primary" : "btn-light"}`}
-        style={{ marginRight: "10px", backgroundColor: transferType === 2 ? "#0070ba" : "inherit"}}
-        onClick={() => handleTransferTypeChange(2)}
-    >
-        Request
-    </button>
-</div>
+                    <button
+                      className={`btn ${transferType === 1 ? "btn-primary" : "btn-light"}`}
+                      style={{ marginRight: "10px", backgroundColor: transferType === 1 ? "#0070ba" : "inherit" }}
+                      onClick={() => handleTransferTypeChange(1)}
+                    >
+                      Transfer
+                    </button>
+                    <button
+                      className={`btn ${transferType === 2 ? "btn-primary" : "btn-light"}`}
+                      style={{ marginRight: "10px", backgroundColor: transferType === 2 ? "#0070ba" : "inherit" }}
+                      onClick={() => handleTransferTypeChange(2)}
+                    >
+                      Request
+                    </button>
+                  </div>
 
                 </div>
                 <div className="card-body d-flex flex-column ">
