@@ -454,7 +454,7 @@ const Wallet = () => {
     GBP: 1.24180,
     CAD: 1.351745,
     AUD: 1.30172, // Australian Dollar
-    KES: 1 / 126,
+    KES: 1 / 134,
     ZAR: 1 / 14.87, // South Africa
     UGX: 1 / 3725, // Uganda
     ZMW: 1 / 19.98, // Zambia
