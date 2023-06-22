@@ -73,9 +73,10 @@ function Signup() {
     const formData = isEmail
       ? { email: identifier, password, referralId }
       : { phoneNumber: formattedIdentifier, password, referralId };
+      const route = isEmail ? "/api/signup" : "/api/signupWithMobile";
 
     try {
-      const response = await api.post("/api/signup", formData);
+      const response = await api.post(route, formData);
 
       if (response.status === 200) {
         showToast('success', "User registered successfully. Sending verification code...");
