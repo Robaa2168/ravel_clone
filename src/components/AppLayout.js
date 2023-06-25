@@ -19,11 +19,14 @@ import Activity from './activity';
 import Wallet1 from "./wallet1/Wallet1";
 import Settings from "./settings/Settings";
 import CreatePIN from './createpin';
+import ForgotPassword from './ForgotPassword';
+import VerificationForgot from './verify_forgot';
+import ResetPassword from './resetPassword';
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
-  const excludedRoutes = ['/login', '/signup', '/KYC', '/verify'];
+  const excludedRoutes = ['/login', '/signup', '/KYC', '/verify','/forgot-password','/verify_forgot','/create_password'];
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
 
@@ -61,6 +64,9 @@ const AppLayout = () => {
           <Route path="/Activity" element={<ProtectedRoute><Activity /></ProtectedRoute>} />
           <Route path="/Currencies" element={<ProtectedRoute><Wallet1 /></ProtectedRoute>} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify_forgot" element={<VerificationForgot />} />
+          <Route path="/create_password" element={<ResetPassword />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/KYC" element={<Application />} />
           <Route path="/settings/*" element={<Settings />} />

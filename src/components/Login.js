@@ -163,10 +163,12 @@ function Login() {
                                         )}
                                     </button>
                                 </form>
+                                <Link to="/forgot-password" title="Forgot password" className="text-primary text-decoration-underline mt-4">Forgot password?</Link>
+                    
                             </div>
+                            
                         </div>
 
-                        <Link to="/forgot" title="#" className="text-primary text-decoration-underline mt-4">Forgot password?</Link>
                     </div>
                 </div>
             </div> {/* End Row */}

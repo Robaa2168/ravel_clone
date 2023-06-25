@@ -73,7 +73,7 @@ function Signup() {
     const formData = isEmail
       ? { email: identifier, password, referralId }
       : { phoneNumber: formattedIdentifier, password, referralId };
-      const route = isEmail ? "/api/signup" : "/api/signupWithMobile";
+    const route = isEmail ? "/api/signup" : "/api/signupWithMobile";
 
     try {
       const response = await api.post(route, formData);
@@ -108,17 +108,17 @@ function Signup() {
       }
 
     }
-  catch (error) {
-    if (error.response && error.response.data && error.response.data.message) {
-      showToast("error", error.response.data.message);
-    } else {
-      showToast("error", "Error on Registration check your Internet");
-      console.error("Error on login: ", error);
+    catch (error) {
+      if (error.response && error.response.data && error.response.data.message) {
+        showToast("error", error.response.data.message);
+      } else {
+        showToast("error", "Error on Registration check your Internet");
+        console.error("Error on login: ", error);
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="body d-flex p-0">
@@ -128,7 +128,7 @@ function Signup() {
             <div className="d-flex flex-column">
               <ToastContainer />
               <span className="text-muted">Register with your Email address or Mobile number</span>
-              <span className="text-muted">Already have an account? <Link to="/login" title="#" className="text-primary text-decoration-underline">Log In</Link></span>
+              <span className="text-muted">Already have an account? <Link to="/login" title="login" className="text-primary text-decoration-underline">Log In</Link></span>
               <div className="card mt-4">
                 <div className="card-body">
                   <form onSubmit={handleSubmit}>

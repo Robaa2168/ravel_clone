@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api';
 import Confetti from "react-confetti";
+import { AiOutlineEdit } from "react-icons/ai";
 
 
 function Verification() {
@@ -29,7 +30,9 @@ function Verification() {
     toast[type](message);
   };
 
-
+  const handleEditClick = () => {
+    navigate("/signup");
+  };
   useEffect(() => {
     if (verificationCode.every((digit) => digit !== "")) {
       handleVerificationSubmit();
@@ -136,10 +139,15 @@ function Verification() {
       <div className="d-flex flex-column text-center">
         <h1>Verification</h1>
         <span className="text-muted">
-          We sent a verification code to your{" "}
-          {verificationType === "email" ? "email" : "phone"}. {contact} <br />
-          Kindly check your spam folder and enter the code in the field below.
-        </span>
+  We sent a verification code to your{" "}
+  <strong>{verificationType === "email" ? "email" : "phone"}. {contact}</strong>
+  <span onClick={handleEditClick} style={{ cursor: "pointer", fontWeight: "bold", marginLeft: "5px" }}>
+    <AiOutlineEdit />
+  </span>
+  <br />
+  Kindly check your spam folder and enter the code in the field below.
+</span>
+
         <div
           className="card mt-4 mb-3"
           style={{ maxWidth: "30rem", margin: "auto" }}
