@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaCcApplePay, FaEllipsisV, FaFileInvoice, FaStore, FaTimes } from 'react-icons/fa';
+import React, { useEffect, useState, useCallback } from "react";
+import { FaCcApplePay, FaEllipsisV, FaFileInvoice, FaTimes } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from "./context";
 import api from '../api';
@@ -12,8 +12,9 @@ const Dashboard = () => {
   const { user, login } = useUser();
   const navigate = useNavigate();
   const [transactions, setTransactions] = useState([]);
+  const [error, setError] = useState(null);
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       const transactionResponse = await api.get('/api/transactions', {
         headers: {
@@ -26,40 +27,33 @@ const Dashboard = () => {
         setTransactions(transactionResponse.data);
       }
     } catch (error) {
+      setError('Failed to fetch transactions');
       console.error('Failed to fetch transactions:', error);
     }
-  };
+  }, [user.token, user?.primaryInfo?._id]);
 
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [fetchTransactions]);
 
-
-  const paymentActivity = [
-
-  ];
-
-  const fetchBalance = async () => {
+  const fetchBalance = useCallback(async () => {
     try {
       const balanceResponse = await api.get('/api/getUserBalances', {
         headers: {
           Authorization: `Bearer ${user.token}`,
-          'user-id': user?.primaryInfo?._id, // Pass the userId as a custom header
+          'user-id': user?.primaryInfo?._id, 
         },
       });
 
       if (balanceResponse.status === 200) {
-        // Update the local storage with the new balances
         const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-
-        // Update the context
         login(updatedUser);
       }
     } catch (error) {
+      setError('Failed to fetch balance');
       console.error('Failed to fetch balance:', error);
     }
-  };
+  }, [user?.token, user?.primaryInfo?._id, login]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -68,44 +62,48 @@ const Dashboard = () => {
       }
     };
 
-    // Initial fetch
     fetchBalance();
 
-    // Add event listener to update balance when the page becomes visible
     document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Clean up the event listener when the component is unmounted
+  
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [fetchBalance]);
 
   useEffect(() => {
-
     if (user && !user.userInfo.pin) {
       navigate("/pin");
     }
-  }, [user]);
+  }, [user, navigate]);
+
 
 
   const accounts = user?.accounts;
   let primaryAccount;
+  let highestBalanceAccount;
   let accountStatus = "";
-
+  
   for (let i = 0; i < accounts?.length; i++) {
     if (accounts[i].isPrimary) {
       primaryAccount = accounts[i];
-
-      if (accounts[i].isBanned) {
-        accountStatus = "banned";
-      } else if (accounts[i].isActive) {
-        accountStatus = "active";
-      } else {
-        accountStatus = "inactive";
-      }
-
-      break;
     }
+  
+    if (!highestBalanceAccount || accounts[i].balance > highestBalanceAccount?.balance) {
+      highestBalanceAccount = accounts[i];
+    }
+  }
+  
+  if (highestBalanceAccount?.isBanned) {
+    accountStatus = "banned";
+  } else if (highestBalanceAccount?.isActive) {
+    accountStatus = "active";
+  } else {
+    accountStatus = "inactive";
+  }
+  
+  if (!highestBalanceAccount || primaryAccount?.balance === highestBalanceAccount?.balance) {
+    highestBalanceAccount = primaryAccount;
   }
 
   const getCurrencySymbol = (currency) => {
@@ -150,50 +148,52 @@ const Dashboard = () => {
 
       <div className='myapp-dashboard'>
         <section className='myapp-cards-container'>
-          <div className="myapp-pypl-card myapp-card-balance-card">
-            <div className="myapp-pypl-card-header">
-              <h3 className='balance-title'>Ravel balance</h3>
-              <div className="pypl-icon-container">
-                <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
-              </div>
-              {showPopup && <div className="pypl-popup">
-                <ul>
-                  <Link to="/Currencies">Activate currencies</Link>
-                  <Link to="/Currencies">Manage currencies</Link>
-                  <Link to="/">Get help</Link>
-                </ul>
-              </div>}
-            </div>
-            <div className="myapp-pypl-card-body">
-              {primaryAccount && (
-                <h1 className={`myapp-pypl-balance ${primaryAccount.isHeld ? "text-danger" : ""}`}>
-                  <span className="myapp-pypl-currency">{getCurrencySymbol(primaryAccount.currency)}</span> {primaryAccount.balance}
-                </h1>
-              )}
+        <div className="myapp-pypl-card myapp-card-balance-card">
+    <div className="myapp-pypl-card-header">
+      <h3 className='balance-title'>Ravel balance</h3>
+      <div className="pypl-icon-container">
+        <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
+      </div>
+      {showPopup && (
+        <div className="pypl-popup">
+          <ul>
+            <Link to="/Currencies">Activate currencies</Link>
+            <Link to="/Currencies">Manage currencies</Link>
+            <Link to="/">Get help</Link>
+          </ul>
+        </div>
+      )}
+    </div>
+    <div className="myapp-pypl-card-body">
+      {highestBalanceAccount && (
+        <h1 className={`myapp-pypl-balance ${highestBalanceAccount.isHeld ? "text-danger" : ""}`}>
+          <span className="myapp-pypl-currency">{getCurrencySymbol(highestBalanceAccount.currency)}</span> {highestBalanceAccount.balance}
+        </h1>
+      )}
 
-              <span className='myapp-pypl-card-text'>Status:</span>
-              {accountStatus === "active" && (
-                <Link to="/Currencies">
-                  <span className='myapp-status-pill myapp-status-active'>Active</span>
-                </Link>
-              )}
-              {accountStatus === "inactive" && (
-                <Link to="/Currencies">
-                  <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
-                </Link>
-              )}
-              {accountStatus === "banned" && (
-                <Link to="/Currencies">
-                  <span className='myapp-status-pill myapp-status-banned'>Banned</span>
-                </Link>
-              )}
+      <span className='myapp-pypl-card-text'>Status:</span>
+      {accountStatus === "active" && (
+        <Link to="/Currencies">
+          <span className='myapp-status-pill myapp-status-active'>Active</span>
+        </Link>
+      )}
+      {accountStatus === "inactive" && (
+        <Link to="/Currencies">
+          <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
+        </Link>
+      )}
+      {accountStatus === "banned" && (
+        <Link to="/Currencies">
+          <span className='myapp-status-pill myapp-status-banned'>Banned</span>
+        </Link>
+      )}
 
-              <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
-            </div>
-            <div className="myapp-pypl-card-footer">
-              <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
-            </div>
-          </div>
+      <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
+    </div>
+    <div className="myapp-pypl-card-footer">
+      <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
+    </div>
+  </div>
 
 
 
