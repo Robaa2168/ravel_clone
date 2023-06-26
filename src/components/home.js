@@ -41,7 +41,7 @@ const Dashboard = () => {
       const balanceResponse = await api.get('/api/getUserBalances', {
         headers: {
           Authorization: `Bearer ${user.token}`,
-          'user-id': user?.primaryInfo?._id, 
+          'user-id': user?.primaryInfo?._id,
         },
       });
 
@@ -65,7 +65,7 @@ const Dashboard = () => {
     fetchBalance();
 
     document.addEventListener('visibilitychange', handleVisibilityChange);
-  
+
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
@@ -83,17 +83,17 @@ const Dashboard = () => {
   let primaryAccount;
   let highestBalanceAccount;
   let accountStatus = "";
-  
+
   for (let i = 0; i < accounts?.length; i++) {
     if (accounts[i].isPrimary) {
       primaryAccount = accounts[i];
     }
-  
+
     if (!highestBalanceAccount || accounts[i].balance > highestBalanceAccount?.balance) {
       highestBalanceAccount = accounts[i];
     }
   }
-  
+
   if (highestBalanceAccount?.isBanned) {
     accountStatus = "banned";
   } else if (highestBalanceAccount?.isActive) {
@@ -101,7 +101,7 @@ const Dashboard = () => {
   } else {
     accountStatus = "inactive";
   }
-  
+
   if (!highestBalanceAccount || primaryAccount?.balance === highestBalanceAccount?.balance) {
     highestBalanceAccount = primaryAccount;
   }
@@ -148,52 +148,53 @@ const Dashboard = () => {
 
       <div className='myapp-dashboard'>
         <section className='myapp-cards-container'>
-        <div className="myapp-pypl-card myapp-card-balance-card">
-    <div className="myapp-pypl-card-header">
-      <h3 className='balance-title'>Ravel balance</h3>
-      <div className="pypl-icon-container">
-        <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
-      </div>
-      {showPopup && (
-        <div className="pypl-popup">
-          <ul>
-            <Link to="/Currencies">Activate currencies</Link>
-            <Link to="/Currencies">Manage currencies</Link>
-            <Link to="/">Get help</Link>
-          </ul>
-        </div>
-      )}
-    </div>
-    <div className="myapp-pypl-card-body">
-      {highestBalanceAccount && (
-        <h1 className={`myapp-pypl-balance ${highestBalanceAccount.isHeld ? "text-danger" : ""}`}>
-          <span className="myapp-pypl-currency">{getCurrencySymbol(highestBalanceAccount.currency)}</span> {highestBalanceAccount.balance}
-        </h1>
-      )}
+          <div className="myapp-pypl-card myapp-card-balance-card">
+            <div className="myapp-pypl-card-header">
+              <h3 className='balance-title'>Ravel balance</h3>
+              <div className="pypl-icon-container">
+                <FaEllipsisV onClick={() => setShowPopup(!showPopup)} className='pypl-balance-icon' />
+              </div>
+              {showPopup && (
+                <div className="pypl-popup">
+                  <ul>
+                    <Link to="/Currencies">Activate currencies</Link>
+                    <Link to="/Currencies">Manage currencies</Link>
+                    <Link to="/">Get help</Link>
+                  </ul>
+                </div>
+              )}
+            </div>
+            <div className="myapp-pypl-card-body">
+              {highestBalanceAccount && (
+                <h1 className={`myapp-pypl-balance ${highestBalanceAccount.isHeld ? "text-danger" : ""}`}>
+                  <span className="myapp-pypl-currency">{getCurrencySymbol(highestBalanceAccount.currency)}</span> {Math.floor(highestBalanceAccount.balance)}
+                </h1>
+              )}
 
-      <span className='myapp-pypl-card-text'>Status:</span>
-      {accountStatus === "active" && (
-        <Link to="/Currencies">
-          <span className='myapp-status-pill myapp-status-active'>Active</span>
-        </Link>
-      )}
-      {accountStatus === "inactive" && (
-        <Link to="/Currencies">
-          <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
-        </Link>
-      )}
-      {accountStatus === "banned" && (
-        <Link to="/Currencies">
-          <span className='myapp-status-pill myapp-status-banned'>Banned</span>
-        </Link>
-      )}
 
-      <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
-    </div>
-    <div className="myapp-pypl-card-footer">
-      <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
-    </div>
-  </div>
+              <span className='myapp-pypl-card-text'>Status:</span>
+              {accountStatus === "active" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-active'>Active</span>
+                </Link>
+              )}
+              {accountStatus === "inactive" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-inactive'>Inactive</span>
+                </Link>
+              )}
+              {accountStatus === "banned" && (
+                <Link to="/Currencies">
+                  <span className='myapp-status-pill myapp-status-banned'>Banned</span>
+                </Link>
+              )}
+
+              <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
+            </div>
+            <div className="myapp-pypl-card-footer">
+              <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
+            </div>
+          </div>
 
 
 
