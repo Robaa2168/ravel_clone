@@ -44,7 +44,7 @@ const Dashboard = () => {
           'user-id': user?.primaryInfo?._id,
         },
       });
-
+  
       if (balanceResponse.status === 200) {
         const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
         login(updatedUser);
@@ -54,22 +54,26 @@ const Dashboard = () => {
       console.error('Failed to fetch balance:', error);
     }
   }, [user?.token, user?.primaryInfo?._id, login]);
-
+  
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         fetchBalance();
       }
     };
-
-    fetchBalance();
-
+  
+    if (document.visibilityState === 'visible') {
+      fetchBalance();
+    }
+  
     document.addEventListener('visibilitychange', handleVisibilityChange);
-
+  
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [fetchBalance]);
+  }, []); // Removed 'fetchBalance' from dependency array
+  
+  
 
   useEffect(() => {
     if (user && !user.userInfo.pin) {
