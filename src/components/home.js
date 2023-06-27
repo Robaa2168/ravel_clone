@@ -18,7 +18,7 @@ const Dashboard = () => {
     try {
       const transactionResponse = await api.get('/api/transactions', {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
           'user-id': user?.primaryInfo?._id,
         },
       });
@@ -30,7 +30,7 @@ const Dashboard = () => {
       setError('Failed to fetch transactions');
       console.error('Failed to fetch transactions:', error);
     }
-  }, [user.token, user?.primaryInfo?._id]);
+  }, [user?.token, user?.primaryInfo?._id]);
 
   useEffect(() => {
     fetchTransactions();
@@ -40,7 +40,7 @@ const Dashboard = () => {
     try {
       const balanceResponse = await api.get('/api/getUserBalances', {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user?.token}`,
           'user-id': user?.primaryInfo?._id,
         },
       });
@@ -152,7 +152,7 @@ const Dashboard = () => {
 
       <div className='myapp-dashboard'>
         <section className='myapp-cards-container'>
-          <div className="myapp-pypl-card myapp-card-balance-card">
+          <div className="myapp-pypl-card2 myapp-card-balance-card">
             <div className="myapp-pypl-card-header">
               <h3 className='balance-title'>Ravel balance</h3>
               <div className="pypl-icon-container">
@@ -176,7 +176,7 @@ const Dashboard = () => {
               )}
 
 
-              <span className='myapp-pypl-card-text'>Status:</span>
+              <span className='myapp-pypl-card-text fw-bold'>Status:</span>
               {accountStatus === "active" && (
                 <Link to="/Currencies">
                   <span className='myapp-status-pill myapp-status-active'>Active</span>
@@ -193,7 +193,7 @@ const Dashboard = () => {
                 </Link>
               )}
 
-              <div className="myapp-payid">Pay ID: {user?.primaryInfo?.payID}</div>
+              <div className="myapp-payid fw-bold">Pay ID: {user?.primaryInfo?.payID}</div>
             </div>
             <div className="myapp-pypl-card-footer">
               <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
