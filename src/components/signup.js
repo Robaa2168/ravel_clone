@@ -129,7 +129,7 @@ function Signup() {
               <ToastContainer />
               <span className="text-muted fs-5">Register with your Email address or Mobile number</span>
               <span className="text-muted fs-6 mb-4">Already have an account? <Link to="/login" title="login" className="text-primary fw-bold">Log In</Link></span>
-              <div className="card shadow mt-4 p-4">
+              <div className="card shadow mt-4 p-md-4 p-3">
                 <div className="card-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">

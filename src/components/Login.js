@@ -126,7 +126,7 @@ function Login() {
               <span className="text-muted fs-5">Welcome back! Log in with your Email or Phone number</span>
               <span className="text-muted fs-6 mb-4">Don't have an account? <Link to="/signup" title="#" className="text-primary fw-bold">Register now</Link> </span>
 
-              <div className="card shadow mt-4 p-4">
+              <div className="card shadow mt-4 p-md-4 p-3">
                 <div className="card-body">
                   <form onSubmit={(event) => handleLogin(event)}>
                     <div className="mb-3">

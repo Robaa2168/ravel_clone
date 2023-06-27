@@ -105,17 +105,16 @@ function ForgotPassword() {
 
 
     return (
-      <main className="d-flex p-0">
+      <main className="d-flex p-md-0 p-3">
         <section className="container-xxl">
-          <div className="row g-3 justify-content-center">
-            <div className="col-lg-4 mx-auto offset-lg-3 d-flex flex-column justify-content-center auth-h100">
+         
+            <div className="col-lg-4 mx-auto offset-lg-3 d-flex flex-column justify-content-center">
               <ToastContainer />
               <h2 className="text-center mb-4">Forgot password?</h2>
-                <p className="text-center mb-4">
-                  Enter the Number or email you signed up with and we will send you instructions on how to reset your password.
-                </p>
-              <div className="card mt-4 shadow p-5">
-             
+              <p className="text-center mb-4">
+                Enter the Number or email you signed up with and we will send you instructions on how to reset your password.
+              </p>
+              <div className="card mt-md-4 mt-2 shadow p-md-5 p-3">
                 <form onSubmit={handleSubmit}>
                   <div className="mb-3">
                     <label htmlFor="identifier" className="form-label fs-6">Email or Mobile number *</label>
@@ -131,7 +130,7 @@ function ForgotPassword() {
     
                   <button 
                     type="submit" 
-                    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2" 
+                    className="btn btn-primary text-uppercase py-2 fs-5 w-100 my-2" 
                     disabled={loading}
                   >
                     {loading ? (
@@ -144,21 +143,24 @@ function ForgotPassword() {
                   </button>
                 </form>
               </div>
+    
+              <div className="text-center mt-4">
+                <Link 
+                  to="/login" 
+                  title="Login" 
+                  className="text-primary"
+                  style={{ fontWeight: 600 }}
+                >
+                  <FontAwesomeIcon icon={faArrowLeft} /> Go to login
+                </Link>
+              </div>
             </div>
-          </div>
-          <div className=" text-center">
-            <Link 
-              to="/login" 
-              title="Login" 
-              className="text-primary"
-              style={{ fontWeight: 600 }}
-            >
-              <FontAwesomeIcon icon={faArrowLeft} /> Go to login
-            </Link>
-          </div>
+          
         </section>
       </main>
     );
+    
     }
     
     export default ForgotPassword;
+    
