@@ -5,6 +5,8 @@ import api from '../api';
 import '../App.css';
 import { showToast } from "../utils/showToast";
 import { useNavigate, Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const formatPhoneNumber = (phoneNumber) => {
     if (phoneNumber.startsWith("+")) {
@@ -103,41 +105,60 @@ function ForgotPassword() {
 
 
     return (
-        <div className="body d-flex p-0">
-          <div className="container-xxl">
-            <div className="row g-3 justify-content-center">
-              <div className="col-lg-4 mx-auto offset-lg-3 justify-content-center align-items-center auth-h100">
-                <div className="d-flex flex-column">
-                  <ToastContainer />
-    
-                  <div className="card mt-4">
-                    <div className="card-body">
-                      <form onSubmit={handleSubmit} className="mb-2">
-                        <div className="mb-3">
-                          <label htmlFor="identifier" className="form-label fs-6">Email or Mobile number *</label>
-                          <input type="text" id="identifier" className="form-control" value={identifier} onChange={handleIdentifierInputChange} required />
-                        </div>
-    
-                        <button type="submit" className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2" disabled={loading}>
-                          {loading ? (
-                            <div className="spinner-border text-light" role="status">
-                              <span className="visually-hidden">Loading...</span>
-                            </div>
-                          ) : (
-                            "Recover Password"
-                          )}
-                        </button>
-                      </form>
-    
-                      <Link to="/login" title="Login" className="text-primary text-decoration-underline mt-4">Go to login?</Link>
-                    </div>
+      <main className="d-flex p-0">
+        <section className="container-xxl">
+          <div className="row g-3 justify-content-center">
+            <div className="col-lg-4 mx-auto offset-lg-3 d-flex flex-column justify-content-center auth-h100">
+              <ToastContainer />
+              <h2 className="text-center mb-4">Forgot password?</h2>
+                <p className="text-center mb-4">
+                  Enter the Number or email you signed up with and we will send you instructions on how to reset your password.
+                </p>
+              <div className="card mt-4 shadow p-5">
+             
+                <form onSubmit={handleSubmit}>
+                  <div className="mb-3">
+                    <label htmlFor="identifier" className="form-label fs-6">Email or Mobile number *</label>
+                    <input 
+                      type="text" 
+                      id="identifier" 
+                      className="form-control" 
+                      value={identifier} 
+                      onChange={handleIdentifierInputChange} 
+                      required 
+                    />
                   </div>
-                </div>
+    
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2" 
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <span className="spinner-border text-light" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </span>
+                    ) : (
+                      "Recover Password"
+                    )}
+                  </button>
+                </form>
               </div>
             </div>
           </div>
-        </div>
-      );
+          <div className=" text-center">
+            <Link 
+              to="/login" 
+              title="Login" 
+              className="text-primary"
+              style={{ fontWeight: 600 }}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} /> Go to login
+            </Link>
+          </div>
+        </section>
+      </main>
+    );
     }
     
     export default ForgotPassword;

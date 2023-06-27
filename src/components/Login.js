@@ -40,7 +40,7 @@ function Login() {
 
     let type = "email";
     let credentials = {};
-    
+
     if (identifier.includes("@")) {
       credentials = { email: identifier, password };
     } else {
@@ -117,64 +117,63 @@ function Login() {
 
 
   return (
-    <div className="body d-flex p-0 ">
-        <div className="container-xxl">
-            <div className="row g-3 justify-content-center">
-                <div className="col-lg-4 mx-auto offset-lg-4 d-flex justify-content-center align-items-center auth-h100">
-                    <div className="d-flex flex-column">
-                        <ToastContainer />
-                        <span className="text-muted">Welcome back! Log In with your Email or Phone number</span>
-                        <span className="text-muted">Don't have an account? <Link to="/signup" title="#" className="text-primary text-decoration-underline">Register now</Link> </span>
+    <div className="body d-flex p-0 bg-light ">
+      <div className="container-xxl my-auto">
+        <div className="row g-3 justify-content-center">
+          <div className="col-lg-4 mx-auto auth-h100">
+            <div className="d-flex flex-column align-items-center text-center">
+              <ToastContainer />
+              <span className="text-muted fs-5">Welcome back! Log in with your Email or Phone number</span>
+              <span className="text-muted fs-6 mb-4">Don't have an account? <Link to="/signup" title="#" className="text-primary fw-bold">Register now</Link> </span>
 
-                        <div className="card mt-4">
-                            <div className="card-body ">
-                                <form onSubmit={(event) => handleLogin(event)}>
-                                    <div className="mb-3">
-                                        <label className="form-label fs-6">Email or Phone number</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={identifier}
-                                            onChange={(e) => setIdentifier(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label className="form-label fs-6">Password</label>
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            required
-                                        />
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary text-uppercase py-2 fs-5 w-100 mt-2"
-                                        disabled={loading}
-                                    >
-                                        {loading ? (
-                                            <div className="spinner-border text-light" role="status">
-                                                <span className="visually-hidden">Loading...</span>
-                                            </div>
-                                        ) : (
-                                            "Log in"
-                                        )}
-                                    </button>
-                                </form>
-                                <Link to="/forgot-password" title="Forgot password" className="text-primary text-decoration-underline mt-4">Forgot password?</Link>
-                    
-                            </div>
-                            
-                        </div>
-
+              <div className="card shadow mt-4 p-4">
+                <div className="card-body">
+                  <form onSubmit={(event) => handleLogin(event)}>
+                    <div className="mb-3">
+                      <label htmlFor="identifier" className="form-label fs-6">Email or Phone number</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="identifier"
+                        value={identifier}
+                        onChange={(e) => setIdentifier(e.target.value)}
+                        required
+                      />
                     </div>
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label fs-6">Password</label>
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="btn btn-primary text-uppercase py-2 fs-5 w-100 my-2"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <div className="spinner-border text-light" role="status">
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                      ) : (
+                        "Log in"
+                      )}
+                    </button>
+                  </form>
+                  <Link to="/forgot-password" title="Forgot password" className="text-primary fw-bold mt-4 mb-2">Forgot password?</Link>
                 </div>
-            </div> {/* End Row */}
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-);
- }
+  );
+}
 
 export default Login;

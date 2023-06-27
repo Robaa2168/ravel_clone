@@ -121,15 +121,15 @@ function Signup() {
   };
 
   return (
-    <div className="body d-flex p-0">
-      <div className="container-xxl">
+    <div className="body d-flex p-0 bg-light">
+      <div className="container-xxl my-auto">
         <div className="row g-3 justify-content-center">
-          <div className="col-lg-4 mx-auto offset-lg-4 d-flex justify-content-center align-items-center auth-h100">
-            <div className="d-flex flex-column">
+          <div className="col-lg-4 mx-auto auth-h100">
+            <div className="d-flex flex-column align-items-center text-center">
               <ToastContainer />
-              <span className="text-muted">Register with your Email address or Mobile number</span>
-              <span className="text-muted">Already have an account? <Link to="/login" title="login" className="text-primary text-decoration-underline">Log In</Link></span>
-              <div className="card mt-4">
+              <span className="text-muted fs-5">Register with your Email address or Mobile number</span>
+              <span className="text-muted fs-6 mb-4">Already have an account? <Link to="/login" title="login" className="text-primary fw-bold">Log In</Link></span>
+              <div className="card shadow mt-4 p-4">
                 <div className="card-body">
                   <form onSubmit={handleSubmit}>
                     <div className="mb-3">
