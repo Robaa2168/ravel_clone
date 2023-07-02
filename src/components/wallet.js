@@ -658,219 +658,9 @@ const Wallet = () => {
       {/* Body: Body */}
       <div className="body d-flex py-3">
         <div className="container-xxl">
+        <ToastContainer />
           <div className="row g-3 mb-3 row-deck">
-            <div className="col-xl-12 col-xxl-7 d-none d-sm-block">
-              <div className="card">
-                <ToastContainer />
-
-                <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
-                  <h6 className="fw-bold m-2">Balance Details</h6>
-                  <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                    {currencies.map((currency) => (
-                      <li className="nav-item" key={currency}>
-                        <a className={`nav-link${selectedCurrency === currency ? " active" : ""}`} data-bs-toggle="tab" href={`#${currency}`} role="tab" onClick={() => handleCurrencySelection(currency)}>
-                          {currency}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="card-body">
-                  <div className="tab-content">
-                    {currencies.map((currency) => {
-                      const account = getAccountByCurrency(currency);
-                      return (
-                        <div key={currency} className={`tab-pane fade${selectedCurrency === currency ? " show active" : ""}`} id={currency}>
-                          <div className="row g-3">
-                            <div className="col-lg-6">
-                              <div>Account balance:</div>
-                              <h4>
-                                {account?.balance.toFixed(2)} {currency}≈${convertToUSD(currency, account?.balance).toFixed(2)}
-                              </h4>
-                              <div className="mt-3 pt-3 text-uppercase text-muted pt-2 small">Received this month:</div>
-                              <h5>
-                                {account?.balance.toFixed(2)} {currency}
-                              </h5>
-                              <div className="mt-3 text-uppercase text-muted small">Transfered this month:</div>
-                              <h5>
-                                {account?.balance.toFixed(2)} {currency}
-                              </h5>
-                              <div className="mt-3 text-uppercase text-muted small">Estimated Value:</div>
-                              <h5>${convertToUSD(currency, account?.balance).toFixed(2)}</h5>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-xl-12 col-xxl-5">
-              <div className="card">
-                <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
-                  <h6 className=" fw-bold">  {withdrawConvert === 1 ? "Withdraw" : "Convert"}</h6>
-                  <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
-                    <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Withdraw" role="tab" onClick={() => handleWithdrawConvert(1)}>Withdraw</a></li>
-                    <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#convert" role="tab" onClick={() => handleWithdrawConvert(2)}>Convert</a></li>
-                  </ul>
-                </div>
-                <div className="card-body">
-                  {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
-                  {successMessage && <div className="alert alert-success">{successMessage}</div>}
-                  {pendingWithdrawal && (
-                    <div className="alert alert-info">
-                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
-                    </div>
-
-
-                  )}
-                  {withdrawConvert === 1 ? (
-                    <form onSubmit={handleWithdrawSubmit}>
-                      <div className="row g-3 mb-3">
-                        <div className="col-sm-12">
-                          <label className="form-label">Enter amount & currency</label>
-                          <div className="input-group">
-                            <input type="tel" placeholder="Amount"
-                              value={amountwithdrawal}
-                              onChange={handleWitAmountChange}
-                              className="form-control" min="100" required />
-                            <button
-                              className="btn btn-outline-secondary dropdown-toggle"
-                              type="button"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                            >
-                              {selectedCurrency}
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end">
-                              {currencies.map((cur) => (
-                                <li
-                                  key={cur}
-                                  className="dropdown-item"
-                                  onClick={() => handleCurrencySelect(cur)}
-                                >
-                                  {cur}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                        </div>
-                        <div className="col-sm-12">
-                          <label className="form-label">Bank/Phone</label>
-                          {user && user.userInfo && (
-                            <select className="form-control">
-                              <option value={user.userInfo.phoneNumber}>{user.userInfo.phoneNumber}</option>
-                            </select>
-                          )}
-                        </div>
-
-                        <div className="col-sm-12">
-                          <label className="form-label">Select Withdraw Network</label>
-                          <select className="form-select" aria-label="Default select example">
-                            <option selected> INT (Arrival time ≈ 2 mins)</option>
-
-                          </select>
-                        </div>
-                        <div className="col-sm-12">
-                          <div className="d-flex justify-content-between flex-wrap">
-                            <div>
-                              <div className="truncated">Balance</div>
-                              <div className="text-muted truncated">  {selectedAccount?.balance?.toFixed(2)} {selectedCurrency}</div>
-                            </div>
-                            <div>
-                              <div className="truncated">Minimum withdrawal</div>
-                              <div className="text-muted  truncated">10.00 USD</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-12">
-                          <div className="d-flex justify-content-between flex-wrap">
-                            <div>
-                              <div className="truncated">Network fee</div>
-                              <div className="text-muted truncated"> {networkFeeMin.toFixed(2)} ~ {networkFeeMax.toFixed(2)} {selectedCurrency}</div>
-                            </div>
-                            <div>
-                              <div className="truncated">24h remaining limit</div>
-                              <div className="text-muted  truncated"> 5000.00 USD</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-sm-12">
-                          <button
-                            type="submit"
-                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-                            disabled={isLoading}
-                          >
-                            {isLoading ? 'Processing...' : 'Withdraw'}
-                          </button>
-
-                        </div>
-                      </div>
-                    </form>
-                  ) : (
-                    <form onSubmit={handleConvertSubmit}>
-                      <div className="row g-3 mb-3">
-                        <div className="col-sm-12">
-                          <label className="form-label">From</label>
-                          <select
-                            className="form-select"
-                            value={fromCurrency}
-                            onChange={(e) => setFromCurrency(e.target.value)}
-                          >
-                            {currencies.map((cur) => (
-                              <option key={cur} value={cur}>
-                                {cur}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-sm-12">
-                          <label className="form-label">To</label>
-                          <select
-                            className="form-select"
-                            value={toCurrency}
-                            onChange={(e) => setToCurrency(e.target.value)}
-                          >
-                            {currencies.map((cur) => (
-                              <option key={cur} value={cur}>
-                                {cur}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-sm-12">
-                          <label className="form-label">Amount</label>
-                          <input
-                            type="tel"
-                            placeholder="Amount"
-                            className="form-control"
-                            value={amount}
-                            onChange={(e) => setAmount(e.target.value)}
-                            required
-                          />
-                        </div>
-                        <div className="col-sm-12">
-                          <button
-                            type="submit"
-                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
-                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
-                            disabled={isLoading}
-                          >
-                            {isLoading ? 'Processing...' : 'Convert'}
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row g-3 mb-3 row-deck">
-            <div className="col-xl-6 col-xxl-7">
+          <div className="col-xl-6 col-xxl-6">
               <div className="card">
                 <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
                   <h6 className="mb-2 fw-bold">Deposit</h6>
@@ -1132,8 +922,172 @@ const Wallet = () => {
                   </div>
                 </div>
               </div>
-            </div>
+              </div>
+            <div className="col-xl-6 col-xxl-6">
+              <div className="card">
+                <div className="card-header py-3 d-flex justify-content-between bg-transparent border-bottom align-items-center flex-wrap">
+                  <h6 className=" fw-bold">  {withdrawConvert === 1 ? "Withdraw" : "Convert"}</h6>
+                  <ul className="nav nav-tabs tab-body-header rounded d-inline-flex" role="tablist">
+                    <li className="nav-item"><a className="nav-link active" data-bs-toggle="tab" href="#Withdraw" role="tab" onClick={() => handleWithdrawConvert(1)}>Withdraw</a></li>
+                    <li className="nav-item"><a className="nav-link" data-bs-toggle="tab" href="#convert" role="tab" onClick={() => handleWithdrawConvert(2)}>Convert</a></li>
+                  </ul>
+                </div>
+                <div className="card-body">
+                  {withdrawerror && <div className="alert alert-danger">{withdrawerror}</div>}
+                  {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                  {pendingWithdrawal && (
+                    <div className="alert alert-info">
+                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
+                    </div>
 
+
+                  )}
+                  {withdrawConvert === 1 ? (
+                    <form onSubmit={handleWithdrawSubmit}>
+                      <div className="row g-3 mb-3">
+                        <div className="col-sm-12">
+                          <label className="form-label">Enter amount & currency</label>
+                          <div className="input-group">
+                            <input type="tel" placeholder="Amount"
+                              value={amountwithdrawal}
+                              onChange={handleWitAmountChange}
+                              className="form-control" min="100" required />
+                            <button
+                              className="btn btn-outline-secondary dropdown-toggle"
+                              type="button"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                            >
+                              {selectedCurrency}
+                            </button>
+                            <ul className="dropdown-menu dropdown-menu-end">
+                              {currencies.map((cur) => (
+                                <li
+                                  key={cur}
+                                  className="dropdown-item"
+                                  onClick={() => handleCurrencySelect(cur)}
+                                >
+                                  {cur}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">Bank/Phone</label>
+                          {user && user.userInfo && (
+                            <select className="form-control">
+                              <option value={user.userInfo.phoneNumber}>{user.userInfo.phoneNumber}</option>
+                            </select>
+                          )}
+                        </div>
+
+                        <div className="col-sm-12">
+                          <label className="form-label">Select Withdraw Network</label>
+                          <select className="form-select" aria-label="Default select example">
+                            <option selected> INT (Arrival time ≈ 2 mins)</option>
+
+                          </select>
+                        </div>
+                        <div className="col-sm-12">
+                          <div className="d-flex justify-content-between flex-wrap">
+                            <div>
+                              <div className="truncated">Balance</div>
+                              <div className="text-muted truncated">  {selectedAccount?.balance?.toFixed(2)} {selectedCurrency}</div>
+                            </div>
+                            <div>
+                              <div className="truncated">Minimum withdrawal</div>
+                              <div className="text-muted  truncated">10.00 USD</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-12">
+                          <div className="d-flex justify-content-between flex-wrap">
+                            <div>
+                              <div className="truncated">Network fee</div>
+                              <div className="text-muted truncated"> {networkFeeMin.toFixed(2)} ~ {networkFeeMax.toFixed(2)} {selectedCurrency}</div>
+                            </div>
+                            <div>
+                              <div className="truncated">24h remaining limit</div>
+                              <div className="text-muted  truncated"> 5000.00 USD</div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-sm-12">
+                          <button
+                            type="submit"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Processing...' : 'Withdraw'}
+                          </button>
+
+                        </div>
+                      </div>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleConvertSubmit}>
+                      <div className="row g-3 mb-3">
+                        <div className="col-sm-12">
+                          <label className="form-label">From</label>
+                          <select
+                            className="form-select"
+                            value={fromCurrency}
+                            onChange={(e) => setFromCurrency(e.target.value)}
+                          >
+                            {currencies.map((cur) => (
+                              <option key={cur} value={cur}>
+                                {cur}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">To</label>
+                          <select
+                            className="form-select"
+                            value={toCurrency}
+                            onChange={(e) => setToCurrency(e.target.value)}
+                          >
+                            {currencies.map((cur) => (
+                              <option key={cur} value={cur}>
+                                {cur}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="col-sm-12">
+                          <label className="form-label">Amount</label>
+                          <input
+                            type="tel"
+                            placeholder="Amount"
+                            className="form-control"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            required
+                          />
+                        </div>
+                        <div className="col-sm-12">
+                          <button
+                            type="submit"
+                            className="btn flex-fill py-2 fs-5 text-uppercase px-5"
+                            style={{ backgroundColor: "#EAF3FD", color: "#0070BA" }}
+                            disabled={isLoading}
+                          >
+                            {isLoading ? 'Processing...' : 'Convert'}
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row g-3 mb-3 row-deck">
+          
             <div className="col-xl-6 col-xxl-5">
               <div className="card">
                 <div className="card-header  d-flex justify-content-between bg-transparent align-items-center">
