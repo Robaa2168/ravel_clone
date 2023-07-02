@@ -49,7 +49,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://img.freepik.com/free-vector/illustration-diverse-people_53876-28662.jpg?w=740&t=st=1687905525~exp=1687906125~hmac=642f0b0f8835962257d991c3900f87faf3418ac203faeea66e2b64900c53719c');
+  background-image: url('https://img.freepik.com/free-vector/illustration-diverse-people_53876-28662.jpg');
   background-repeat: no-repeat;
   background-position: center; 
   background-size: cover;
@@ -57,6 +57,31 @@
   filter: blur(1px);
   z-index: -1;
 }
+
+.myapp-pypl-card_slider {
+  border-radius: 1.25rem;
+  width: 35em;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.8); /* Decrease opacity to 0.7 */
+  border: 0.0625rem solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.myapp-pypl-image-slider-container {
+  height: 200px; 
+  border-radius: 1.25rem;
+}
+
+.slider-image {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+  background-repeat: no-repeat;
+  border-radius: 1.25rem;
+}
+
+
 
 .myapp-pypl-card.myapp-card-balance-card:hover {
   transition: 0.3s ease;
@@ -476,6 +501,10 @@
 
   .myapp-pypl-card2 {
     max-width: 90vw;
+  }
+  .myapp-pypl-card_slider {
+    max-width: 90vw;
+   
   }
 
   .myapp-card-balance-card .myapp-pypl-card-header {

@@ -22,6 +22,17 @@ body {
   margin-bottom: 2em;
 }
 
+.ravel-logo {
+ 
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 4%;
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 0;
+  cursor: pointer;
+}
+
 .sideMenu {
   color: #ffffff;
   display: none;
@@ -145,12 +156,17 @@ body {
     z-index: 9999 !important;
   }
 
+  .ravel-logo {
+    width: 5.2%;
+    display: none;
+  }
+
   .sideMenu {
     display: block;
     z-index: 9999 !important;
   }
 
-  .navLinks {
+  .dashboardheader {
     display: none;
   }
 

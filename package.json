@@ -27,8 +27,10 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.2",
+    "react-slick": "^0.29.0",
     "react-swipeable": "^7.0.0",
     "react-toastify": "^9.1.2",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.9",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1"

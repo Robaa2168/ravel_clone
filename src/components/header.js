@@ -59,6 +59,8 @@ const Header = () => {
           <RxCross2 className="sideMenu" onClick={handleToggle} />
         )}
 
+        <img src="https://img.freepik.com/free-vector/tree-transparent-background_1308-74201.jpg?w=740&t=st=1688251642~exp=1688252242~hmac=2d1d9a9fbcb340a914c562df1020871be7e2cf4029a8898fa446cd87d6f180de" alt="Ravel" className="ravel-logo" />
+
         <div className="dashboardheader">
 
           <div className="navLinks">
