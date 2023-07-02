@@ -217,7 +217,7 @@ const Dashboard = () => {
 
               <div className="myapp-payid fw-bold">Pay ID: {user?.primaryInfo?.payID}</div>
             </div>
-            <div className="myapp-pypl-ca'rd-footer">
+            <div className="myapp-pypl-card-footer">
               <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
             </div>
           </div>
