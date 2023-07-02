@@ -5,7 +5,7 @@ import { useUser } from "./context";
 import api from '../api';
 import './home.css';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 
@@ -27,11 +27,11 @@ const Dashboard = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true, 
-    autoplaySpeed: 3000, 
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
-  
-  
+
+
   const img1 = './slider3.jpeg';
   const img2 = './slider2.jpeg';
   const img3 = './slider.jpeg';
@@ -66,7 +66,7 @@ const Dashboard = () => {
           'user-id': user?.primaryInfo?._id,
         },
       });
-  
+
       if (balanceResponse.status === 200) {
         const updatedUser = { ...user, accounts: balanceResponse.data.accounts };
         login(updatedUser);
@@ -76,26 +76,26 @@ const Dashboard = () => {
       console.error('Failed to fetch balance:', error);
     }
   }, [user?.token, user?.primaryInfo?._id, login]);
-  
+
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
         fetchBalance();
       }
     };
-  
+
     if (document.visibilityState === 'visible') {
       fetchBalance();
     }
-  
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
-  
+
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []); // Removed 'fetchBalance' from dependency array
-  
-  
+
+
 
   useEffect(() => {
     if (user && !user.userInfo.pin) {
@@ -217,24 +217,25 @@ const Dashboard = () => {
 
               <div className="myapp-payid fw-bold">Pay ID: {user?.primaryInfo?.payID}</div>
             </div>
-            <div className="myapp-pypl-ca'rd-footer">
+            <div className="myapp-pypl-card-footer">
               <Link to="/wallet" className='myapp-pypl-primary-btn'>Transfer funds</Link>
             </div>
           </div>
+
           <div className="myapp-pypl-card_slider mb-3">
-          <div className="myapp-pypl-image-slider-container">
-          <Slider {...settings}>
-          <div>
-            <img className="slider-image" src={img1} alt="Slide 1" />
-          </div>
-          <div>
-            <img className="slider-image" src={img2} alt="Slide 2" />
-          </div>
-          <div>
-            <img className="slider-image" src={img3} alt="Slide 2" />
-          </div>
-          </Slider>
-        </div>
+            <div className="myapp-pypl-image-slider-container">
+              <Slider {...settings}>
+                <div>
+                  <img className="slider-image" src={img1} alt="Slide 1" />
+                </div>
+                <div>
+                  <img className="slider-image" src={img2} alt="Slide 2" />
+                </div>
+                <div>
+                  <img className="slider-image" src={img3} alt="Slide 2" />
+                </div>
+              </Slider>
+            </div>
           </div>
 
 
