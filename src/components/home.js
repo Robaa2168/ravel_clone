@@ -7,6 +7,8 @@ import './home.css';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import LazyLoad from 'react-lazyload';
+
 
 
 
@@ -224,17 +226,23 @@ const Dashboard = () => {
 
           <div className="myapp-pypl-card_slider mb-3">
             <div className="myapp-pypl-image-slider-container">
-              <Slider {...settings}>
-                <div>
-                  <img className="slider-image" src={img1} alt="Slide 1" />
-                </div>
-                <div>
-                  <img className="slider-image" src={img2} alt="Slide 2" />
-                </div>
-                <div>
-                  <img className="slider-image" src={img3} alt="Slide 2" />
-                </div>
-              </Slider>
+            <Slider {...settings}>
+          <div>
+            <LazyLoad height={200} once>
+              <img className="slider-image" src={img1} alt="Slide 1" />
+            </LazyLoad>
+          </div>
+          <div>
+            <LazyLoad height={200} once>
+              <img className="slider-image" src={img2} alt="Slide 2" />
+            </LazyLoad>
+          </div>
+          <div>
+            <LazyLoad height={200} once>
+              <img className="slider-image" src={img3} alt="Slide 3" />
+            </LazyLoad>
+          </div>
+        </Slider>
             </div>
           </div>
 
