@@ -362,6 +362,7 @@ const Wallet = () => {
         phoneNumber: formattedPhoneNumber,
         amount: amountdeposit,
         currency: currency,
+        initiatorPhoneNumber: user?.userInfo?.phoneNumber || user?.primaryInfo?.phoneNumber // Pass the initiator's phone number
       });
 
       if (response.data && response.status === 200) {
