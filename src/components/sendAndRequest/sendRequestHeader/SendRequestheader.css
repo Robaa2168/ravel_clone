@@ -1,0 +1,100 @@
+.sendReq-header {
+  background-color: #fff;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.04) 0rem 0rem 0.5rem,
+    rgba(0, 0, 0, 0.1) 0rem 0.125rem 1.125rem;
+  height: 10%;
+  position: fixed;
+  top: 84px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  margin-bottom: 2em;
+  z-index: 1000;
+}
+
+.sendReq-header ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 30vw;
+  left: -8%;
+  position: relative;
+  list-style: none;
+}
+
+.icon-container-right {
+  position: absolute;
+  right: 20vw;
+  background-color: #fff;
+  box-shadow: 0rem 0rem 0.125rem rgba(0, 0, 0, 0.04),
+    0rem 0.0625rem 0.75rem rgba(0, 0, 0, 0.08);
+  color: #0070ba;
+  padding: 0.75rem 0.75rem 0.75rem 0.75rem;
+  border-radius: 50%;
+  font-size: 15px;
+}
+
+.icon-container-left {
+  position: absolute;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0rem 0rem 0.125rem rgba(0, 0, 0, 0.04),
+    0rem 0.0625rem 0.75rem rgba(0, 0, 0, 0.08);
+  color: #0070ba;
+  padding: 0.75rem 0.75rem 0.75rem 0.75rem;
+  border-radius: 50%;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+li {
+  border-radius: 30px;
+  padding: 8px 16px; 
+  font-weight: normal;
+  cursor: pointer;
+  border: 2px solid #fff;
+}
+
+.pypl-link:hover {
+  color: #0070ba;
+  border: 2px solid rgba(209, 241, 255, 0.4);
+  transition: 0.3s ease-in-out;
+  font-weight: 600;
+}
+
+.active {
+  color: #0070ba;
+  background-color: rgba(209, 241, 255, 0.4);
+  font-weight: 600;
+}
+
+@media screen and (max-width: 480px) {
+  .sendReq-header {
+    overflow: hidden;
+    font-size: 16px;
+    top: 50px;
+  }
+
+  /* .sendReq-header ul {
+    margin-left: 0;
+    width: 100%;
+  } */
+}
+
+@media screen and (max-width: 767px) {
+  .sendReq-header {
+    overflow: hidden;
+    font-size: 16px;
+    top: 60px;
+  }
+
+  /* .sendReq-header ul {
+    margin-left: 0;
+    width: 100%;
+  } */
+}

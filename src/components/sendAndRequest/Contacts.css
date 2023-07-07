@@ -1,0 +1,37 @@
+.send-money3 {
+  margin-top: 9rem;
+  left: 0;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.send-money3 > input {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.view {
+  color: #0070ba;
+  font-weight: 500;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.view:hover {
+  color: #0070ba;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+  .send-money3 {
+    width: 90%;
+  }
+
+  .send-money3 > input {
+    width: 100%;
+  }
+}

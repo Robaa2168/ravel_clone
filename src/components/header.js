@@ -67,7 +67,7 @@ const Header = () => {
             <Link to="/" className="navLink">
               Dashboard
             </Link>
-            <Link to="/wallet" className="navLink">
+            <Link to="/send-and-request" className="navLink">
               Send and Request
             </Link>
             <Link to="/wallet" className="navLink">
@@ -106,7 +106,7 @@ const Header = () => {
             <Link to="/" className="popLink">
               Dashboard
             </Link>
-            <Link to="/wallet" className="popLink">
+            <Link to="/send-and-request" className="popLink">
               Send and Request
             </Link>
             <Link to="/wallet" className="popLink">

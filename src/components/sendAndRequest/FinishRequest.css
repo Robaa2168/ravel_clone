@@ -1,0 +1,135 @@
+.buy {
+  margin-top: 3rem;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.buy-div1 {
+  border: 1px solid rgb(190, 183, 183);
+  border-radius: 5px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.for-username {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.for-username1 {
+  height: 50px;
+  width: 50px;
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.for-usernameP {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.dolla-sign {
+  width: 40%;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.d-sign {
+  font-size: 12px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.dolla-sign > input {
+  width: 50%;
+  font-size: 26px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.us-currency {
+  font-weight: 600;
+  color: #0070ba;
+}
+
+.us-currency:hover {
+  color: #0070ba;
+}
+
+.searchInput6 {
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.eligible {
+  margin-bottom: 0;
+}
+
+.eligible-p1, .eligible-p2 {
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.eligible-p1 > .buyer, .eligible-p2 > .buyer {
+  color: #0070ba;
+}
+
+.btns-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.continue1 {
+  width: 30%;
+  padding: 1% 3%;
+  border-radius: 20px;
+}
+
+.continue2 {
+  width: 30%;
+  border: none;
+  color: #0070ba;
+  text-align: center;
+}
+
+.continue2:hover {
+  color: #0070ba;
+}
+
+
+@media screen and (max-width: 769px) {
+  .buy {
+    width: 90%;
+  }
+
+  .for-username1 {
+    height: 30px;
+    width: 30px;
+    padding: 3px;
+  }
+}
