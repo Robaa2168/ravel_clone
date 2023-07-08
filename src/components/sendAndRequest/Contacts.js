@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Contacts.css";
+import styles from "./Contacts.module.css";
 import { Link } from "react-router-dom";
 
 function Contacts() {
@@ -11,16 +11,16 @@ function Contacts() {
   };
 
   return (
-    <div className="send-money3">
+    <div className={styles["send-money3"]}>
       <input
         type="text"
-        className="searchInput"
+        className={styles["searchInput"]}
         placeholder="Search"
         value={searchTerm}
         onChange={handleSearchTermChange}
       />
 
-      <Link className="view">View blocked contacts</Link>
+      <Link className={styles["view"]}>View blocked contacts</Link>
     </div>
   );
 }

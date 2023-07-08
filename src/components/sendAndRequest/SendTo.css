@@ -93,3 +93,29 @@
     border-radius: 20px;
   }
 }
+
+.selected-contact {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 4px;
+  margin-right: 4px;
+}
+
+.contact-name {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+}
+
+.user-icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+}
+
+.clear-icon {
+  cursor: pointer;
+}
+
