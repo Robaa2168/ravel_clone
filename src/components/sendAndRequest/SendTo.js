@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import api from '../../api';
-import { Link, useNavigate } from 'react-router-dom';
-import { RiBookletLine } from 'react-icons/ri';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { AiOutlineUser } from 'react-icons/ai';
-import { FaSpinner } from 'react-icons/fa'; // Import the spinner icon
-import './SendTo.css';
+import React, { useState, useEffect } from "react";
+import api from "../../api";
+import { Link, useNavigate } from "react-router-dom";
+import { RiBookletLine } from "react-icons/ri";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineUser } from "react-icons/ai";
+import { FaSpinner } from "react-icons/fa"; // Import the spinner icon
+import styles from "./SendTo.module.css";
 
 function SendTo() {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [contacts, setContacts] = useState([]);
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [userNotFound, setUserNotFound] = useState(false);
@@ -34,7 +34,7 @@ function SendTo() {
 
   const handleContactSelect = (contact) => {
     setSelectedContacts([...selectedContacts, contact]);
-    setSearchTerm('');
+    setSearchTerm("");
     setContacts([]);
     setUserNotFound(false);
   };
@@ -46,7 +46,7 @@ function SendTo() {
 
   const handleBuy = () => {
     if (selectedContacts.length > 0) {
-      navigate('/complete_send', { state: { receiverInfo: selectedContacts[0] } });
+      navigate("/buy", { state: { receiverInfo: selectedContacts[0] } });
     }
   };
 
@@ -57,7 +57,9 @@ function SendTo() {
 
       if (response.status !== 200) {
         const message = response.data?.message;
-        throw new Error(`Error fetching receiver info: ${message || response.status}`);
+        throw new Error(
+          `Error fetching receiver info: ${message || response.status}`
+        );
       }
 
       const { firstName, lastName } = response.data;
@@ -68,7 +70,7 @@ function SendTo() {
         lastName,
       };
     } catch (error) {
-      console.error('Error fetching receiver info:', error);
+      console.error("Error fetching receiver info:", error);
       return null;
     } finally {
       setLoading(false); // Set loading state to false
@@ -102,18 +104,18 @@ function SendTo() {
   const isNextButtonDisabled = selectedContacts.length === 0 || userNotFound;
 
   return (
-    <div className="send-money1abc">
-      <div className="payment1abc">
+    <div className={styles.sendMoney1}>
+      <div className={styles.payment1}>
         <p>Send payment to</p>
-        <div className="selected-contacts-abc">
+        <div className={styles.selectedContacts}>
           {selectedContacts.map((contact) => (
-            <div className="selected-contactabc" key={contact.id}>
-              <span className="contact-nameabc">
-                <AiOutlineUser className="user-iconabc" />
+            <div className={styles.selectedContact} key={contact.id}>
+              <span className={styles.contactName}>
+                <AiOutlineUser className={styles.userIcon} />
                 {contact.firstName} {contact.lastName}
               </span>
               <AiOutlineCloseCircle
-                className="clear-iconabc"
+                className={styles.clearIcon}
                 onClick={() => handleClearSelectedContact(contact)}
               />
             </div>
@@ -121,23 +123,25 @@ function SendTo() {
         </div>
         <input
           type="text"
-          className="searchInputabc"
+          className={styles.sendToInput}
           placeholder="Name, @pay ID, email, or mobile"
           value={searchTerm}
           onChange={handleSearchTermChange}
         />
         {loading ? ( // Render the spinner when loading state is true
-          <div className="spinner">
-          Loading... <FaSpinner className="spinner-icon" />
-        </div>
+          <div className={styles.spinner}>
+            Loading... <FaSpinner className={styles.spinnerIcon} />
+          </div>
         ) : userNotFound ? (
-          <div className="userNotFound">User not found</div>
+          <div className={styles.userNotFound}>User not found</div>
         ) : (
           contacts.map((contact) => (
             <div
               key={contact.id}
               className={`contact-abc ${
-                selectedContacts.some((c) => c.id === contact.id) ? 'selected-abc' : ''
+                selectedContacts.some((c) => c.id === contact.id)
+                  ? "selected-abc"
+                  : ""
               }`}
               onClick={() => handleContactSelect(contact)}
             >
@@ -146,18 +150,22 @@ function SendTo() {
           ))
         )}
 
-        <button id="btn1" onClick={handleBuy} disabled={isNextButtonDisabled}>
+        <button
+          id={styles.btn1}
+          onClick={handleBuy}
+          disabled={isNextButtonDisabled}
+        >
           Next
         </button>
       </div>
 
-      <div className="more-ways1abc">
-        <p>More ways to send</p>
-        <Link className="invoice1abc">
-          <RiBookletLine className="ways-icon1abc" />
-          <div className="div1abc">
-            <p className="p1abc">Send an invoice</p>
-            <p className="p2abc">Customize, track, and send invoices.</p>
+      <div className={styles.moreWays1}>
+        <p className={styles.moreWays1P}>More ways to send</p>
+        <Link className={styles.invoice1}>
+          <RiBookletLine className={styles.waysIcon1} />
+          <div className={styles.div1}>
+            <p className={styles.p1}>Send an invoice</p>
+            <p className={styles.p2}>Customize, track, and send invoices.</p>
           </div>
         </Link>
       </div>

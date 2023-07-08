@@ -89,27 +89,27 @@ function FinishRequestFrom() {
       </div>
     </div>
   ) : (
-    <div className={styles["buy"]}>
-      <div className={styles["buy-div1"]}>
-        {requestError && <p className={styles["error-message"]}>{requestError}</p>}
-        <div className={styles["for-username"]}>
-          <FaUser className={styles["for-username1"]} />
-          <p className={styles["for-usernameP"]}>{`${firstName} ${lastName}`}</p>
+    <div className={styles.buy}>
+      <div className={styles.buyDiv1}>
+        {requestError && <p className={styles.errorMessage}>{requestError}</p>}
+        <div className={styles.forUsername}>
+          <FaUser className={styles.forUsername1} />
+          <p className={styles.forUsernameP}>{`${firstName} ${lastName}`}</p>
         </div>
-        <div className={styles["dolla-sign"]}>
-          <div className={styles["currency-container"]}>
-            <FaDollarSign className={styles["d-sign"]} />
+        <div className={styles.dollaSign}>
+          <div className={styles.currencyContainer}>
+            <FaDollarSign className={styles.dSign} />
           </div>
           <input
             type="text"
-            className={styles["searchInput5"]}
+            className={styles.finishRequestFromInput}
             value={requestAmount}
             onChange={(e) => setRequestAmount(e.target.value)}
           />
         </div>
-        <div className={styles["currency-dropdown-container"]}>
+        <div className={styles.currencyDropdownContainer}>
           <select
-            className={styles["currency-dropdown"]}
+            className={styles.currencyDropdown}
             value={selectedCurrency}
             onChange={(e) => setSelectedCurrency(e.target.value)}
           >
@@ -122,34 +122,34 @@ function FinishRequestFrom() {
         </div>
         <input
           type="text"
-          className={styles["searchInput6"]}
+          className={styles.finishRequestFromInput1}
           placeholder="+ What's this request for?"
           value={purpose}
           onChange={(e) => setPurpose(e.target.value)}
         />
       </div>
 
-      <div className={styles["eligible"]}>
-        <p className={styles["eligible-p1"]}>
+      <div className={styles.eligible}>
+        <p className={styles.eligibleP1}>
           Eligible purchases are covered by{" "}
-          <Link className={styles["buyer"]}>Ravel Buyer Protection</Link>
+          <Link className={styles.buyer}>Ravel Buyer Protection</Link>
         </p>
-        <p className={styles["eligible-p2"]}>
+        <p className={styles.eligibleP2}>
           For more information please read our{" "}
-          <Link className={styles["buyer"]}>user agreement.</Link>
+          <Link className={styles.buyer}>user agreement.</Link>
         </p>
       </div>
 
-      <div className={styles["btns-2"]}>
+      <div className={styles.btns2}>
         <button
-          className={styles["continue1"]}
+          className={styles.continue1}
           disabled={isNextButtonDisabled || isLoading}
           onClick={handleRequestSubmit}
         >
           {isLoading ? "Processing..." : "Continue"}
         </button>
 
-        <Link className={styles["continue2"]} to="/send-and-request/request-from">
+        <Link className={styles.continue2} to="/send-and-request/request-from">
           Cancel
         </Link>
       </div>

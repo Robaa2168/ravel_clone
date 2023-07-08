@@ -25,29 +25,29 @@ const SendRequestHeader = () => {
   const swipeHandlers = useSwipeable({ onSwiped: handleSwipe });
 
   return (
-    <div className={styles["sendReq-header"]} {...swipeHandlers}>
+    <div className={styles.sendReqHeader} {...swipeHandlers}>
       <ul>
         <li
           onClick={() => handleLinkClick("send-to")}
-          className={activeSubPage === "send-to" ? styles["active"] : styles["pypl-link"]}
+          className={activeSubPage === "send-to" ? styles.active : styles.pyplLink}
         >
           Send
         </li>
         <li
           onClick={() => handleLinkClick("request-from")}
-          className={activeSubPage === "request-from" ? styles["active"] : styles["pypl-link"]}
+          className={activeSubPage === "request-from" ? styles.active : styles.pyplLink}
         >
           Request
         </li>
         <li
           onClick={() => handleLinkClick("contacts")}
-          className={activeSubPage === "contacts" ? styles["active"] : styles["pypl-link"]}
+          className={activeSubPage === "contacts" ? styles.active : styles.pyplLink}
         >
           Contacts
         </li>
         <li
           onClick={() => handleLinkClick("more")}
-          className={activeSubPage === "more" ? styles["active"] : styles["pypl-link"]}
+          className={activeSubPage === "more" ? styles.active : styles.pyplLink}
         >
           More
         </li>

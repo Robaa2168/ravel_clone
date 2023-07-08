@@ -11,16 +11,16 @@ function Contacts() {
   };
 
   return (
-    <div className={styles["send-money3"]}>
+    <div className={styles.sendMoney3}>
       <input
         type="text"
-        className={styles["searchInput"]}
+        className={styles.contactInput}
         placeholder="Search"
         value={searchTerm}
         onChange={handleSearchTermChange}
       />
 
-      <Link className={styles["view"]}>View blocked contacts</Link>
+      <Link className={styles.view}>View blocked contacts</Link>
     </div>
   );
 }

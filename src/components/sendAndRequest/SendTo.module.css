@@ -1,4 +1,4 @@
-.send-money1 {
+.sendMoney1 {
   margin-top: 9rem;
   left: 0;
   width: 60%;
@@ -21,22 +21,38 @@
   margin-bottom: 0;
 }
 
-.payment1 > input {
+.sendToInput {
   width: 100%;
+  border: none;
+  border-radius: 1.6rem;
+  padding: 0.8rem 1.3rem;
+  font-size: 1.1rem;
+  background-color: white;
+  border: 1px solid rgb(226, 219, 219);
 }
 
-.payment1 > #btn1 {
+.sendToInput:focus {
+  outline: none;
+  border: 1px solid #046096;
+  box-shadow: 0px 0px 5px #0079c1;
+}
+
+.contactAbc {
+  border: 1px solid red;
+}
+
+#btn1 {
   width: 17%;
   padding: 1% 2%;
   border-radius: 20px;
 }
 
-.more-ways1 {
+.moreWays1 {
   gap: 20px;
   width: 28%;
 }
 
-.more-ways1 > p {
+.moreWays1P {
   font-size: 20px;
   font-weight: 500;
 }
@@ -49,12 +65,12 @@
   color: black;
 }
 
-.ways-icon1 {
-  height: 30px;
-  width: 30px;
+.waysIcon1 {
+  height: 25px;
+  width: 25px;
   background-color: rgb(240, 235, 235);
   border-radius: 50%;
-  padding: 4px;
+  padding: 3px;
   color: #0070ba;
   margin-right: 5px;
   margin-top: 2px;
@@ -64,12 +80,12 @@
   gap: 0;
 }
 
-.div1 > .p1 {
+.p1 {
   margin-bottom: 0;
   font-weight: 600;
 }
 
-.div1 > .p2 {
+.p2 {
   font-size: 12px;
   font-weight: 300;
   margin-top: 0;
@@ -77,13 +93,13 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .send-money1 {
+  .sendMoney1 {
     flex-direction: column;
     gap: 30px;
     width: 90%;
   }
 
-  .payment1, .more-ways1 {
+  .payment1, .moreWays1 {
     width: 100%;
   }
 
@@ -94,7 +110,7 @@
   }
 }
 
-.selected-contact {
+.selectedContact {
   display: inline-flex;
   align-items: center;
   background-color: #f0f0f0;
@@ -103,19 +119,19 @@
   margin-right: 4px;
 }
 
-.contact-name {
+.contactName {
   display: flex;
   align-items: center;
   margin-right: 8px;
 }
 
-.user-icon {
+.userIcon {
   height: 16px;
   width: 16px;
   margin-right: 4px;
 }
 
-.clear-icon {
+.clearIcon {
   cursor: pointer;
 }
 

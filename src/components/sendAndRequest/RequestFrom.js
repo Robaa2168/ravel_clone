@@ -98,20 +98,20 @@ function RequestFrom() {
   const isNextButtonDisabled = selectedContacts.length === 0 || userNotFound;
 
   return (
-    <div className={styles['send-money2']}>
-      <div className={styles['payment2']}>
+    <div className={styles.sendMoney2}>
+      <div className={styles.payment2}>
         <p>Request payment from</p>
-        <p id="multiple">You can request multiple payments from up to 20 people.</p>
+        <p id={styles.multiple}>You can request multiple payments from up to 20 people.</p>
 
-        <div className={styles['selected-contacts']}>
+        <div className={styles.selectedContacts}>
           {selectedContacts.map((contact) => (
-            <div className={styles['selected-contact']} key={contact.id}>
-              <span className={styles['contact-name']}>
-                <AiOutlineUser className={styles['user-icon']} />
+            <div className={styles.selectedContact} key={contact.id}>
+              <span className={styles.contactName}>
+                <AiOutlineUser className={styles.userIcon} />
                 {contact.firstName} {contact.lastName}
               </span>
               <AiOutlineCloseCircle
-                className={styles['clear-icon']}
+                className={styles.clearIcon}
                 onClick={() => handleClearSelectedContact(contact)}
               />
             </div>
@@ -120,7 +120,7 @@ function RequestFrom() {
 
         <input
           type="text"
-          className={styles['searchInput']}
+          className={styles.requestInput}
           placeholder="PayID"
           value={searchTerm}
           onChange={handleSearchTermChange}
@@ -131,7 +131,7 @@ function RequestFrom() {
           contacts.map((contact) => (
             <div
               key={contact.id}
-              className={`${styles['contact']} ${selectedContacts.some((c) => c.id === contact.id) ? styles['selected'] : ''}`}
+              className={`${styles.contact} ${selectedContacts.some((c) => c.id === contact.id) ? styles.selected : ''}`}
               onClick={() => handleContactSelect(contact)}
             >
               {contact.firstName} {contact.lastName}
@@ -139,24 +139,24 @@ function RequestFrom() {
           ))
         )}
 
-        <div className={styles['users']}>
+        <div className={styles.users}>
           <div>
             <HiUsers /> {selectedContacts.length}/20
           </div>
         </div>
 
-        <button id="btn2" onClick={handleRequest} disabled={isNextButtonDisabled}>
+        <button id={styles.btn2} onClick={handleRequest} disabled={isNextButtonDisabled}>
           Next
         </button>
       </div>
 
-      <div className={styles['more-ways2']}>
+      <div className={styles.moreWays2}>
         <p>More ways to request</p>
-        <Link className={styles['invoice2']}>
-          <RiBookletLine className={styles['ways-icon2']} />
-          <div className={styles['div2']}>
-            <p className={styles['p3']}>Send an invoice</p>
-            <p className={styles['p6']}>Customize, track, and send invoices.</p>
+        <Link className={styles.invoice2}>
+          <RiBookletLine className={styles.waysIcon2} />
+          <div className={styles.div2}>
+            <p className={styles.p3}>Send an invoice</p>
+            <p className={styles.p6}>Customize, track, and send invoices.</p>
           </div>
         </Link>
       </div>

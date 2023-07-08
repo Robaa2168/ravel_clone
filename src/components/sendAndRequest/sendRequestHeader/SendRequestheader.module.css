@@ -1,4 +1,4 @@
-.sendReq-header {
+.sendReqHeader {
   background-color: #fff;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.04) 0rem 0rem 0.5rem,
@@ -15,7 +15,7 @@
   z-index: 1000;
 }
 
-.sendReq-header ul {
+.sendReqHeader ul {
   display: flex;
   align-items: center;
   margin-top: auto;
@@ -61,7 +61,7 @@ li {
   border: 2px solid #fff;
 }
 
-.pypl-link:hover {
+.pyplLink:hover {
   color: #0070ba;
   border: 2px solid rgba(209, 241, 255, 0.4);
   transition: 0.3s ease-in-out;
@@ -75,7 +75,7 @@ li {
 }
 
 @media screen and (max-width: 480px) {
-  .sendReq-header {
+  .sendReqHeader {
     overflow: hidden;
     font-size: 16px;
     top: 50px;
@@ -88,7 +88,7 @@ li {
 }
 
 @media screen and (max-width: 767px) {
-  .sendReq-header {
+  .sendReqHeader {
     overflow: hidden;
     font-size: 16px;
     top: 60px;

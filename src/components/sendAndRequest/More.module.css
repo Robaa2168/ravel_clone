@@ -1,4 +1,4 @@
-.send-money4 {
+.sendMoney4 {
   margin-top: 9rem;
   left: 0;
   width: 22%;
@@ -15,7 +15,7 @@
   border-radius: 5px;
 }
 
-.ways-icon4 {
+.waysIcon4 {
   height: 40px;
   width: 40px;
   background-color: rgb(240, 235, 235);
@@ -46,7 +46,7 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .send-money4 {
+  .sendMoney4 {
     width: 90%;
   }
 }

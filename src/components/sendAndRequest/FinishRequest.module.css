@@ -8,7 +8,7 @@
   gap: 20px;
 }
 
-.buy-div1 {
+.buyDiv1 {
   border: 1px solid rgb(190, 183, 183);
   border-radius: 5px;
   background-color: white;
@@ -20,29 +20,29 @@
   padding-bottom: 20px;
 }
 
-.for-username {
+.forUsername {
   display: flex;
   gap: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.for-username1 {
-  height: 50px;
-  width: 50px;
+.forUsername1 {
+  height: 40px;
+  width: 40px;
   border: 1px solid lightgray;
   border-radius: 50%;
-  padding: 5px;
+  padding: 15px;
 }
 
-.for-usernameP {
+.forUsernameP {
   margin-top: auto;
   margin-bottom: auto;
   font-weight: 600;
   font-size: 16px;
 }
 
-.dolla-sign {
+.dollaSign {
   width: 40%;
   margin-right: auto;
   margin-left: auto;
@@ -51,20 +51,21 @@
   align-items: center;
 }
 
-.currency-container {
+.currencyContainer {
   display: flex;
   align-items: center;
 }
 
-.currency-dropdown-container {
+.currencyDropdownContainer {
   width: 50%;
   margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.currency-dropdown {
+.currencyDropdown {
   width: 100%;
   font-size: 16px;
   font-weight: 500;
@@ -73,7 +74,7 @@
   padding: 5px;
   margin: 0;
 }
-.error-message {
+.errorMessage {
   background-color: #ffdddd;
   border: 1px solid #ff0000;
   border-radius: 4px;
@@ -86,7 +87,7 @@
   position: relative;
 }
 
-.error-message::before {
+.errorMessage::before {
   content: "";
   position: absolute;
   top: -4px;
@@ -100,7 +101,7 @@
 
 
 
-.animation-container {
+.animationContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,37 +111,37 @@
  
 }
 
-.transfer-details {
+.transferDetails {
   text-align: center;
   max-width: 400px;
   margin-top: 20px;
 }
 
-.transfer-details h2 {
+.transferDetails h2 {
   font-weight: 700; /* Roboto bold */
   margin-bottom: 20px;
 }
 
-.transfer-details p {
+.transferDetails p {
   font-weight: 400; /* Roboto regular */
 }
 
 
 
-.d-sign {
+.dSign {
   font-size: 12px;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.dropdown-icon {
+.dropdownIcon {
   margin-left: 5px;
   font-size: 10px;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.dolla-sign > input {
+.finishRequestInput {
   width: 50%;
   max-width: 90%; 
   font-size: 26px;
@@ -150,16 +151,16 @@
   padding: 0;
 }
 
-.us-currency {
+.usCurrency {
   font-weight: 600;
   color: #0070ba;
 }
 
-.us-currency:hover {
+.usCurrency:hover {
   color: #0070ba;
 }
 
-.searchInput6 {
+.finishRequestInput1 {
   padding: 0;
   border: none;
   outline: none;
@@ -175,19 +176,19 @@
   margin-bottom: 0;
 }
 
-.eligible-p1,
-.eligible-p2 {
+.eligibleP1,
+.eligibleP2 {
   font-size: 13px;
   text-align: center;
   font-weight: 500;
 }
 
-.eligible-p1 > .buyer,
-.eligible-p2 > .buyer {
+.eligibleP1 > .buyer,
+.eligibleP2 > .buyer {
   color: #0070ba;
 }
 
-.btns-2 {
+.btns2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -213,7 +214,7 @@
   color: #0070ba;
 }
 
-.currency-dropdown {
+.currencyDropdown {
   width: 50%;
   font-size: 16px;
   font-weight: 500;
@@ -228,7 +229,7 @@
     width: 90%;
   }
 
-  .for-username1 {
+  .forUsername1 {
     height: 30px;
     width: 30px;
     padding: 3px;

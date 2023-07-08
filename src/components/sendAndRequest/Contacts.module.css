@@ -1,4 +1,4 @@
-.send-money3 {
+.sendMoney3 {
   margin-top: 9rem;
   left: 0;
   width: 40%;
@@ -9,9 +9,22 @@
   gap: 15px;
 }
 
-.send-money3 > input {
+.contactInput {
+  width: 80%;
+  border: none;
+  border-radius: 1.6rem;
+  padding: 0.8rem 1.3rem;
+  font-size: 1.1rem;
+  background-color: white;
+  border: 1px solid rgb(226, 219, 219);
   margin-right: auto;
   margin-left: auto;
+}
+
+.contactInput:focus {
+  outline: none;
+  border: 1px solid #046096;
+  box-shadow: 0px 0px 5px #0079c1;
 }
 
 .view {
@@ -27,11 +40,11 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .send-money3 {
+  .sendMoney3 {
     width: 90%;
   }
 
-  .send-money3 > input {
+  .contactInput {
     width: 100%;
   }
 }

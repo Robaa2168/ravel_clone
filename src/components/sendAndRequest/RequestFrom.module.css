@@ -1,4 +1,4 @@
-.send-money2 {
+.sendMoney2 {
   margin-top: 9rem;
   left: 0;
   width: 60%;
@@ -26,8 +26,20 @@
   font-weight: 500;
 }
 
-.payment2 > input {
+.requestInput {
   width: 100%;
+  border: none;
+  border-radius: 1.6rem;
+  padding: 0.8rem 1.3rem;
+  font-size: 1.1rem;
+  background-color: white;
+  border: 1px solid rgb(226, 219, 219);
+}
+
+.requestInput:focus {
+  outline: none;
+  border: 1px solid #046096;
+  box-shadow: 0px 0px 5px #0079c1;
 }
 
 .users {
@@ -35,18 +47,18 @@
   justify-content: end;
 }
 
-.payment2 > #btn2 {
+#btn2 {
   width: 17%;
   padding: 1% 2%;
   border-radius: 20px;
 }
 
-.more-ways2 {
+.moreWays2 {
   gap: 20px;
   width: 28%;
 }
 
-.more-ways2 > p {
+.moreWays2 > p {
   font-size: 20px;
   font-weight: 500;
 }
@@ -59,12 +71,12 @@
   color: black;
 }
 
-.ways-icon2 {
-  height: 30px;
-  width: 30px;
+.waysIcon2 {
+  height: 25px;
+  width: 25px;
   background-color: rgb(240, 235, 235);
   border-radius: 50%;
-  padding: 4px;
+  padding: 3px;
   color: #0070ba;
   margin-right: 5px;
   margin-top: 2px;
@@ -87,13 +99,13 @@
 }
 
 @media screen and (max-width: 1024px) {
-  .send-money2 {
+  .sendMoney2 {
     flex-direction: column;
     gap: 30px;
     width: 90%;
   }
 
-  .payment2, .more-ways2 {
+  .payment2, .moreWays2 {
     width: 100%;
   }
 
