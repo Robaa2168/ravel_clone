@@ -51,14 +51,98 @@
   align-items: center;
 }
 
+.currency-container {
+  display: flex;
+  align-items: center;
+}
+
+.currency-dropdown-container {
+  width: 50%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.currency-dropdown {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  padding: 5px;
+  margin: 0;
+}
+.error-message {
+  background-color: #ffdddd;
+  border: 1px solid #ff0000;
+  border-radius: 4px;
+  color: #ff0000;
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.error-message::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px dashed #ff0000;
+  border-radius: 6px;
+}
+
+
+
+
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif; /* Added font-family */
+ 
+}
+
+.transfer-details {
+  text-align: center;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.transfer-details h2 {
+  font-weight: 700; /* Roboto bold */
+  margin-bottom: 20px;
+}
+
+.transfer-details p {
+  font-weight: 400; /* Roboto regular */
+}
+
+
+
 .d-sign {
   font-size: 12px;
   margin-top: auto;
   margin-bottom: auto;
 }
 
+.dropdown-icon {
+  margin-left: 5px;
+  font-size: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 .dolla-sign > input {
   width: 50%;
+  max-width: 90%; 
   font-size: 26px;
   font-weight: 500;
   border: none;
@@ -79,19 +163,27 @@
   padding: 0;
   border: none;
   outline: none;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
+
+
 
 .eligible {
   margin-bottom: 0;
 }
 
-.eligible-p1, .eligible-p2 {
+.eligible-p1,
+.eligible-p2 {
   font-size: 13px;
   text-align: center;
   font-weight: 500;
 }
 
-.eligible-p1 > .buyer, .eligible-p2 > .buyer {
+.eligible-p1 > .buyer,
+.eligible-p2 > .buyer {
   color: #0070ba;
 }
 
@@ -121,6 +213,15 @@
   color: #0070ba;
 }
 
+.currency-dropdown {
+  width: 50%;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  padding: 5px;
+  margin-top: 10px;
+}
 
 @media screen and (max-width: 769px) {
   .buy {

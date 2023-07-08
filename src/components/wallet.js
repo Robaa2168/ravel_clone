@@ -524,18 +524,8 @@ const Wallet = () => {
     }
   };
 
-  const handleMax = () => {
-    // Logic for handling max amount
-  };
 
-
-
-  const handleNumericInput = (e, setValue) => {
-    const value = e.target.value;
-    if (value === '' || /^[0-9\b]+$/.test(value)) {
-      setValue(value);
-    }
-  };
+  
 
   const handleConfirm = async (e) => {
     e.preventDefault();
