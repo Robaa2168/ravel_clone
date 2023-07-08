@@ -25,6 +25,7 @@ import ResetPassword from "./resetPassword";
 import SendAndRequest from "./sendAndRequest/SendAndRequest";
 import FinishRequest from "./sendAndRequest/FinishRequest";
 import FinishRequestFrom from "./sendAndRequest/FinishRequestFrom";
+import Help from "./help/Help";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -171,6 +172,7 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/help" element={<Help />} />
         </Routes>
 
         {!excludedRoutes.includes(location.pathname) && <Footer />}
