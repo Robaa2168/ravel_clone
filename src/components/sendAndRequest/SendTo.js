@@ -138,7 +138,7 @@ function SendTo() {
           contacts.map((contact) => (
             <div
               key={contact.id}
-              className={`contact-abc ${
+              className={`${styles.contactAbc} ${
                 selectedContacts.some((c) => c.id === contact.id)
                   ? "selected-abc"
                   : ""
