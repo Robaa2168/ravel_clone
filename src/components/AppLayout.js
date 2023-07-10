@@ -26,6 +26,7 @@ import SendAndRequest from "./sendAndRequest/SendAndRequest";
 import FinishRequest from "./sendAndRequest/FinishRequest";
 import FinishRequestFrom from "./sendAndRequest/FinishRequestFrom";
 import Help from "./help/Help";
+import { MpesaHome, TopUp, Withdraw } from "./PaypalMpesa";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -145,6 +146,30 @@ const AppLayout = () => {
             element={
               <ProtectedRoute>
                 <FinishRequestFrom />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa"
+            element={
+              <ProtectedRoute>
+                <MpesaHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/withdraw"
+            element={
+              <ProtectedRoute>
+                <Withdraw />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/topup"
+            element={
+              <ProtectedRoute>
+                <TopUp />
               </ProtectedRoute>
             }
           />
