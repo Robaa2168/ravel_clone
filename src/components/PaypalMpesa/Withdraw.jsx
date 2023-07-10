@@ -9,18 +9,18 @@ const Withdraw = () => {
       <section className={styles.pyplWithdrawSection}>
         <div className={styles.mainWithdrawContent}>
           <div className={styles.introHeader}>
-            <h1>Withdraw from your PayPal account</h1>
+            <h1>Withdraw from your Ravel account</h1>
           </div>
 
           <div className={styles.withdrawWrapperSplitter}>
             <div className={styles.withdrawContainer}>
-              <h5>Available balance in your PayPal account:</h5>
+              <h5>Available balance in your Ravel account:</h5>
               <div className={styles.balance}>
                 <h2>0.00 USD</h2>
               </div>
               <p>
                 Please enter the amount you would like to withdraw from your
-                PayPal account:
+                Ravel account:
               </p>
               <div className={styles.inputContainer}>
                 <input type="number" placeholder="Amount" name="" id="" />

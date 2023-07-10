@@ -10,7 +10,7 @@ const TopUp = () => {
       <section className={styles.topupSection}>
         <div className={styles.mainTopupSection}>
           <div className={styles.topupHeader}>
-            <h1>Top Up your PayPal account</h1>
+            <h1>Top Up your Ravel account</h1>
           </div>
           <div className={styles.addMoneyContainer}>
             <div className={styles.topupDirectionsHowto}>
@@ -19,7 +19,7 @@ const TopUp = () => {
                   <span className={styles.bulletNumber}>1</span>
                   <li className={styles.first}>
                     Calculate the KES amount you need to convert to get the USD
-                    amount you want in your PayPal account.
+                    amount you want in your Ravel account.
                   </li>
                 </div>
                 <div className={styles.item}>
@@ -38,11 +38,11 @@ const TopUp = () => {
                   </li>
                 </div>
               </ul>
-              <div className={styles.added} >
+              <div className={styles.added}>
                 <h3>And that's it!</h3>
                 <p>
                   You will receive an SMS confirming that USD were added to your
-                  PayPal balance. You can also check the status on the{" "}
+                  Ravel balance. You can also check the status on the{" "}
                   <Link to="/" className={styles.textHighlighted}>
                     Trasaction History
                   </Link>{" "}
@@ -61,9 +61,9 @@ const TopUp = () => {
             <div className={styles.topupInput}>
               <form action="" method="POST">
                 <div>
-                  <span className={styles.amountYouWant} >
+                  <span className={styles.amountYouWant}>
                     The amount you want in your&nbsp;
-                    <span className={styles.textHighlighted}>PayPal</span>
+                    <span className={styles.textHighlighted}>Ravel</span>
                     &nbsp;account:
                   </span>
                   <div className={styles.topupInputContainer}>
