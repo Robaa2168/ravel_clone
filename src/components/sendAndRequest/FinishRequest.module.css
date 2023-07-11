@@ -1,23 +1,22 @@
 .buy {
-  margin-top: 3rem;
-  width: 40%;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 3rem auto;
+  width: 60%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
 
 .buyDiv1 {
   border: 1px solid rgb(190, 183, 183);
   border-radius: 5px;
-  background-color: white;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 20px;
+  gap: 10px;
+  width: 80%;
 }
 
 .forUsername {
@@ -101,30 +100,51 @@
 
 
 
-.animationContainer {
+.animation-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  font-family: 'Roboto', sans-serif; /* Added font-family */
- 
+  text-align: center;
+  font-family: 'Roboto', sans-serif; 
+  height: 100vh; /* this will make sure that the container takes the full height of the viewport */
 }
 
-.transferDetails {
-  text-align: center;
+.transfer-details {
+  text-align: left;
   max-width: 400px;
   margin-top: 20px;
+  margin-left: 3%;
 }
 
-.transferDetails h2 {
-  font-weight: 700; /* Roboto bold */
+
+.transfer-details h4 {
+  font-weight: 1000; /* Roboto bold */
   margin-bottom: 20px;
 }
 
-.transferDetails p {
+.transfer-details p {
   font-weight: 400; /* Roboto regular */
 }
+
+
+.download-receipt {
+  background-color: #0070ba;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.download-receipt:hover {
+  box-shadow: 0 4px 10px rgba(0, 112, 186, 0.8);
+}
+
 
 
 

@@ -36,10 +36,30 @@
   border: 1px solid #046096;
   box-shadow: 0px 0px 5px #0079c1;
 }
-
 .contactAbc {
-  border: 1px solid red;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px; 
+  transition: background-color 0.3s ease;
+  background-color: #f5f5f5; /* Light grey background color */
+  z-index: 10; /* Increase z-index to make the contact appear above other elements */
 }
+
+.contactAbc:hover {
+  background-color: #ebebeb; /* Change the background color when hovering */
+}
+
+.selectedAbc {
+  background-color: #b8d8d8; /* Distinct color for selected contact */
+  z-index: 20; /* Increase z-index even more for selected contacts */
+}
+
+.userNotFound {
+  color: red;
+  font-weight: bold;
+  z-index: 1; 
+}
+
 
 #btn1 {
   width: 17%;

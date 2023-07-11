@@ -53,26 +53,28 @@
 }
 
 
-li {
+.sendReqHeader li {
   border-radius: 30px;
-  padding: 8px 16px; 
+  padding: 8px 16px;
   font-weight: normal;
   cursor: pointer;
   border: 2px solid #fff;
 }
 
-.pyplLink:hover {
+.sendReqHeader .pyplLink:hover {
   color: #0070ba;
   border: 2px solid rgba(209, 241, 255, 0.4);
   transition: 0.3s ease-in-out;
   font-weight: 600;
 }
 
-.active {
+.sendReqHeader .active {
   color: #0070ba;
   background-color: rgba(209, 241, 255, 0.4);
   font-weight: 600;
 }
+
+
 
 @media screen and (max-width: 480px) {
   .sendReqHeader {
