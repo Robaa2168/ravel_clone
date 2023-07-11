@@ -45,7 +45,7 @@ function RequestFrom() {
 
   const handleRequest = () => {
     if (selectedContacts.length > 0) {
-      navigate('/request', { state: { receiverInfo: selectedContacts[0] } });
+      navigate('/complete_request', { state: { receiverInfo: selectedContacts[0] } });
     }
   };
 
@@ -125,19 +125,20 @@ function RequestFrom() {
           value={searchTerm}
           onChange={handleSearchTermChange}
         />
-        {userNotFound ? (
-          <div>User not found</div>
-        ) : (
-          contacts.map((contact) => (
-            <div
-              key={contact.id}
-              className={`${styles.contact} ${selectedContacts.some((c) => c.id === contact.id) ? styles.selected : ''}`}
-              onClick={() => handleContactSelect(contact)}
-            >
-              {contact.firstName} {contact.lastName}
-            </div>
-          ))
-        )}
+       {userNotFound ? (
+  <div className={styles.userNotFound}>User not found</div>
+) : (
+  contacts.map((contact) => (
+    <div
+      key={contact.id}
+      className={`${styles.contactAbc} ${selectedContacts.some((c) => c.id === contact.id) ? styles.selectedAbc : ''}`}
+      style={{ background: '#f5f5f5', zIndex: 10 }}
+      onClick={() => handleContactSelect(contact)}
+    >
+      {contact.firstName} {contact.lastName}
+    </div>
+  ))
+)}
 
         <div className={styles.users}>
           <div>

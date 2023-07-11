@@ -109,6 +109,47 @@
   line-height: 13px;
 }
 
+.selectedContact {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 4px;
+  margin-right: 4px;
+}
+
+.contactName {
+  margin-right: 8px;
+}
+
+.clearIcon {
+  cursor: pointer;
+}
+
+
+.contactAbc {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px; 
+  transition: background-color 0.3s ease;
+  background-color: #f5f5f5; 
+  z-index: 10;
+}
+
+.contactAbc:hover {
+  background-color: #ebebeb;
+}
+
+.selectedAbc {
+  background-color: #b8d8d8; 
+  z-index: 20; 
+}
+
+.userNotFound {
+  color: red;
+  font-weight: bold;
+  z-index: 1; 
+}
 @media screen and (max-width: 1024px) {
   .sendMoney2 {
     flex-direction: column;
