@@ -26,3 +26,9 @@
 .questionLinks:hover {
   color: #0070ba;
 }
+
+@media screen and (max-width: 767px) {
+  .commonQ {
+    width: 100%;
+  }
+}

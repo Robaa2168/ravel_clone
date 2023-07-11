@@ -31,3 +31,9 @@
   font-size: 1.3rem;
   cursor: pointer;
 }
+
+@media screen and (max-width: 767px) {
+  .commonQ {
+    width: 100%;
+  }
+}

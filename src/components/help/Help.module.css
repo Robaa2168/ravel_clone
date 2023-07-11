@@ -129,6 +129,7 @@
   font-size: 1.3rem;
   font-weight: 500;
   color: black;
+  text-align: center;
 }
 
 .surveyP>span {
@@ -136,4 +137,36 @@
   font-weight: 600;
   color: #0070ba;
   cursor: pointer;
+}
+
+@media screen and (max-width: 1023px) {
+  .helpMainDiv1 {
+    width: 95%;
+  }
+
+  .technicalHelp {
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .commonQuizes {
+    flex-direction: column-reverse;
+  }
+
+  .commonQuizes>.navSideBar {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .technicalHelp {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .surveyP {
+    font-size: 1rem;
+  }
 }
