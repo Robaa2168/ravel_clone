@@ -334,7 +334,7 @@ function MyAccount() {
           </div>
           {toggle6 ? (
             <div className={styles.questions}>
-              <p>
+              <p className={styles.subtopic}>
                 Click on a subtopic below and dive deeper into Tax information
                 topics.
               </p>

@@ -60,6 +60,10 @@
   color: #0070ba;
 }
 
+.subtopic {
+  margin: 0;
+}
+
 @media screen and (max-width: 767px) {
   .commonQ {
     width: 100%;
