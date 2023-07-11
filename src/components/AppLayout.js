@@ -134,7 +134,7 @@ const AppLayout = () => {
             }
           />
           <Route
-            path="/buy"
+            path="/complete_send"
             element={
               <ProtectedRoute>
                 <FinishRequest />
@@ -142,7 +142,7 @@ const AppLayout = () => {
             }
           />
           <Route
-            path="/request"
+            path="/complete_request"
             element={
               <ProtectedRoute>
                 <FinishRequestFrom />
