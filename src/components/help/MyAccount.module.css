@@ -19,17 +19,45 @@
 .myContainerDiv {
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+  padding: 11px 0;
 }
 
-.myContainerDiv > .containerP {
+.myContainerDiv>.containerP {
   font-size: 1.2rem;
   font-weight: 400;
   color: black;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-.myContainerDiv > .containerIcon {
+.myContainerDiv>.containerIcon {
   font-size: 1.3rem;
-  cursor: pointer;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.myContainerActive {
+  border: 2px solid #0070ba;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px #0079c1;
+  margin-bottom: 15px;
+}
+
+.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.questionLinks {
+  color: #0070ba;
+  font-weight: 600;
+}
+
+.questionLinks:hover {
+  color: #0070ba;
 }
 
 @media screen and (max-width: 767px) {

@@ -41,30 +41,10 @@ function DisputesAndLimitations() {
           {toggle ? (
             <div className={styles.questions}>
               <Link className={styles.questionLinks}>
-                Why is the payment I sent pending or unclaimed? Can I cancel it?
+                How do I return an item to the seller?
               </Link>
               <Link className={styles.questionLinks}>
-                What is an automatic payment and how do I update or cancel one?
-              </Link>
-              <Link className={styles.questionLinks}>
-                I want my money back. Cancel I cancel a payment?
-              </Link>
-              <Link className={styles.questionLinks}>
-                What's an "authorization" and can I cancel it?
-              </Link>
-
-              <Link className={styles.questionLinks}>
-                Can I cancel a withdrawal from my Ravel account?
-              </Link>
-              <Link className={styles.questionLinks}>
-                Can I cancel a money transfer from my bank account to my Ravel
-                account?
-              </Link>
-              <Link className={styles.questionLinks}>
-                What's an Order and why is it pending?
-              </Link>
-              <Link className={styles.questionLinks}>
-                Can I cancel an eCheck payment?
+                What should I do if I didn't receive all my items or if one or more were late?
               </Link>
             </div>
           ) : (
@@ -88,30 +68,29 @@ function DisputesAndLimitations() {
           {toggle1 ? (
             <div className={styles.questions}>
               <Link className={styles.questionLinks}>
-                Why is the payment I sent pending or unclaimed? Can I cancel it?
+                How do I remove a limitation from my account?
               </Link>
               <Link className={styles.questionLinks}>
-                What is an automatic payment and how do I update or cancel one?
+                Why is my Ravel account limited?
               </Link>
               <Link className={styles.questionLinks}>
-                I want my money back. Cancel I cancel a payment?
+                How long will it take to lift my Ravel account limitation?
               </Link>
               <Link className={styles.questionLinks}>
-                What's an "authorization" and can I cancel it?
+                What kind of documentation can I provide to remove my account limitation?
               </Link>
 
               <Link className={styles.questionLinks}>
-                Can I cancel a withdrawal from my Ravel account?
+                What should I do if my account becomes limited because I did not provide the requested FATCA information?
               </Link>
               <Link className={styles.questionLinks}>
-                Can I cancel a money transfer from my bank account to my Ravel
-                account?
+               Error message during upload? Here's what it means
               </Link>
               <Link className={styles.questionLinks}>
-                What's an Order and why is it pending?
+                What is a beneficial owner and why do I need to provide this information?
               </Link>
               <Link className={styles.questionLinks}>
-                Can I cancel an eCheck payment?
+                Why is Ravel requesting information about my business?
               </Link>
             </div>
           ) : (
@@ -135,30 +114,16 @@ function DisputesAndLimitations() {
           {toggle2 ? (
             <div className={styles.questions}>
               <Link className={styles.questionLinks}>
-                Why is the payment I sent pending or unclaimed? Can I cancel it?
+                How do I report an unauthorized transaction or account activity?
               </Link>
               <Link className={styles.questionLinks}>
-                What is an automatic payment and how do I update or cancel one?
+               How do I spot a fake, fraudulent, or phishing Ravel email or website?
               </Link>
               <Link className={styles.questionLinks}>
-                I want my money back. Cancel I cancel a payment?
+                How do I report potential fraud, spoof or unauthorized transactions to Ravel?
               </Link>
               <Link className={styles.questionLinks}>
-                What's an "authorization" and can I cancel it?
-              </Link>
-
-              <Link className={styles.questionLinks}>
-                Can I cancel a withdrawal from my Ravel account?
-              </Link>
-              <Link className={styles.questionLinks}>
-                Can I cancel a money transfer from my bank account to my Ravel
-                account?
-              </Link>
-              <Link className={styles.questionLinks}>
-                What's an Order and why is it pending?
-              </Link>
-              <Link className={styles.questionLinks}>
-                Can I cancel an eCheck payment?
+                What should I do if I think there has been unauthorized access to my Ravel data?
               </Link>
             </div>
           ) : (
