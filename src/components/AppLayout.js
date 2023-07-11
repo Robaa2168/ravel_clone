@@ -197,7 +197,7 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/help" element={<Help />} />
+          <Route path="/help/*" element={<Help />} />
         </Routes>
 
         {!excludedRoutes.includes(location.pathname) && <Footer />}

@@ -1,0 +1,33 @@
+.commonQ {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.commonQ>.commonQP {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: black;
+  line-height: 1rem;
+}
+
+.myContainer {
+  margin-top: 10px;
+}
+
+.myContainerDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.myContainerDiv > .containerP {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: black;
+}
+
+.myContainerDiv > .containerIcon {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
