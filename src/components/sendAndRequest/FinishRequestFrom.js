@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import styles from "./FinishRequestFrom.module.css";
 import { FaUser, FaDollarSign } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
@@ -228,18 +228,55 @@ function FinishRequestFrom() {
     }
   }
 
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+
+    let newValue = "0.00";
+
+    // Remove any non-digit characters from the entered value
+    const sanitizedValue = inputValue.replace(/[^\d]/g, "");
+
+    if (sanitizedValue !== "") {
+      // Get the length of the sanitized value
+      const valueLength = sanitizedValue.length;
+
+      if (valueLength === 1) {
+        // If only one digit is entered, update the decimal part
+        newValue = `0.0${sanitizedValue}`;
+      } else if (valueLength === 2) {
+        // If two digits are entered, update the decimal part
+        newValue = `0.${sanitizedValue}`;
+      } else if (valueLength > 2) {
+        // If more than two digits are entered, update the whole part and decimal part
+        const wholePart = sanitizedValue.slice(0, valueLength - 2);
+        const decimalPart = sanitizedValue.slice(valueLength - 2);
+        newValue = `${wholePart}.${decimalPart}`;
+      }
+    }
+
+    setRequestAmount(newValue);
+  };
+
   return showSuccess ? (
     <div className={styles["animation-container"]}>
       <Lottie
         animationData={successAnimation}
-        style={{ width: '200px', height: '200px' }}
+        style={{ width: "200px", height: "200px" }}
       />
       <div className={styles["transfer-details"]}>
         <h2>Request Successful</h2>
-        <p><strong>Request ID:</strong> {id}</p>
-        <p><strong>Receiver:</strong> {`${firstName} ${lastName}`}</p>
-        <p><strong>Amount:</strong> {`${requestAmount} ${selectedCurrency}`}</p>
-        <p><strong>Date:</strong> {requestDate}</p>
+        <p>
+          <strong>Request ID:</strong> {id}
+        </p>
+        <p>
+          <strong>Receiver:</strong> {`${firstName} ${lastName}`}
+        </p>
+        <p>
+          <strong>Amount:</strong> {`${requestAmount} ${selectedCurrency}`}
+        </p>
+        <p>
+          <strong>Date:</strong> {requestDate}
+        </p>
       </div>
       <button className={styles["download-receipt"]} onClick={generateReceipt}>
         Download Receipt
@@ -261,7 +298,7 @@ function FinishRequestFrom() {
             type="text"
             className={styles.finishRequestFromInput}
             value={requestAmount}
-            onChange={(e) => setRequestAmount(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className={styles.currencyDropdownContainer}>
@@ -312,5 +349,8 @@ function FinishRequestFrom() {
       </div>
     </div>
   );
-            }  
+
+}
+
 export default FinishRequestFrom;
+

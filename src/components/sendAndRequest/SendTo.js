@@ -134,8 +134,6 @@ function SendTo() {
     </div>
   ))
 )}
-
-
         <button
           id={styles.btn1}
           onClick={handleBuy}

@@ -1,0 +1,267 @@
+.topupSection {
+    margin-top: 9rem;
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.topupHeader h1 {
+    color: #0070ba;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.addMoneyContainer {
+    display: flex;
+}
+
+.popupPic {
+    position: relative;
+}
+
+.popupPic img {
+    max-width: 100%;
+    display: block;
+    padding-top: 20px !important;
+}
+
+.howToContainer {
+    margin-bottom: 2em;
+}
+
+.howToContainer .item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.howToContainer .item li {
+    list-style: none;
+}
+
+.howToContainer .item .bulletNumber {
+    margin-right: 10px;
+    padding: 0.5em;
+    background-color: #cacaca;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.first, .second, .third {
+    border: none;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.textHighlighted {
+    font-weight: 500;
+    color: #0070ba;
+}
+
+.topupCalculator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+    background-color: #f1f4f6;
+    padding: 3rem 2rem;
+    border-bottom: 1px solid #cacbcb;
+    border-top: 1px solid #cacbcb;
+}
+
+.topupInput {
+    width: 50%;
+}
+
+.inputSelect input {
+    border-radius: 5px 0px 0px 5px;
+    padding: 0.5em;
+    border-right: none;
+    background-color: white;
+    border: 3px solid rgb(226, 219, 219);
+}
+
+.inputSelect input:focus {
+    border-right: 3px !important;
+    outline: none;
+    border: 1px solid #046096;
+    box-shadow: 0px 0px 5px #0079c1;
+}
+
+.topupCalculator select {
+    appearance: none;
+    padding: 0.5em;
+    border: 3px solid #cacbcb;
+    border-radius: 0px 5px 5px 0px;
+    border-left: none;
+    background-color: #cacbcb;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.topupInputContainer {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.inputSelect {
+    display: flex;
+    align-items: center;
+}
+
+.buttonContainer {
+    width: 100%;
+}
+
+.buttonContainer button {
+    width: 100% !important;
+    background: #0070ba;
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 30px;
+    border: 1px solid #0070ba;
+}
+
+.topupfundsOutput {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+}
+
+.topupfundsOutput p {
+    margin: 0;
+    font-weight: 700;
+}
+
+.topupfundsOutput p > span {
+    font-weight: 700;
+}
+
+.topupfundsOutput span {
+    font-size: 14px;
+}
+
+.topupfundsOutput h3 {
+    font-size: 1.5rem;
+}
+
+
+/* responsiveness */
+
+@media screen and (max-width: 1279px) {
+/* S {
+        margin: 15% 2em 1em 2em;
+    } */
+
+    .topupSection {
+        width: 90%;
+    }
+
+    .topupHeader h1 {
+        font-weight: lighter;
+        font-size: 30px;
+    }
+
+    .topupPic {
+        display: none !important;
+    }
+
+    .addMoneyContainer {
+        font-size: 13px;
+    }
+
+    .howToContainer .item {
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .howToContainer .item .bulletNumber {
+        font-size: 10px;
+        width: 20px;
+        height: 20px;
+        padding: 1rem;
+    }
+
+    .howToContainer .item li {
+        color: #909090;
+    }
+
+    .topupDirectionsHowto h3 {
+        font-size: 20px;
+    }
+    
+    .topupDirectionsHowto p {
+        color: #909090;
+    }
+
+    .topupCalculator {
+        display: flex;
+        flex-direction: column;
+        /* align-items: flex-start;
+        justify-content: left; */
+        margin-top: 2rem;
+        padding: 2rem 2rem 2rem 2rem;
+        font-size: 13px;
+    }
+
+    .topupInput {
+        width: 100%;
+    }
+
+    .amountYouWant {
+        width: 100%;
+    }
+
+    .inputSelect input {
+        width: 100%;
+    }
+
+    .arrow {
+        display: none;
+    }
+
+    form span {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .topupCalculator select {
+        margin-right: 0;
+    }
+
+    .topupInputContainer {
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .buttonContainer {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .topupfundsOutput {
+        margin-left: 0;
+        margin-top: 2rem;
+        border-top: 1px solid #cacbcb;
+        width: 100%;
+    }
+
+    .topupfundsOutput p {
+        font-size: 20px;
+    }
+
+    .topupfundsOutput h3 {
+        font-size: 1.5rem;
+    }
+}

@@ -26,6 +26,7 @@ import SendAndRequest from "./sendAndRequest/SendAndRequest";
 import FinishRequest from "./sendAndRequest/FinishRequest";
 import FinishRequestFrom from "./sendAndRequest/FinishRequestFrom";
 import Help from "./help/Help";
+import { MpesaHome, TopUp, Withdraw } from "./PaypalMpesa";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -148,6 +149,30 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/ravel-mpesa"
+            element={
+              <ProtectedRoute>
+                <MpesaHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/withdraw"
+            element={
+              <ProtectedRoute>
+                <Withdraw />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/topup"
+            element={
+              <ProtectedRoute>
+                <TopUp />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify_forgot" element={<VerificationForgot />} />
@@ -172,7 +197,7 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/help" element={<Help />} />
+          <Route path="/help/*" element={<Help />} />
         </Routes>
 
         {!excludedRoutes.includes(location.pathname) && <Footer />}

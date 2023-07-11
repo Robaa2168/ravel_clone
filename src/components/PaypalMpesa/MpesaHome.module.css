@@ -1,0 +1,89 @@
+.pyplMpesaSection {
+    margin-top: 6.5rem;
+    height: 88vh;
+    background: url(https://res.cloudinary.com/dztycn4or/image/upload/v1681885826/home-bg-logged_f051pj.jpg);
+    /* background-position: center; */
+    background-size: cover;
+}
+
+.pyplWlcmInfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 13rem;
+    padding-top: 10rem;
+    max-width: 35%;
+}
+
+.pyplWlcmInfo h1 {
+    color: #0070ba;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.3em;
+}
+
+.pyplWlcmInfo p {
+    font-size: 15px;
+}
+
+.pyplWltBtnsContainer {
+    display: flex;
+}
+
+.pyplWltBtnsContainer :first-child {
+    margin-right: 1em !important;
+}
+
+.pyplWltBtnsContainer .button {
+    background-color: #0070BA;
+    color: #fff;
+    font-size: 1em;
+    margin: 10px 0 0 0;
+    padding: 7px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.pyplWltBtnsContainer .button:hover {
+    background-color: #005EA6;
+    transition: 0.2s ease-in-out;
+}
+
+
+/* responsoveness */
+
+@media screen and (max-width: 767px) {
+    .pyplMpesaSection {
+        background-position: 40%;
+    }
+
+    .pyplWlcmInfo {
+        margin-left: 1em;
+        padding-top: 15%;
+        width: 290px;
+    }
+
+    .pyplWlcmInfo h1 {
+        font-size: 1.5em;
+        max-width: 8em !important;
+    }
+
+    .pyplWlcmInfo p {
+        font-size: 11px;
+        max-width: 15em;
+    }
+
+    .pyplWltBtnsContainer {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        max-width: 20em;
+    }
+
+    .pyplWltBtnsContainer :first-child {
+        margin-right: 0;
+    }
+
+    .pyplWltBtnsContainer .button {
+        font-size: 12px;
+    }
+}

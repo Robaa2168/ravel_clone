@@ -1,0 +1,177 @@
+.pypl-mpesa-header {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.04) 0rem 0rem 0.5rem,
+        rgba(0, 0, 0, 0.1) 0rem 0.125rem 1.125rem;
+    height: 10%;
+    position: fixed;
+    top: 11.5%;
+    left: 0;
+    margin-bottom: 2em;
+    z-index: 1000;
+    background-color: #fff;
+    border-bottom: 1px solid #c5c5c5;
+}
+
+.desktop-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0 20px;
+    height: 100%;
+}
+
+.desktop-navbar .logo-container {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.desktop-navbar .logo-container .pypl-logo {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #c5c5c5;
+}
+
+.desktop-navbar .logo-container .mpesa-logo .mpesa {
+    color: green;
+    font-size: 14px;
+    border: 2px solid white;
+    padding: 4px 12px;
+    border-radius: 30px;
+}
+
+.nav-container-desktop {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.nav-item-desktop {
+    margin-right: 15px;
+    cursor: pointer;
+    border: 2px solid white;
+    padding: 4px 12px;
+    border-radius: 30px;
+}
+
+.nav-item-desktop:hover, .desktop-navbar .logo-container .mpesa-logo .mpesa:hover  {
+    transition: 0.3s ease;
+    color: var(--pal-blue);
+    border: 2px solid rgba(209, 241, 255, 0.4);
+}
+
+.active {
+    color: #0070ba;
+    background-color: rgba(209, 241, 255, 0.4);
+    font-weight: 600;
+  }
+
+.login-content {
+    display: flex;
+    align-items: center;
+}
+
+.login-content .user-welcome {
+    color: #c5c0c0;
+    margin-right: 10px;
+}
+
+.login-content button {
+    background: transparent;
+    border: 1px solid var(--pal-blue);
+    padding: 7px 20px;
+    border-radius: 30px;
+    color: var(--pal-blue);
+    cursor: pointer;
+
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+/* responsiveness */
+
+@media screen and (max-width: 767px) {
+    .pypl-mpesa-header {
+        /* display: flex;
+        justify-content: space-between;
+        align-items: center; */
+        background: #fff;
+        padding: 10px;
+    }
+
+    .mobile-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+        padding-left: 1em;
+    }
+
+    .pypl-logo {
+        border-right: 1px solid gray;
+        padding-right: 10px;
+    }
+
+    .pypl-logo img {
+        width: 25px;
+    }
+
+    .mpesa-logo .mpesa {
+        color: green;
+        font-size: 15px;
+        border: 2px solid white;
+        padding: 4px 12px;
+        border-radius: 30px;
+    }
+
+    .hamburger-icon .icon {
+        color: var(--pal-blue);
+        font-size: 20px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    /* mobile navigation styling */
+    .mobile-navigations {
+        width: 100%;
+        transition: top 0.2s ease-in-out;
+        background-color: white;
+    }
+
+    .nav-container__mobile {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nav-item__mobile {
+        border-top: 1px solid #c5c0c0;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .nav-item__mobile:hover {
+        color: var(--pal-blue);
+        transition: 0.3s ease;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .desktop-navbar {
+        width: 80%;
+    }
+}
