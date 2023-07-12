@@ -66,9 +66,9 @@ const Navbar = () => {
               Top Up
             </Link>
             <Link
-              to="/ravel-mpesa"
+              to="/ravel-mpesa/transaction-history"
               className={`nav-item__mobile ${
-                location.pathname === "/ravel-mpesa" ? "active" : ""
+                location.pathname === "/ravel-mpesa/transaction-history" ? "active" : ""
               }`}
             >
               Transaction History
@@ -113,9 +113,9 @@ const Navbar = () => {
                 Top Up
               </Link>
               <Link
-                to="/ravel-mpesa"
+                to="/ravel-mpesa/transaction-history"
                 className={`nav-item-desktop ${
-                  location.pathname === "/ravel-mpesa" ? "active" : ""
+                  location.pathname === "/ravel-mpesa/transaction-history" ? "active" : ""
                 }`}
               >
                 Transaction History
