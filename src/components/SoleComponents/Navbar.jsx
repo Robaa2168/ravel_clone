@@ -1,131 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import "./Navbar.css";
-import { Link, useLocation } from "react-router-dom";
+import React from "react";
+import styles from "./SettingsHeader.module.css";
+import { NavLink } from "react-router-dom";
+import { useSwipeable } from "react-swipeable";
 
-const Navbar = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [openMobileNav, setOpenMobilenav] = useState(false);
-  const location = useLocation();
-
-  useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 768);
+function SettingsHeader() {
+  const handleSwipe = (eventData) => {
+    if (eventData.dir === "Left") {
+      // Handle swipe left logic
+    } else if (eventData.dir === "Right") {
+      // Handle swipe right logic
     }
+  };
 
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const swipeHandlers = useSwipeable({ onSwiped: handleSwipe });
 
   return (
-    <header className="pypl-mpesa-header">
-      {/* mobile navbar */}
-      {isMobile && (
-        <div className="mobile-navbar">
-          <div className="logo-container">
-            <div className="mpesa-logo">
-              <Link
-                to="/ravel-mpesa"
-                className={`mpesa ${
-                  location.pathname === "/ravel-mpesa" ? "active" : ""
-                }`}
-              >
-                M-PESA
-              </Link>
-            </div>
-          </div>
-          <div className="hamburger-icon">
-            <FaBars
-              onClick={() => setOpenMobilenav(!openMobileNav)}
-              className="icon"
-            />
-          </div>
-        </div>
-      )}
-
-      {/* mobile navigation */}
-      {openMobileNav && (
-        <nav className="mobile-navigations">
-          <ul className="nav-container__mobile">
-            <Link
-              to="/ravel-mpesa/withdraw"
-              className={`nav-item__mobile ${
-                location.pathname === "/ravel-mpesa/withdraw" ? "active" : ""
-              }`}
-            >
-              Withdraw
-            </Link>
-            <Link
-              to="/ravel-mpesa/topup"
-              className={`nav-item__mobile ${
-                location.pathname === "/ravel-mpesa/topup" ? "active" : ""
-              }`}
-            >
-              Top Up
-            </Link>
-            <Link
-              to="/ravel-mpesa"
-              className={`nav-item__mobile ${
-                location.pathname === "/ravel-mpesa" ? "active" : ""
-              }`}
-            >
-              Transaction History
-            </Link>
-          </ul>
-        </nav>
-      )}
-
-      {/* desktop navigation */}
-      {!isMobile && (
-        <div className="desktop-navbar">
-          <div className="logo-container">
-            <div className="mpesa-logo">
-              <Link
-                to="/ravel-mpesa"
-                className={`mpesa ${
-                  location.pathname === "/ravel-mpesa" ? "active" : ""
-                }`}
-              >
-                M-PESA
-              </Link>
-            </div>
-          </div>
-
-          {/* desktop navbar */}
-          <nav className="desktop-navigations">
-            <ul className="nav-container-desktop">
-              <Link
-                to="/ravel-mpesa/withdraw"
-                className={`nav-item-desktop ${
-                  location.pathname === "/ravel-mpesa/withdraw" ? "active" : ""
-                }`}
-              >
-                Withdraw
-              </Link>
-              <Link
-                to="/ravel-mpesa/topup"
-                className={`nav-item-desktop ${
-                  location.pathname === "/ravel-mpesa/topup" ? "active" : ""
-                }`}
-              >
-                Top Up
-              </Link>
-              <Link
-                to="/ravel-mpesa"
-                className={`nav-item-desktop ${
-                  location.pathname === "/ravel-mpesa" ? "active" : ""
-                }`}
-              >
-                Transaction History
-              </Link>
-            </ul>
-          </nav>
-        </div>
-      )}
-    </header>
+    <div className={styles.settingsNav} {...swipeHandlers}>
+      <div className={styles.scrollContainer}>
+        <NavLink
+          to="/ravel-mpesa/deposit"
+          className={styles.account}
+          activeClassName={styles.active}
+        >
+          Deposit
+        </NavLink>
+        <NavLink
+          to="/ravel-mpesa/withdraw"
+          className={styles.account}
+          activeClassName={styles.active}
+        >
+          Withdraw
+        </NavLink>
+        <NavLink
+          to="/history"
+          className={styles.account}
+          activeClassName={styles.active}
+        >
+         History
+        </NavLink>
+        
+      </div>
+    </div>
   );
-};
+}
 
-export default Navbar;
+export default SettingsHeader;

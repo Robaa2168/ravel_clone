@@ -14,10 +14,12 @@ import MyAccount from "./MyAccount";
 import MyWallet from "./MyWallet";
 import LoginAndSecurity from "./LoginAndSecurity";
 import SellerTools from "./SellerTools";
+import { useUser } from "../context";
 
 function Help() {
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
+  const { user } = useUser();
 
   // Handle input change
   const handleSearchTermChange = (event) => {
@@ -32,7 +34,7 @@ function Help() {
             Help Center - Personal Account
           </p>
           <p className={styles.helpContainerP2}>
-            Welcome Stanley, how can we help?
+            Welcome {user?.userInfo?.firstName}, how can we help?
           </p>
           <input
             type="text"

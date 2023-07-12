@@ -1,5 +1,5 @@
 .pyplWithdrawSection {
-    margin-top: 9rem;
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -38,6 +38,7 @@
     border-bottom: 1px solid #333 !important;
     margin-bottom: 1.5em;
     width: 80%;
+    margin-top: 1em;
 }
 
 .withdrawContainer p {
@@ -45,7 +46,13 @@
     font-size: 14px;
     margin-bottom: 1em;
 }
-
+.customSelect {
+    border: none;
+  }
+.customSelect:focus {
+    outline: none;
+  }
+  
 .inputContainer {
     display: flex;
     margin-bottom: 1em;
@@ -95,6 +102,83 @@
 }
 
 
+.errorMessage {
+    background-color: #ffdddd;
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+    color: #ff0000;
+    font-size: 14px;
+    padding: 5px 10px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+  }
+  
+  .errorMessage::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px dashed #ff0000;
+    border-radius: 6px;
+  }
+  
+  .animationcontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Roboto', sans-serif; 
+    height: auto;
+    margin-top: rem;
+  }
+ 
+  .transferdetails p {
+    font-weight: 400; /* Roboto regular */
+  }
+  
+  
+  .downloadreceipt {
+    background-color: #0070ba;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .downloadreceipt:hover {
+    box-shadow: 0 4px 10px rgba(0, 112, 186, 0.8);
+  }
+
+
+  .centeredContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+  }
+  
+  
+  .centeredContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .centeredButton {
+    margin-top: 20px; /* Add some spacing between the transfer details and the button */
+    text-align: center;
+  }
+  
 @media screen and (max-width: 767px) {
     .svgTransferIllustration {
         display: none;
