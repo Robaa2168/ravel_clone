@@ -9,17 +9,16 @@ const MpesaHome = () => {
       <Navbar />
       <section className={styles.pyplMpesaSection}>
         <div className={styles.pyplWlcmInfo}>
-          <h1>Welcome to Ravel Mobile Money Service with M-PESA.</h1>
+          <h1>Welcome to Ravel Mobile Money Service.</h1>
           <p>
-            Finally in Kenya you can now move funds between your Ravel and
-            M-PESA accounts. Your money, your choice!
+          Transfer your funds effortlessly between your Ravel pay and M-PESA accounts.
           </p>
           <div className={styles.pyplWltBtnsContainer}>
             <Link to="/ravel-mpesa/withdraw" className={styles.button}>
               Withdraw from Ravel
             </Link>
-            <Link to="/ravel-mpesa/topup" className={styles.button}>
-              Top Up to Ravel
+            <Link to="/ravel-mpesa/deposit" className={styles.button}>
+              Deposit to Ravel
             </Link>
           </div>
         </div>
