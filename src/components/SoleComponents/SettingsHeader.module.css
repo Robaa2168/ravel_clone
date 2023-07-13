@@ -41,7 +41,7 @@
 
 .account:hover {
   border: 1px solid #0070ba;
-  font-weight: 500;
+  /* font-weight: 500; */
   color: #0070ba;
 }
 
