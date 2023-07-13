@@ -35,8 +35,19 @@ const Withdraw = () => {
   const [withdrawalResponse, setWithdrawalResponse] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [pendingWithdrawal, setPendingWithdrawal] = useState(null);
+  const [isValid, setIsValid] = useState(false);
 
 
+  const handleAmountChange = (e) => {
+    const amount = e.target.value;
+    setAmountWithdrawal(amount);
+  
+    if (!isNaN(amount) && amount > 0) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
+    }
+  };
 
   const handleCurrencyChange = (e) => {
     setSelectedCurrency(e.target.value);
@@ -312,27 +323,26 @@ const Withdraw = () => {
                 </h5>
                 <p>Please enter the amount you would like to withdraw from your Ravel account:</p>
                 <div className={styles.inputContainer}>
-                  <input
-                    type="text"
-                    placeholder="Amount"
-                    name="amount"
-                    id=""
-                    value={amountwithdrawal}
-                    onChange={(e) => setAmountWithdrawal(e.target.value)}
-                    required
-                  />
-                  <select name="" id="" className={styles.customSelect}>
-                    <option value="USD" selected>
-                      {selectedCurrency}
-                    </option>
-                  </select>
-                </div>
-                <div className={styles.buttonContainer}>
-                  <button disabled={loading} onClick={handleSubmit}>
-                    {loading ? 'Processing...' : 'Continue to Withdraw'}
-                  </button>
-                  {error && <p className={styles.error}>{error}</p>} {/* Display error message */}
-                </div>
+  <input
+    type="text"
+    placeholder="Amount"
+    name="amount"
+    id=""
+    value={amountwithdrawal}
+    onChange={handleAmountChange}
+    required
+  />
+  <select name="" id="" className={styles.customSelect}>
+    <option value="USD" selected>
+      {selectedCurrency}
+    </option>
+  </select>
+</div>
+<div className={styles.buttonContainer}>
+  <button disabled={loading || !isValid} onClick={handleSubmit}>
+    {loading ? 'Processing...' : 'Continue to Withdraw'}
+  </button>
+</div>
               </div>
               <div className={styles.svgTransferIllustration}>
                 <img src="/ravel-withdraw.png" alt="transfer-illustration" />
