@@ -81,6 +81,7 @@ const Withdraw = () => {
     }
     return result;
   }
+  const transID = generateRandomTransactionNumber();
 
   const generateReceipt = async () => {
     let doc = new jsPDF();
@@ -172,7 +173,7 @@ const Withdraw = () => {
     doc.text(`Name: ${user?.userInfo?.firstName.toUpperCase()} ${user?.userInfo?.lastName.toUpperCase()}`, squareX + squareSize + 10, squareY + 5);
 
     // Add the transaction ID
-    const transID = generateRandomTransactionNumber();
+   
     doc.text(`Transaction No: ${transID}`, squareX + squareSize + 10, squareY + 15);
 
     // Add the date
@@ -231,7 +232,7 @@ const Withdraw = () => {
             <div className={styles.transferdetails}>
               <h2>Successful</h2>
               <p>
-                <strong>Withdraw ID:</strong> {withdrawalResponse.transID}
+                <strong>Withdraw ID:</strong> {`${transID}`}
               </p>
               <p>
                 <strong>Channel:</strong> Mpesa
@@ -253,76 +254,76 @@ const Withdraw = () => {
       </div>
     ) : (
       <>
-      <Navbar />
-      <section className={styles.pyplWithdrawSection}>
-        <div className={styles.mainWithdrawContent}>
-          <div className={styles.introHeader}>
-            <h1>Withdraw from your Ravel account</h1>
-          </div>
-
-          <div className={styles.withdrawWrapperSplitter}>
-            <div className={styles.withdrawContainer}>
-              <h5>
-                Available balance in your Ravel account:
-                {error && <p className={styles.errorMessage}>{error}</p>}
-                <div className={styles.balanceContainer}>
-                  <h5 className={styles.balance}>{getBalanceForCurrency(selectedCurrency)}</h5>
-                  <select
-                    className={styles.customSelect}
-                    name=""
+        <Navbar />
+        <section className={styles.pyplWithdrawSection}>
+          <div className={styles.mainWithdrawContent}>
+            <div className={styles.introHeader}>
+              <h1>Withdraw from your Ravel account</h1>
+            </div>
+  
+            <div className={styles.withdrawWrapperSplitter}>
+              <div className={styles.withdrawContainer}>
+                <h5>
+                  Available balance in your Ravel account:
+                  {error && <p className={styles.errorMessage}>{error}</p>}
+                  <div className={styles.balanceContainer}>
+                    <h5 className={styles.balance}>{getBalanceForCurrency(selectedCurrency)}</h5>
+                    <select
+                      className={styles.customSelect}
+                      name=""
+                      id=""
+                      value={selectedCurrency}
+                      onChange={handleCurrencyChange}
+                    >
+                      {/* Render the currency options */}
+                      {currencies.map((currency) => (
+                        <option key={currency} value={currency}>
+                          {currency}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </h5>
+                <p>Please enter the amount you would like to withdraw from your Ravel account:</p>
+                <div className={styles.inputContainer}>
+                  <input
+                    type="text"
+                    placeholder="Amount"
+                    name="amount"
                     id=""
-                    value={selectedCurrency}
-                    onChange={handleCurrencyChange}
-                  >
-                    {/* Render the currency options */}
-                    {currencies.map((currency) => (
-                      <option key={currency} value={currency}>
-                        {currency}
-                      </option>
-                    ))}
+                    value={amountwithdrawal}
+                    onChange={(e) => setAmountWithdrawal(e.target.value)}
+                    required
+                  />
+                  <select name="" id="" className={styles.customSelect}>
+                    <option value="USD" selected>
+                      {selectedCurrency}
+                    </option>
                   </select>
                 </div>
-              </h5>
-              <p>Please enter the amount you would like to withdraw from your Ravel account:</p>
-              <div className={styles.inputContainer}>
-                <input
-                  type="text"
-                  placeholder="Amount"
-                  name="amount"
-                  id=""
-                  value={amountwithdrawal}
-                  onChange={(e) => setAmountWithdrawal(e.target.value)}
-                  required
-                />
-                <select name="" id="">
-                  <option value="USD" selected>
-                    {selectedCurrency}
-                  </option>
-                </select>
+                <div className={styles.buttonContainer}>
+                  <button disabled={loading} onClick={handleSubmit}>
+                    {loading ? 'Processing...' : 'Continue to Withdraw'}
+                  </button>
+                  {error && <p className={styles.error}>{error}</p>} {/* Display error message */}
+                </div>
               </div>
-              <div className={styles.buttonContainer}>
-                <button disabled={loading} onClick={handleSubmit}>
-                  {loading ? 'Processing...' : 'Continue to Withdraw'}
-                </button>
-                {error && <p className={styles.error}>{error}</p>} {/* Display error message */}
+              <div className={styles.svgTransferIllustration}>
+                <img src="/ravel-withdraw.png" alt="transfer-illustration" />
               </div>
-            </div>
-            <div className={styles.svgTransferIllustration}>
-              <img src="/ravel-withdraw.png" alt="transfer-illustration" />
             </div>
           </div>
-        </div>
-        <div className={styles.importantInfo}>
-          <p>
-            Please note that the maximum amount per transaction is 150,000 KES and you can only hold up to 300,000 KES
-            in your M-PESA account. Make sure your M-PESA account can hold your withdrawal balance.
-          </p>
-        </div>
-       
-        </section>
-      </>
-    )
-  );
-};
+          <div className={styles.importantInfo}>
+            <p>
+              Please note that the maximum amount per transaction is 150,000 KES and you can only hold up to 300,000 KES
+              in your M-PESA account. Make sure your M-PESA account can hold your withdrawal balance.
+            </p>
+          </div>
+         
+          </section>
+        </>
+      )
+    );
+  };
 
 export default Withdraw;
