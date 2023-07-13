@@ -1,0 +1,109 @@
+.pyplMpesaSection {
+    margin-top: 3rem;
+    height: 88vh;
+    background: url('../../../public/ravelmpesa2.png');
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+  }
+  
+  .pyplWlcmInfo {
+    display: flex;
+    flex-direction: column;
+    margin-left: 13rem;
+    padding-top: 10rem;
+    max-width: 35%;
+  }
+  
+  .pyplWlcmInfo h1 {
+    color: #0070ba;
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.3em;
+  }
+  
+  .pyplWlcmInfo p {
+    font-size: 15px;
+  }
+  
+  .pyplWltBtnsContainer {
+    display: flex;
+  }
+  
+  .pyplWltBtnsContainer :first-child {
+    margin-right: 1em !important;
+  }
+  
+  .pyplWltBtnsContainer .button {
+    background-color: #0070BA;
+    color: #fff;
+    font-size: 1em;
+    margin: 10px 0 0 0;
+    padding: 7px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    width: 80%;
+    text-align: center;
+  }
+  
+  .pyplWltBtnsContainer .button:hover {
+    background-color: #005EA6;
+    transition: 0.2s ease-in-out;
+  }
+  
+  /* Responsiveness */
+  
+  @media screen and (max-width: 767px) {
+    .pyplMpesaSection {
+      background-position: 40%;
+    }
+  
+    .pyplWlcmInfo {
+      margin-left: 1em;
+      padding-top: 15%;
+      max-width: 100%;
+    }
+  
+    .pyplWlcmInfo h1 {
+      font-size: 1.5em;
+      max-width: 100% !important;
+    }
+  
+    .pyplWlcmInfo p {
+      font-size: 11px;
+      max-width: 100%;
+    }
+  
+    .pyplWltBtnsContainer {
+      flex-direction: column;
+      text-align: center;
+      max-width: 100%;
+    }
+  
+    .pyplWltBtnsContainer :first-child {
+      margin-right: 0;
+    }
+  
+    .pyplWltBtnsContainer .button {
+      font-size: 12px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .pyplWlcmInfo {
+      margin-left: 1em;
+      padding-top: 10%;
+      max-width: 100%;
+    }
+  
+    .pyplWlcmInfo h1 {
+      font-size: 1.2em;
+      max-width: 100% !important;
+    }
+  
+    .pyplWlcmInfo p {
+      font-size: 10px;
+      max-width: 100%;
+    }
+  }
+  

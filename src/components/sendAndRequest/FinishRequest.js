@@ -246,6 +246,35 @@ function FinishRequest() {
     }
   }
 
+  const handleInputChange = (event) => {
+    const inputValue = event.target.value;
+
+    let newValue = '0.00';
+
+    // Remove any non-digit characters from the entered value
+    const sanitizedValue = inputValue.replace(/[^\d]/g, '');
+
+    if (sanitizedValue !== '') {
+      // Get the length of the sanitized value
+      const valueLength = sanitizedValue.length;
+
+      if (valueLength === 1) {
+        // If only one digit is entered, update the decimal part
+        newValue = `0.0${sanitizedValue}`;
+      } else if (valueLength === 2) {
+        // If two digits are entered, update the decimal part
+        newValue = `0.${sanitizedValue}`;
+      } else if (valueLength > 2) {
+        // If more than two digits are entered, update the whole part and decimal part
+        const wholePart = sanitizedValue.slice(0, valueLength - 2);
+        const decimalPart = sanitizedValue.slice(valueLength - 2);
+        newValue = `${wholePart}.${decimalPart}`;
+      }
+    }
+
+    setTransferAmount(newValue);
+  };
+
   return showSuccess ? (
     <div className={styles["animation-container"]}>
       <Lottie animationData={successAnimation} style={{ width: '200px', height: '200px' }} />
@@ -285,7 +314,7 @@ function FinishRequest() {
             type="text"
             className={styles.finishRequestInput}
             value={transferamount}
-            onChange={(e) => setTransferAmount(e.target.value)}
+            onChange={handleInputChange}
           />
         </div>
         <div className={styles.currencyDropdownContainer}>

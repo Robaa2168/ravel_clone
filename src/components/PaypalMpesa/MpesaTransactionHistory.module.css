@@ -1,0 +1,70 @@
+.pyplTransactionSection {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  column-gap: 20px;
+}
+
+.pyplWltBtnsContainer {
+  display: flex;
+}
+
+.pyplWltBtnsContainer :first-child {
+  margin-right: 1em !important;
+}
+
+.pyplWltBtnsContainer .button {
+  background-color: #0070BA;
+  color: #fff;
+  font-size: 1em;
+  margin: 10px 0;
+  padding: 5px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.pyplWltBtnsContainer .button:hover {
+  background-color: #005EA6;
+  transition: 0.2s ease-in-out;
+}
+
+.par1 {
+  font-size: 1.7rem;
+  color: #0070ba;
+  font-weight: 300;
+}
+
+.par2 {
+  margin: 15px 0 0 0;
+  font-size: 1.1rem;
+}
+
+.par3 {
+  color: #0070ba;
+  margin: 5px 0;
+}
+
+.par3 > span {
+  text-decoration: underline;
+}
+
+.par3 > span:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 410px) {
+  .pyplWltBtnsContainer {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pyplWltBtnsContainer :first-child {
+    margin-right: 0 !important;
+  }
+}

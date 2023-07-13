@@ -11,12 +11,12 @@ function SendAndRequest() {
     <div>
       <SendRequestHeader />
       <Routes>
-          <Route path="/" element={<SendTo />} />
-          <Route path="/send-to" element={<SendTo />} />
-          <Route path="/request-from" element={<RequestFrom />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/more" element={<More />} />
-        </Routes>
+        <Route path="/" element={<SendTo />} />
+        <Route path="/send-to" element={<SendTo />} />
+        <Route path="/request-from" element={<RequestFrom />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/more" element={<More />} />
+      </Routes>
     </div>
   );
 }

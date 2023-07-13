@@ -26,6 +26,8 @@ import SendAndRequest from "./sendAndRequest/SendAndRequest";
 import FinishRequest from "./sendAndRequest/FinishRequest";
 import FinishRequestFrom from "./sendAndRequest/FinishRequestFrom";
 import Help from "./help/Help";
+import { MpesaHome, TopUp, Withdraw } from "./PaypalMpesa";
+import MpesaTransactionHistory from "./PaypalMpesa/MpesaTransactionHistory";
 
 const AppLayout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -47,7 +49,7 @@ const AppLayout = () => {
   }, [user]);
 
   if (loading) {
-    return null; // Or replace with a loading component if desired
+    return null; 
   }
 
   const toggleSidebar = () => {
@@ -148,6 +150,38 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/ravel-mpesa"
+            element={
+              <ProtectedRoute>
+                <MpesaHome />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/withdraw"
+            element={
+              <ProtectedRoute>
+                <Withdraw />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ravel-mpesa/deposit"
+            element={
+              <ProtectedRoute>
+                <TopUp />
+              </ProtectedRoute>
+            }
+          />
+              <Route
+            path="/ravel-mpesa/history"
+            element={
+              <ProtectedRoute>
+                <MpesaTransactionHistory />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/verify_forgot" element={<VerificationForgot />} />
@@ -172,7 +206,7 @@ const AppLayout = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/help" element={<Help />} />
+          <Route path="/help/*" element={<Help />} />
         </Routes>
 
         {!excludedRoutes.includes(location.pathname) && <Footer />}

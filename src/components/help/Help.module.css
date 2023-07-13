@@ -1,3 +1,172 @@
 .helpMain {
-  padding: 20px;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.helpMainDiv1 {
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
+.helpContainerP1 {
+  font-weight: 600;
+  color: black;
+}
+
+.helpContainerP2 {
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: black;
+}
+
+.helpInput {
+  width: 100%;
+  padding: 10px 8px;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
+  border: 2px solid rgb(226, 219, 219);
+}
+
+.helpInput:focus {
+  outline: none;
+  border: 2px solid #046096;
+  box-shadow: 0px 0px 5px #0079c1;
+}
+
+.commonQuizes {
+  display: flex;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.commonQuizes>.navSideBar {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.navSideBar>.sideLinks {
+  padding: 7px 10px;
+}
+
+.navSideBar>.sideLinks:hover {
+  color: #0070ba;
+  text-decoration: underline;
+}
+
+.active {
+  color: #0070ba;
+  background-color: rgba(209, 241, 255, 0.4);
+  font-weight: 600;
+  border-left: 2px solid #0070ba;
+}
+
+.moreHelpP {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: black;
+  line-height: 1rem;
+}
+
+.moreHelpDivs {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 15px;
+}
+
+.technicalHelp {
+  display: flex;
+  width: 32%;
+  border: 1px solid rgb(226, 219, 219);
+  border-radius: 10px;
+  color: #0070ba;
+  padding: 10px 20px;
+}
+
+.technicalHelp:hover {
+  box-shadow: rgba(0, 0, 0, 0.04) 0rem 0rem 0.5rem,
+    rgba(0, 0, 0, 0.1) 0rem 0.125rem 1.125rem;
+  color: #0070ba;
+}
+
+.technicalHelpP {
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: 30px;
+}
+
+.technicalHelpDiv {
+  margin-left: 10px;
+}
+
+.technicalHelpDiv>.technicalHelpP1 {
+  font-weight: 600;
+  margin: 0;
+}
+
+.technicalHelpDiv>.technicalHelpP2 {
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+.survey {
+  margin: 30px 0;
+  background-color: rgb(226, 219, 219);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.surveyP {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: black;
+  text-align: center;
+}
+
+.surveyP>span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0070ba;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1023px) {
+  .helpMainDiv1 {
+    width: 95%;
+  }
+
+  .technicalHelp {
+    width: 48%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .commonQuizes {
+    flex-direction: column-reverse;
+  }
+
+  .commonQuizes>.navSideBar {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .technicalHelp {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .surveyP {
+    font-size: 1rem;
+  }
 }

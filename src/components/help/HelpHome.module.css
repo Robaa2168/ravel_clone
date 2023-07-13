@@ -1,0 +1,34 @@
+.commonQ {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.commonQ>.commonQP {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: black;
+  line-height: 1rem;
+}
+
+.commonQ>.questions {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.questionLinks {
+  color: #0070ba;
+  font-weight: 600;
+}
+
+.questionLinks:hover {
+  color: #0070ba;
+}
+
+@media screen and (max-width: 767px) {
+  .commonQ {
+    width: 100%;
+  }
+}
