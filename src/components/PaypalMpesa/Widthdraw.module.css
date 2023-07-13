@@ -46,6 +46,21 @@
     font-size: 14px;
     margin-bottom: 1em;
 }
+.withdrawWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.withdrawContainer {
+  flex: 0 0 60%; 
+}
+
+.svgTransferIllustration {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 .customSelect {
     border: none;
   }
@@ -178,23 +193,23 @@
     margin-top: 20px; /* Add some spacing between the transfer details and the button */
     text-align: center;
   }
-  
-@media screen and (max-width: 767px) {
+  @media screen and (max-width: 767px) {
     .svgTransferIllustration {
         display: none;
     }
 
     .introHeader h1 {
-        font-size: 25px;
+        font-size: 1.2rem; /* Adjusted font-size */
         line-height: 1.5em;
     }
 
     .pyplWithdrawSection {
-        width: 90%;
+        width: 100%; /* Adjusted width */
     }
 
     .withdrawWrapperSplitter {
         width: 100%;
+        flex-direction: column; /* New property */
     }
 
     .importantInfo {

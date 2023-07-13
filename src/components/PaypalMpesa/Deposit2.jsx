@@ -186,103 +186,101 @@ const Deposit = () => {
             <div className={styles.introHeader}>
               <h1>Deposit into your Ravel account</h1>
             </div>
-
+  
             <div className={styles.depositWrapperSplitter}>
-  <div className={styles.depositContainer}>
-    {currentStep === 1 && (
-      <>
-        <h6>Deposit Amount from your Mobile Money</h6>
-        <p>Please enter your phone number:</p>
-        <div className={styles.inputContainer}>
-          <input
-            type="text"
-            placeholder="Phone Number e.g 254724..."
-            name="phoneNumber"
-            id=""
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.buttonContainer}>
-          <button onClick={handleContinue} disabled={!phoneNumber}>
-            Continue
-          </button>
-          {error && <p className={styles.error}>{error}</p>}
-        </div>
-      </>
-    )}
-
-{currentStep === 2 && (
-  <>
-    <div className={styles.stepContent}>
-      <p>Please select the currency:</p>
-      <div>
-        <select
-          className={styles.customSelect}
-          name=""
-          id=""
-          value={selectedCurrency}
-          onChange={handleCurrencyChange}
-          required
-        >
-          {/* Default option */}
-          <option value="" disabled hidden>
-            Select Currency
-          </option>
-
-          {/* Render the currency options */}
-          {currencies.map((currency) => (
-            <option key={currency} value={currency}>
-              {currency}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-
-    <div className={styles.buttonContainer}>
-      <button onClick={handleContinue} disabled={!selectedCurrency}>
-        Continue
-      </button>
-      {error && <p className={styles.error}>{error}</p>}
-    </div>
-  </>
-)}
-
-
-    {currentStep === 3 && (
-      <>
-        {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
-        {error && <p className={styles.errorMessage}>{error}</p>}
-        <p>Please enter the amount you would like to deposit into your Ravel account:</p>
-        <div className={styles.inputContainer}>
-          <input
-            type="text"
-            placeholder="Amount"
-            name="amount"
-            id=""
-            value={amountDeposit}
-            onChange={(e) => setAmountDeposit(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.buttonContainer}>
-          <button
-            disabled={loading || !selectedCurrency || !phoneNumber || !amountDeposit}
-            onClick={handleSubmit}
-          >
-            {loading ? 'Processing...' : 'Continue to Deposit'}
-          </button>
-        </div>
-      </>
-    )}
-  </div>
-  <div className={styles.svgTransferIllustration}>
-    <img src="/ravel-withdraw.png" alt="transfer-illustration" />
-  </div>
-</div>
-
+              <div className={styles.depositContainer}>
+                {currentStep === 1 && (
+                  <>
+                    <h6>Deposit Amount from your Mobile Money</h6>
+                    <p>Please enter your phone number:</p>
+                    <div className={styles.inputContainer}>
+                      <input
+                        type="text"
+                        placeholder="Phone Number e.g 254724..."
+                        name="phoneNumber"
+                        id=""
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className={styles.buttonContainer}>
+                      <button onClick={handleContinue} disabled={!phoneNumber}>
+                        Continue
+                      </button>
+                      {error && <p className={styles.error}>{error}</p>}
+                    </div>
+                  </>
+                )}
+  
+                {currentStep === 2 && (
+                  <>
+                    <div className={styles.stepContent}>
+                      <p>Please select the currency:</p>
+                      <div>
+                        <select
+                          className={styles.customSelect}
+                          name=""
+                          id=""
+                          value={selectedCurrency}
+                          onChange={handleCurrencyChange}
+                          required
+                        >
+                          {/* Default option */}
+                          <option value="" disabled hidden>
+                            Select Currency
+                          </option>
+  
+                          {/* Render the currency options */}
+                          {currencies.map((currency) => (
+                            <option key={currency} value={currency}>
+                              {currency}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+  
+                    <div className={styles.buttonContainer}>
+                      <button onClick={handleContinue} disabled={!selectedCurrency}>
+                        Continue
+                      </button>
+                      {error && <p className={styles.error}>{error}</p>}
+                    </div>
+                  </>
+                )}
+  
+                {currentStep === 3 && (
+                  <>
+                    {successMessage && <div className={styles.successMessage}>{successMessage}</div>}
+                    {error && <p className={styles.errorMessage}>{error}</p>}
+                    <p>Please enter the amount you would like to deposit:</p>
+                    <div className={styles.inputContainer}>
+                      <input
+                        type="text"
+                        placeholder="Amount"
+                        name="amount"
+                        id=""
+                        value={amountDeposit}
+                        onChange={(e) => setAmountDeposit(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className={styles.buttonContainer}>
+                      <button
+                        disabled={loading || !selectedCurrency || !phoneNumber || !amountDeposit}
+                        onClick={handleSubmit}
+                      >
+                        {loading ? 'Processing...' : 'Continue to Deposit'}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+              <div className={styles.svgTransferIllustration}>
+                <img src="/ravel-withdraw.png" alt="transfer-illustration" />
+              </div>
+            </div>
           </div>
           <div className={styles.importantInfo}>
             <p>
@@ -294,6 +292,7 @@ const Deposit = () => {
       </>
     )
   );
+  
 };
 
 export default Deposit;

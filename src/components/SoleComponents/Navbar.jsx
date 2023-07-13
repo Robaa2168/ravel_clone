@@ -32,7 +32,7 @@ function SettingsHeader() {
           Withdraw
         </NavLink>
         <NavLink
-          to="/history"
+          to="/ravel-mpesa/transaction-history"
           className={styles.account}
           activeClassName={styles.active}
         >

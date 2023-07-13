@@ -2,6 +2,7 @@ import MpesaHome from "./MpesaHome";
 import Withdraw from "./Withdraw";
 import TopUp from "./TopUp";
 import Deposit from "./Deposit2";
+import MpesaTransactionHistory from "./MpesaTransactionHistory";
 
 
 export {
@@ -9,4 +10,5 @@ export {
     Withdraw,
     TopUp,
     Deposit,
+    MpesaTransactionHistory,
 }
