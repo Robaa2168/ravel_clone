@@ -1,5 +1,5 @@
 .pyplWithdrawSection {
-  margin-top: 2rem;
+  margin-top: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,8 +7,7 @@
   width: 80%;
   margin-right: auto;
   margin-left: auto;
-  gap: 20px;
-  /* padding: 10% 20rem 3rem 20rem; */
+  column-gap: 20px;
 }
 
 .introHeader {
@@ -19,16 +18,10 @@
 
 .introHeader h1 {
   font-size: 1.5rem;
-  line-height: 1.5rem;
-  margin-bottom: 1.5rem;
 }
 
-/* .pyplWithdrawSection > div {
-    margin-bottom: 1.5em;
-} */
-
 .withdrawWrapperSplitter {
-  width: 750px;
+  /* width: 750px; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -53,14 +46,20 @@
 }
 
 .withdrawContainer {
-  flex: 0 0 60%;
+  width: 58%;
 }
 
 .svgTransferIllustration {
-  flex: 0 0 40%;
+  width: 41%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.ravelWithdrawImg {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .customSelect {
@@ -158,7 +157,6 @@
 
 .transferdetails p {
   font-weight: 400;
-  /* Roboto regular */
 }
 
 
@@ -185,6 +183,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 1em;
+  margin-top: 6rem;
 }
 
 
@@ -196,7 +195,6 @@
 
 .centeredButton {
   margin-top: 20px;
-  /* Add some spacing between the transfer details and the button */
   text-align: center;
 }
 
@@ -206,21 +204,20 @@
     display: none;
   }
 
-  .introHeader h1 {
-    font-size: 1.2rem;
-    /* Adjusted font-size */
-    line-height: 1.5em;
-  }
-
   .pyplWithdrawSection {
     width: 90%;
-    /* Adjusted width */
+    margin-top: 6rem;
   }
 
   .withdrawWrapperSplitter {
     width: 100%;
     flex-direction: column;
-    /* New property */
+  }
+
+  .withdrawContainer {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .importantInfo {

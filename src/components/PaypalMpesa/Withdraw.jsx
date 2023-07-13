@@ -449,7 +449,7 @@ const Withdraw = () => {
               </div>
             </div>
             <div className={styles.svgTransferIllustration}>
-              <img src="/ravel-withdraw.png" alt="transfer-illustration" />
+              <img src="/ravel-withdraw.png" alt="transfer-illustration" className={styles.ravelWithdrawImg} />
             </div>
           </div>
         </div>
