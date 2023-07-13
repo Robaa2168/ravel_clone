@@ -30,11 +30,12 @@
 .account {
   text-decoration: none;
   font-size: 17px;
-  font-weight: 400;
+  font-weight: 500;
   color: black;
   border: 1px solid white;
-  padding: 10px 12px;
+  padding: 8px 12px;
   border-radius: 24px;
+  margin: 0 5px;
 }
 
 .account:hover {
@@ -44,8 +45,10 @@
 }
 
 .active {
-  background-color: #d7e6f0;
+  border: 1px solid #0070ba;
   color: #0070ba;
+  background-color: rgba(209, 241, 255, 0.4);
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
