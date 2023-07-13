@@ -49,7 +49,7 @@ const AppLayout = () => {
   }, [user]);
 
   if (loading) {
-    return null; // Or replace with a loading component if desired
+    return null; 
   }
 
   const toggleSidebar = () => {
