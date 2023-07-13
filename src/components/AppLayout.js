@@ -167,7 +167,7 @@ const AppLayout = () => {
             }
           />
           <Route
-            path="/ravel-mpesa/topup"
+            path="/ravel-mpesa/deposit"
             element={
               <ProtectedRoute>
                 <TopUp />
@@ -175,7 +175,7 @@ const AppLayout = () => {
             }
           />
               <Route
-            path="/ravel-mpesa/transaction-history"
+            path="/ravel-mpesa/history"
             element={
               <ProtectedRoute>
                 <MpesaTransactionHistory />
