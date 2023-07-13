@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import styles from "./Widthdraw.module.css";
 import { Navbar } from "../SoleComponents";
 import { useUser } from "../context";
@@ -34,6 +34,7 @@ const Withdraw = () => {
   const [error, setError] = useState(null);
   const [withdrawalResponse, setWithdrawalResponse] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [pendingWithdrawal, setPendingWithdrawal] = useState(null);
 
 
 
@@ -71,6 +72,24 @@ const Withdraw = () => {
     }
   };
   
+  const fetchPendingWithdrawal = async () => {
+    try {
+      const response = await api.get('/api/pending-withdrawal', {
+        headers: { Authorization: `Bearer ${user.token}` }, // Pass the user token
+        params: { userId: user?.primaryInfo?._id }, // Pass the userId in the params
+      });
+
+      if (response.status === 200) {
+        setPendingWithdrawal(response.data.withdrawal);
+      }
+    } catch (error) {
+      console.error("Error fetching pending withdrawal:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPendingWithdrawal();
+  }, []);
 
   function generateRandomTransactionNumber() {
     const prefix = "RGP";
@@ -263,6 +282,13 @@ const Withdraw = () => {
   
             <div className={styles.withdrawWrapperSplitter}>
               <div className={styles.withdrawContainer}>
+              {pendingWithdrawal && (
+                    <div className="alert alert-info">
+                      Your withdrawal request ({pendingWithdrawal.transactionId}) of {pendingWithdrawal.amount} {pendingWithdrawal.currency} will be completed within 1-3 days.
+                    </div>
+
+
+                  )}
                 <h5>
                   Available balance in your Ravel account:
                   {error && <p className={styles.errorMessage}>{error}</p>}
