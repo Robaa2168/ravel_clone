@@ -13,7 +13,7 @@ function MpesaTransactionHistory() {
           <Link to="/ravel-mpesa/withdraw" className={styles.button}>
             Withdraw from Ravel
           </Link>
-          <Link to="/ravel-mpesa/topup" className={styles.button}>
+          <Link to="/ravel-mpesa/deposit" className={styles.button}>
             Top Up to Ravel
           </Link>
         </div>
