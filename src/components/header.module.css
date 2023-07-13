@@ -1,7 +1,11 @@
-html,
+/* html,
 body {
   overflow-x: hidden;
   max-width: 100%;
+} */
+
+.headerContainer {
+  margin-bottom: 2em;
 }
 
 .navbar {
@@ -10,20 +14,19 @@ body {
   align-items: center;
   text-align: center;
   background-color: #0070ba;
-  padding: 20px 20%;
+  padding-left: 20%;
+  padding-right: 20%;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  position: fixed; /* Changed to 'fixed' */
-  top: 0; /* Added */
-  left: 0; /* Added */
-  width: 100%; /* Added */
+  position: fixed;
+  top: 0;
+  /* left: 0;  */
+  height: 10%;
+  width: 100%;
   z-index: 9999 !important;
 }
-.header-container {
-  margin-bottom: 2em;
-}
 
-.ravel-logo {
- 
+.ravelLogo {
+
   border: 1px solid white;
   border-radius: 50%;
   width: 4%;
@@ -47,10 +50,12 @@ body {
 }
 
 .navLinks,
-.logOut {
+.logOutDiv {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .navLink {
@@ -60,7 +65,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   padding: 10px 15px;
-  border: 1px solid #0070ba;
+  border: 1px solid transparent;
   border-radius: 24px;
 }
 
@@ -101,7 +106,8 @@ body {
   background-color: #0070ba;
   top: 0;
   position: absolute;
-  z-index: 9998; /* Added */
+  z-index: 9998;
+  /* Added */
 }
 
 .popUp1 {
@@ -120,7 +126,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 90%; 
+  width: 90%;
 }
 
 .popUp2 {
@@ -149,14 +155,16 @@ body {
   text-decoration: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .navbar {
-    padding: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
     overflow-x: hidden;
     z-index: 9999 !important;
+    height: 7%;
   }
 
-  .ravel-logo {
+  .ravelLogo {
     width: 5.2%;
     display: none;
   }
@@ -180,65 +188,16 @@ body {
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .navbar {
-    justify-content: center;
-    z-index: 9999 !important;
-  }
-
-  .dashboard {
-    margin-right: auto;
-    margin-left: auto;
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }
 
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 1025px) and (max-width: 1280px) {
   .navbar {
-    padding: 3%;
-    overflow-x: hidden;
-    z-index: 9999 !important;
-    justify-content: space-between; /* Added */
-  }
-
-  .sideMenu {
-    display: block;
-    z-index: 9999 !important;
-  }
-
-  .navLinks {
-    display: none;
-  }
-
-  #logo1 {
-    display: block;
-  }
-
-  .settings1,
-  .logout {
-    display: block; /* Modified */
-  }
-}
-
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-  .navbar {
-    padding: 20px 20%;
-    z-index: 9999 !important;
-    justify-content: space-between; /* Added */
-  }
-
-  .sideMenu {
-    display: none;
-  }
-
-  .navLinks {
-    display: flex;
-    justify-content: center; /* Added */
-  }
-
-  .settings1,
-  .logout {
-    display: block;
+    padding-left: 10%;
+    padding-right: 10%;
   }
 }

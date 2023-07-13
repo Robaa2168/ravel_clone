@@ -5,7 +5,7 @@
     rgba(0, 0, 0, 0.1) 0rem 0.125rem 1.125rem;
   height: 10%;
   position: fixed; 
-  top: 12%;
+  top: 10%;
   left: 0;
   display: flex;
   align-items: center;
@@ -93,7 +93,8 @@
   .sendReqHeader {
     overflow: hidden;
     font-size: 16px;
-    top: 60px;
+    top: 7%;
+    height: 7%;
   }
 
   /* .sendReq-header ul {

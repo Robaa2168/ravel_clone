@@ -4,7 +4,7 @@
         rgba(0, 0, 0, 0.1) 0rem 0.125rem 1.125rem;
     height: 10%;
     position: fixed;
-    top: 11.5%;
+    top: 10%;
     left: 0;
     margin-bottom: 2em;
     z-index: 1000;
@@ -106,6 +106,8 @@ img {
         align-items: center; */
         background: #fff;
         padding: 10px;
+        top: 7%;
+        height: 7%;
     }
 
     .mobile-navbar {

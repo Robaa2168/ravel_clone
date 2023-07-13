@@ -1,5 +1,5 @@
 .sendMoney1 {
-  margin-top: 9rem;
+  margin-top: 8rem;
   left: 0;
   width: 60%;
   margin-left: auto;
@@ -110,6 +110,12 @@
   font-weight: 300;
   margin-top: 0;
   line-height: 13px;
+}
+
+@media screen and (max-width: 767px) {
+.sendMoney1 {
+  margin-top: 6rem;
+}
 }
 
 @media screen and (max-width: 1024px) {

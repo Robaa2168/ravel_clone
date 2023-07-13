@@ -1,26 +1,26 @@
 .pyplWithdrawSection {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    margin-right: auto;
-    margin-left: auto;
-    gap: 20px;
-    /* padding: 10% 20rem 3rem 20rem; */
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  margin-right: auto;
+  margin-left: auto;
+  gap: 20px;
+  /* padding: 10% 20rem 3rem 20rem; */
 }
 
 .introHeader {
-    color: #0070ba;
-    margin-bottom: 1rem;
-    text-align: center;
+  color: #0070ba;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .introHeader h1 {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 /* .pyplWithdrawSection > div {
@@ -28,31 +28,32 @@
 } */
 
 .withdrawWrapperSplitter {
-    width: 750px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 750px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .withdrawContainer .balance {
-    border-bottom: 1px solid #333 !important;
-    margin-bottom: 1.5em;
-    width: 80%;
-    margin-top: 1em;
+  border-bottom: 1px solid #333 !important;
+  margin-bottom: 1.5em;
+  width: 80%;
+  margin-top: 1em;
 }
 
 .withdrawContainer p {
-    width: 80%;
-    font-size: 14px;
-    margin-bottom: 1em;
+  width: 80%;
+  font-size: 14px;
+  margin-bottom: 1em;
 }
+
 .withdrawWrapper {
   display: flex;
   flex-wrap: wrap;
 }
 
 .withdrawContainer {
-  flex: 0 0 60%; 
+  flex: 0 0 60%;
 }
 
 .svgTransferIllustration {
@@ -61,160 +62,170 @@
   justify-content: flex-end;
   align-items: center;
 }
+
 .customSelect {
-    border: none;
-  }
-.customSelect:focus {
-    outline: none;
-  }
-  
-.inputContainer {
-    display: flex;
-    margin-bottom: 1em;
+  border: none;
 }
+
+.customSelect:focus {
+  outline: none;
+}
+
+.inputContainer {
+  display: flex;
+  margin-bottom: 1em;
+}
+
 .inputContainer input {
-    border-radius: 5px 0px 0px 5px;
-    padding: 0.5em;
-    border-right: none;
-    background-color: white;
-    border: 3px solid rgb(226, 219, 219);
-    width: 70%;
+  border-radius: 5px 0px 0px 5px;
+  padding: 0.5em;
+  border-right: none;
+  background-color: white;
+  border: 3px solid rgb(226, 219, 219);
+  width: 70%;
 }
 
 .inputContainer input:focus {
-    border-right: 3px !important;
-    outline: none;
-    border: 1px solid #046096;
-    box-shadow: 0px 0px 5px #0079c1;
+  border-right: 3px !important;
+  outline: none;
+  border: 1px solid #046096;
+  box-shadow: 0px 0px 5px #0079c1;
 }
 
 .inputContainer select {
-    appearance: none;
-    padding: 0.5em;
-    border: 3px solid #cacbcb;
-    border-radius: 0px 5px 5px 0px;
-    border-left: none;
-    background-color: #cacbcb;
+  appearance: none;
+  padding: 0.5em;
+  border: 3px solid #cacbcb;
+  border-radius: 0px 5px 5px 0px;
+  border-left: none;
+  background-color: #cacbcb;
 }
 
 .buttonContainer button {
-    background: #0070ba;
-    color: #fff;
-    padding: 0.5em;
-    border-radius: 30px;
-    width: 80%;
-    border: 1px solid #0070ba;
+  background: #0070ba;
+  color: #fff;
+  padding: 0.5em;
+  border-radius: 30px;
+  width: 80%;
+  border: 1px solid #0070ba;
 }
 
 .importantInfo {
-    text-align: center;
-    color: #0070ba;
-    padding-left: 10em;
-    margin-top: 1.5em;
-    padding-bottom: 3em;
-    border-bottom: 1px solid #cacbcb;
-    
+  text-align: center;
+  color: #0070ba;
+  padding-left: 10em;
+  margin-top: 1.5em;
+  padding-bottom: 3em;
+  border-bottom: 1px solid #cacbcb;
+
 }
 
 
 .errorMessage {
-    background-color: #ffdddd;
-    border: 1px solid #ff0000;
-    border-radius: 4px;
-    color: #ff0000;
+  background-color: #ffdddd;
+  border: 1px solid #ff0000;
+  border-radius: 4px;
+  color: #ff0000;
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
+  position: relative;
+}
+
+.errorMessage::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px dashed #ff0000;
+  border-radius: 6px;
+}
+
+.animationcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  height: auto;
+  margin-top: rem;
+}
+
+.transferdetails p {
+  font-weight: 400;
+  /* Roboto regular */
+}
+
+
+.downloadreceipt {
+  background-color: #0070ba;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+.downloadreceipt:hover {
+  box-shadow: 0 4px 10px rgba(0, 112, 186, 0.8);
+}
+
+
+.centeredContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}
+
+
+.centeredContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.centeredButton {
+  margin-top: 20px;
+  /* Add some spacing between the transfer details and the button */
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+
+  .svgTransferIllustration {
+    display: none;
+  }
+
+  .introHeader h1 {
+    font-size: 1.2rem;
+    /* Adjusted font-size */
+    line-height: 1.5em;
+  }
+
+  .pyplWithdrawSection {
+    width: 90%;
+    /* Adjusted width */
+  }
+
+  .withdrawWrapperSplitter {
+    width: 100%;
+    flex-direction: column;
+    /* New property */
+  }
+
+  .importantInfo {
+    padding: 0;
+    text-align: left;
     font-size: 14px;
-    padding: 5px 10px;
-    margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    position: relative;
   }
-  
-  .errorMessage::before {
-    content: "";
-    position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 1px dashed #ff0000;
-    border-radius: 6px;
-  }
-  
-  .animationcontainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: 'Roboto', sans-serif; 
-    height: auto;
-    margin-top: rem;
-  }
- 
-  .transferdetails p {
-    font-weight: 400; /* Roboto regular */
-  }
-  
-  
-  .downloadreceipt {
-    background-color: #0070ba;
-    color: #fff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .downloadreceipt:hover {
-    box-shadow: 0 4px 10px rgba(0, 112, 186, 0.8);
-  }
-
-
-  .centeredContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;
-  }
-  
-  
-  .centeredContent {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .centeredButton {
-    margin-top: 20px; /* Add some spacing between the transfer details and the button */
-    text-align: center;
-  }
-  @media screen and (max-width: 767px) {
-    .svgTransferIllustration {
-        display: none;
-    }
-
-    .introHeader h1 {
-        font-size: 1.2rem; /* Adjusted font-size */
-        line-height: 1.5em;
-    }
-
-    .pyplWithdrawSection {
-        width: 100%; /* Adjusted width */
-    }
-
-    .withdrawWrapperSplitter {
-        width: 100%;
-        flex-direction: column; /* New property */
-    }
-
-    .importantInfo {
-        padding: 0;
-        text-align: left;
-        font-size: 14px;
-    }
 }
